@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import SidebarLayout from '@/components/sidebar-layout'
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
@@ -6,12 +7,13 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
   return (
-    <main className="flex-1 p-6">
+    <SidebarLayout>
       <h1 className="text-2xl font-bold">Welcome to Dashboard</h1>
-      <p className="text-muted-foreground mt-2">
+      <p className="text-muted-foreground">
         This is your home page.
       </p>
-    </main>
+    </SidebarLayout>
   )
 }
+
 
