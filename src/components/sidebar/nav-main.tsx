@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export type Route = {
   id: string;
@@ -35,13 +35,38 @@ export type Route = {
 export default function DashboardNavigation({ routes }: { routes: Route[] }) {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
+  const location = useLocation();
+  const currentPath = location.pathname;
   const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
+
+  // Auto-expand parent if a sub-route is active
+  useEffect(() => {
+    for (const route of routes) {
+      if (route.subs?.some((sub) => sub.link === currentPath)) {
+        setOpenCollapsible(route.id);
+        break;
+      }
+    }
+  }, [currentPath, routes]);
+
+  const isRouteActive = (link: string) => {
+    if (link === "/") {
+      return currentPath === "/";
+    }
+    return currentPath === link || currentPath.startsWith(link + "/");
+  };
+
+  const isParentActive = (route: Route) => {
+    if (isRouteActive(route.link)) return true;
+    return route.subs?.some((sub) => isRouteActive(sub.link)) ?? false;
+  };
 
   return (
     <SidebarMenu>
       {routes.map((route) => {
         const isOpen = !isCollapsed && openCollapsible === route.id;
         const hasSubRoutes = !!route.subs?.length;
+        const parentActive = isParentActive(route);
 
         return (
           <SidebarMenuItem key={route.id}>
@@ -57,8 +82,8 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                   <SidebarMenuButton
                     className={cn(
                       "flex w-full items-center rounded-lg px-2 transition-colors",
-                      isOpen
-                        ? "bg-sidebar-muted text-foreground"
+                      parentActive
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold"
                         : "text-muted-foreground hover:bg-sidebar-muted hover:text-foreground",
                       isCollapsed && "justify-center"
                     )}
@@ -84,21 +109,29 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                 {!isCollapsed && (
                   <CollapsibleContent>
                     <SidebarMenuSub className="my-1 ml-3.5 ">
-                      {route.subs?.map((subRoute) => (
-                        <SidebarMenuSubItem
-                          key={`${route.id}-${subRoute.title}`}
-                          className="h-auto"
-                        >
-                          <SidebarMenuSubButton asChild>
-                            <Link
-                              to={subRoute.link}
-                              className="flex items-center rounded-md px-4 py-1.5 text-sm font-medium text-muted-foreground hover:bg-sidebar-muted hover:text-foreground"
-                            >
-                              {subRoute.title}
-                            </Link>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
+                      {route.subs?.map((subRoute) => {
+                        const subActive = isRouteActive(subRoute.link);
+                        return (
+                          <SidebarMenuSubItem
+                            key={`${route.id}-${subRoute.title}`}
+                            className="h-auto"
+                          >
+                            <SidebarMenuSubButton asChild>
+                              <Link
+                                to={subRoute.link}
+                                className={cn(
+                                  "flex items-center rounded-md px-4 py-1.5 text-sm font-medium transition-colors",
+                                  subActive
+                                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                                    : "text-muted-foreground hover:bg-sidebar-muted hover:text-foreground"
+                                )}
+                              >
+                                {subRoute.title}
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 )}
@@ -108,7 +141,10 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                 <Link
                   to={route.link}
                   className={cn(
-                    "flex items-center rounded-lg px-2 transition-colors text-muted-foreground hover:bg-sidebar-muted hover:text-foreground",
+                    "flex items-center rounded-lg px-2 transition-colors",
+                    isRouteActive(route.link)
+                      ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold"
+                      : "text-muted-foreground hover:bg-sidebar-muted hover:text-foreground",
                     isCollapsed && "justify-center"
                   )}
                 >
