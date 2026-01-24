@@ -6,10 +6,12 @@ import {
   Users,
   CalendarCheck,
   Stamp,
-  Bus,
-  Receipt,
   Settings,
   GalleryVerticalEnd,
+  Package,
+  FileText,
+  Truck,
+  CreditCard,
 } from "lucide-react"
 
 
@@ -52,8 +54,27 @@ const data = {
           url: "/clients",
         },
         {
-          title: "Documents",
-          url: "/clients/documents",
+          title: "Leads",
+          url: "/clients/leads",
+        },
+      ],
+    },
+    {
+      title: "Products",
+      url: "#",
+      icon: Package,
+      items: [
+        {
+          title: "Packages",
+          url: "/products/packages",
+        },
+        {
+          title: "Visa Services",
+          url: "/products/visa-services",
+        },
+        {
+          title: "Transport Services",
+          url: "/products/transport-services",
         },
       ],
     },
@@ -70,50 +91,61 @@ const data = {
           title: "New Booking",
           url: "/bookings/new",
         },
-        {
-          title: "Packages",
-          url: "/bookings/packages",
-        },
       ],
     },
     {
-      title: "Visa & Passport",
+      title: "Applications",
       url: "#",
       icon: Stamp,
       items: [
         {
           title: "Visa Applications",
-          url: "/visa",
+          url: "/applications/visa",
         },
         {
           title: "Passport Applications",
-          url: "/passport",
+          url: "/applications/passport",
         },
       ],
     },
     {
-      title: "Transport",
+      title: "Documents",
       url: "#",
-      icon: Bus,
+      icon: FileText,
       items: [
         {
-          title: "Assignments",
-          url: "/transport/assignments",
+          title: "Client Documents",
+          url: "/documents/clients",
+        },
+        {
+          title: "Booking Documents",
+          url: "/documents/bookings",
         },
       ],
     },
     {
-      title: "Invoices & Payments",
+      title: "Operations",
       url: "#",
-      icon: Receipt,
+      icon: Truck,
+      items: [
+        {
+          title: "Transport Assignments",
+          url: "/operations/transport-assignments",
+        },
+      ],
+    },
+    {
+      title: "Billing",
+      url: "#",
+      icon: CreditCard,
       items: [
         {
           title: "Invoices",
-          url: "/invoices",
+          url: "/billing/invoices",
         },
         {
           title: "Payments",
-          url: "/payments",
+          url: "/billing/payments",
         },
       ],
     },
