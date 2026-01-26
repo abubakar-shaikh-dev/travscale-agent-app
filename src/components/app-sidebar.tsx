@@ -12,6 +12,7 @@ import {
   FileText,
   Truck,
   CreditCard,
+  ClipboardList,
 } from "lucide-react"
 
 
@@ -173,6 +174,10 @@ const data = {
         {
           title: "Master Data",
           url: "/settings/master-data",
+        },
+        {
+          title: "Audit Logs",
+          url: "/settings/audit-logs",
         },
       ],
     },
