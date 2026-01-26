@@ -12,7 +12,6 @@ import {
   FileText,
   Truck,
   CreditCard,
-  ClipboardList,
 } from "lucide-react"
 
 
