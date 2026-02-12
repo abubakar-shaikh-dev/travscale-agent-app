@@ -7,7 +7,6 @@ import {
   CalendarCheck,
   Stamp,
   Settings,
-  GalleryVerticalEnd,
   Package,
   FileText,
   Truck,
@@ -15,9 +14,10 @@ import {
 } from "lucide-react"
 
 
+
+import { Logo } from "@/components/logo"
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -28,6 +28,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  useSidebar,
 } from "@/components/ui/sidebar"
 
 const data = {
@@ -36,13 +37,6 @@ const data = {
     email: "admin@travscale.com",
     avatar: "/avatars/admin.jpg",
   },
-  teams: [
-    {
-      name: "Travscale",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-  ],
   navMain: [
     {
       title: "Clients",
@@ -184,10 +178,25 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { state } = useSidebar()
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild className="group-data-[collapsible=icon]:!p-0 hover:bg-transparent active:bg-transparent">
+              <a href="/">
+                {state === "expanded" ? (
+                  <Logo variant="full" className="h-7 w-auto" />
+                ) : (
+                  <div className="flex w-full justify-center">
+                    <Logo variant="icon" className="size-8" />
+                  </div>
+                )}
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         {/* Dashboard Link */}

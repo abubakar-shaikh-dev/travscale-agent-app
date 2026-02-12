@@ -18,7 +18,7 @@ export function AuthLayout({ children, title, description }: AuthLayoutProps) {
 		<main className="relative md:h-screen md:overflow-hidden lg:grid lg:grid-cols-2">
 			<div className="relative hidden h-full flex-col border-r bg-secondary p-10 lg:flex dark:bg-secondary/20">
 				<div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-background" />
-				<Logo className="mr-auto h-5" />
+				<Logo className="mr-auto h-7" />
 
 				<div className="z-10 mt-auto">
 					<blockquote className="space-y-2">
@@ -52,7 +52,7 @@ export function AuthLayout({ children, title, description }: AuthLayoutProps) {
 					</Link>
 				</Button>
 				<div className="mx-auto space-y-4 sm:w-sm">
-					<Logo className="h-5 lg:hidden" />
+					<Logo className="h-10 lg:hidden" />
 					<div className="flex flex-col space-y-1">
 						<h1 className="font-bold text-2xl tracking-wide">{title}</h1>
 						<p className="text-base text-muted-foreground">{description}</p>
