@@ -187,10 +187,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild className="group-data-[collapsible=icon]:!p-0 hover:bg-transparent active:bg-transparent">
               <a href="/">
                 {state === "expanded" ? (
-                  <Logo variant="full" className="h-7 w-auto" />
+                  <Logo variant="full" className="h-6.5 w-auto" />
                 ) : (
                   <div className="flex w-full justify-center">
-                    <Logo variant="icon" className="size-8" />
+                    <Logo variant="icon" className="size-6.5" />
                   </div>
                 )}
               </a>
