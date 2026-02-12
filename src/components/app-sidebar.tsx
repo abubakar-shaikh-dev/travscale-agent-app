@@ -18,6 +18,7 @@ import {
 import { Logo } from "@/components/logo"
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
+import { SidebarSearch } from "@/components/sidebar-search"
 import {
   Sidebar,
   SidebarContent,
@@ -196,6 +197,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
+          <SidebarSearch />
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
