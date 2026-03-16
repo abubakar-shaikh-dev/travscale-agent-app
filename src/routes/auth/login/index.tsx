@@ -1,18 +1,18 @@
 import { AuthLayout } from "@/components/auth-layout";
-import { LoginForm } from "@/components/login-form";
+import { LoginForm } from "@/features/auth/components/LoginForm";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/auth/login/")({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	return (
-		<AuthLayout
-			title="Welcome Back!"
-			description="Sign in to your account to continue."
-		>
-			<LoginForm />
-		</AuthLayout>
-	);
+  return (
+    <AuthLayout
+      title="Welcome Back!"
+      description="Sign in to your account to continue."
+    >
+      <LoginForm />
+    </AuthLayout>
+  );
 }
