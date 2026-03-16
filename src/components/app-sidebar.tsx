@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+  Bell,
   LayoutDashboard,
   Users,
   CalendarCheck,
@@ -38,21 +39,6 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
-      items: [
-        {
-          title: "Overview",
-          url: "/dashboard",
-        },
-        {
-          title: "Pending Items",
-          url: "/dashboard/pending",
-        },
-      ],
-    },
-    {
       title: "Customers",
       url: "#",
       icon: Users,
@@ -70,6 +56,7 @@ const data = {
     {
       title: "Suppliers",
       url: "#",
+      icon: Truck,
       items: [
         {
           title: "All Suppliers",
@@ -84,6 +71,7 @@ const data = {
     {
       title: "Packages",
       url: "#",
+      icon: Package,
       items: [
         {
           title: "All Packages",
@@ -102,6 +90,7 @@ const data = {
     {
       title: "Orders",
       url: "#",
+      icon: CalendarCheck,
       items: [
         {
           title: "All Orders",
@@ -116,6 +105,7 @@ const data = {
     {
       title: "Service Charges",
       url: "#",
+      icon: Stamp,
       items: [
         {
           title: "Charge History",
@@ -130,6 +120,7 @@ const data = {
     {
       title: "Documents",
       url: "#",
+      icon: FileText,
       items: [
         {
           title: "All Documents",
@@ -144,6 +135,7 @@ const data = {
     {
       title: "Finance",
       url: "#",
+      icon: CreditCard,
       items: [
         {
           title: "Invoices",
@@ -162,6 +154,7 @@ const data = {
     {
       title: "Notifications",
       url: "#",
+      icon: Bell,
       items: [
         {
           title: "Templates",
