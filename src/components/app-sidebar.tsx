@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   LayoutDashboard,
   Users,
@@ -11,14 +11,12 @@ import {
   FileText,
   Truck,
   CreditCard,
-} from "lucide-react"
+} from "lucide-react";
 
-
-
-import { Logo } from "@/components/logo"
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
-import { SidebarSearch } from "@/components/sidebar-search"
+import { Logo } from "@/components/logo";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
+import { SidebarSearch } from "@/components/sidebar-search";
 import {
   Sidebar,
   SidebarContent,
@@ -30,7 +28,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 const data = {
   user: {
@@ -40,107 +38,138 @@ const data = {
   },
   navMain: [
     {
-      title: "Clients",
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: LayoutDashboard,
+      items: [
+        {
+          title: "Overview",
+          url: "/dashboard",
+        },
+        {
+          title: "Pending Items",
+          url: "/dashboard/pending",
+        },
+      ],
+    },
+    {
+      title: "Customers",
       url: "#",
       icon: Users,
       items: [
         {
-          title: "All Clients",
-          url: "/clients",
+          title: "All Customers",
+          url: "/customers",
         },
         {
-          title: "Leads",
-          url: "/clients/leads",
-        },
-      ],
-    },
-    {
-      title: "Products",
-      url: "#",
-      icon: Package,
-      items: [
-        {
-          title: "Packages",
-          url: "/products/packages",
-        },
-        {
-          title: "Visa Services",
-          url: "/products/visa-services",
-        },
-        {
-          title: "Transport Services",
-          url: "/products/transport-services",
+          title: "Add Customer",
+          url: "/customers/new",
         },
       ],
     },
     {
-      title: "Bookings",
+      title: "Suppliers",
       url: "#",
-      icon: CalendarCheck,
       items: [
         {
-          title: "All Bookings",
-          url: "/bookings",
+          title: "All Suppliers",
+          url: "/suppliers",
         },
         {
-          title: "New Booking",
-          url: "/bookings/new",
+          title: "Add Supplier",
+          url: "/suppliers/new",
         },
       ],
     },
     {
-      title: "Applications",
+      title: "Packages",
       url: "#",
-      icon: Stamp,
       items: [
         {
-          title: "Visa Applications",
-          url: "/applications/visa",
+          title: "All Packages",
+          url: "/packages",
         },
         {
-          title: "Passport Applications",
-          url: "/applications/passport",
+          title: "Add Package",
+          url: "/packages/new",
+        },
+        {
+          title: "Categories",
+          url: "/packages/categories",
+        },
+      ],
+    },
+    {
+      title: "Orders",
+      url: "#",
+      items: [
+        {
+          title: "All Orders",
+          url: "/orders",
+        },
+        {
+          title: "New Order",
+          url: "/orders/new",
+        },
+      ],
+    },
+    {
+      title: "Service Charges",
+      url: "#",
+      items: [
+        {
+          title: "Charge History",
+          url: "/service-charges",
+        },
+        {
+          title: "Audit Log",
+          url: "/service-charges/audit-log",
         },
       ],
     },
     {
       title: "Documents",
       url: "#",
-      icon: FileText,
       items: [
         {
-          title: "Client Documents",
-          url: "/documents/clients",
+          title: "All Documents",
+          url: "/documents",
         },
         {
-          title: "Booking Documents",
-          url: "/documents/bookings",
+          title: "Upload Document",
+          url: "/documents/upload",
         },
       ],
     },
     {
-      title: "Operations",
+      title: "Finance",
       url: "#",
-      icon: Truck,
-      items: [
-        {
-          title: "Transport Assignments",
-          url: "/operations/transport-assignments",
-        },
-      ],
-    },
-    {
-      title: "Billing",
-      url: "#",
-      icon: CreditCard,
       items: [
         {
           title: "Invoices",
-          url: "/billing/invoices",
+          url: "/finance/invoices",
         },
         {
           title: "Payments",
-          url: "/billing/payments",
+          url: "/finance/payments",
+        },
+        {
+          title: "Balance",
+          url: "/finance/balance",
+        },
+      ],
+    },
+    {
+      title: "Notifications",
+      url: "#",
+      items: [
+        {
+          title: "Templates",
+          url: "/notifications/templates",
+        },
+        {
+          title: "Sent Log",
+          url: "/notifications/log",
         },
       ],
     },
@@ -154,8 +183,12 @@ const data = {
           url: "/settings/company",
         },
         {
-          title: "Users",
-          url: "/settings/users",
+          title: "Preferences",
+          url: "/settings/preferences",
+        },
+        {
+          title: "Team Members",
+          url: "/settings/team",
         },
         {
           title: "Roles & Permissions",
@@ -166,26 +199,26 @@ const data = {
           url: "/settings/invoice",
         },
         {
-          title: "Master Data",
-          url: "/settings/master-data",
-        },
-        {
-          title: "Audit Logs",
-          url: "/settings/audit-logs",
+          title: "Plan & Billing",
+          url: "/settings/plan",
         },
       ],
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { state } = useSidebar()
+  const { state } = useSidebar();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild className="group-data-[collapsible=icon]:!p-0 hover:bg-transparent active:bg-transparent">
+            <SidebarMenuButton
+              size="lg"
+              asChild
+              className="group-data-[collapsible=icon]:!p-0 hover:bg-transparent active:bg-transparent"
+            >
               <a href="/">
                 {state === "expanded" ? (
                   <Logo variant="full" className="h-6.5 w-auto" />
@@ -214,7 +247,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
-        
+
         {/* Main Navigation */}
         <NavMain items={data.navMain} />
       </SidebarContent>
@@ -223,6 +256,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
-
