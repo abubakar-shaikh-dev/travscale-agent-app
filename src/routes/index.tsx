@@ -1,19 +1,24 @@
-import { createFileRoute } from '@tanstack/react-router'
-import SidebarLayout from '@/components/sidebar-layout'
+// Router
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/')({
+// UI Components
+import SidebarLayout from "@/components/sidebar-layout";
+
+// Feature Components
+import PageHeader from "@/components/shared/PageHeader";
+
+export const Route = createFileRoute("/")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   return (
     <SidebarLayout>
-      <h1 className="text-2xl font-bold">Welcome to Dashboard</h1>
-      <p className="text-muted-foreground">
-        This is your home page.
-      </p>
+      <PageHeader
+        title="Dashboard"
+        description="Welcome to your Travscale dashboard."
+        breadcrumbs={[{ label: "Dashboard" }]}
+      />
     </SidebarLayout>
-  )
+  );
 }
-
-
