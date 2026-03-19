@@ -17,7 +17,7 @@ function RouteComponent() {
       <PageHeader
         title="Dashboard"
         description="Welcome to your Travscale dashboard."
-        breadcrumbs={[{ label: "Dashboard" }]}
+        breadcrumbs={[{ label: "Dashboard", href: "/"},]}
       />
     </SidebarLayout>
   );
