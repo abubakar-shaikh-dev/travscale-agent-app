@@ -1,4 +1,4 @@
-# Travscale Agent App — Copilot Instructions
+# Travscale Agent App — AI Agent Instructions
 
 ## Project Overview
 
@@ -8,16 +8,29 @@ suppliers, packages, and documents. The backend is at `api.travscale.com`.
 
 ## Tech Stack
 
-- Vite + React (TypeScript / TSX)
-- TanStack Router (file-based routing)
-- TanStack Query with Axios
-- Tailwind CSS
-- Shadcn/ui (components in `src/components/ui/` — never edit these files)
+- **Build Tool**: Vite + React 19 (TypeScript / TSX)
+- **Router**: TanStack Router (file-based routing with auto code-splitting)
+- **Data Fetching**: TanStack Query + Axios
+- **Styling**: Tailwind CSS v4
+- **UI Components**: Shadcn/ui (components in `src/components/ui/` — never edit these files)
 
-## Package Manager
+## Package Manager & Commands
 
-- Always use `pnpm` for dependency and script commands.
-- Do not use `npm` or `yarn` commands in this repository.
+**ALWAYS use `pnpm`** — never use `npm` or `yarn`.
+
+### Development Commands
+```bash
+pnpm dev              # Start dev server (default port 5173)
+pnpm build            # Type-check with tsc and build for production
+pnpm preview          # Preview production build locally
+pnpm lint             # Run ESLint on all TypeScript files
+```
+
+### Testing
+⚠️ **No test suite currently configured.** When tests are added:
+- Recommended: Vitest for unit tests, Playwright/Cypress for E2E
+- Run single test file: `pnpm test <file-pattern>`
+- Run specific test: `pnpm test -t "test name pattern"`
 
 ## Architecture: Feature-Sliced Design (adapted)
 
@@ -34,10 +47,10 @@ src/
 
 ### Import Rules (enforce strictly)
 
-- `routes/` can import from `features/`, `components/`, `hooks/`
-- `features/X/` can import from `components/shared/`, `lib/`, `hooks/`
+- `routes/` can import from `features/`, `components/`, `hooks/`, `lib/`
+- `features/X/` can import from `components/`, `lib/`, `hooks/`
 - `features/X/` CANNOT import from another feature (e.g. `features/orders/` cannot import from `features/customers/`)
-- `components/ui/` is Shadcn territory — extend via `components/shared/`, never edit directly
+- `components/ui/` is Shadcn territory — extend via wrapper components, never edit directly
 
 ### Import Organization (required)
 
@@ -113,6 +126,7 @@ features/customers/
 - Use `interface` for object shapes, `type` for unions and utility types
 - Axios calls typed with generics: `axios.get<ApiResponse<Customer[]>>('/customers')`
 - TanStack Query hooks return properly typed data — infer from query functions, don't cast
+- Props interfaces: `interface [ComponentName]Props { ... }`
 
 ## Code Style
 
@@ -124,12 +138,20 @@ features/customers/
 - No business logic in route files — delegate to feature queries and components
 - Keep route files under 50 lines where possible
 
+## Error Handling
+
+- Let TanStack Query handle query errors automatically via error boundaries
+- Use `onError` callback in mutations to display user feedback (toast notifications)
+- 401 responses auto-redirect to login (handled in `lib/axios.ts` interceptor)
+- Never silently catch errors — always provide user feedback or log for debugging
+- Type error responses: `{ error: { code: string; message: string } }`
+
 ## Shadcn/ui Usage
 
 - All Shadcn components live in `src/components/ui/` — installed via CLI, never manually edited
 - Import directly: `import { Button } from '@/components/ui/button'`
 - Use `cn()` from `lib/utils.ts` for all conditional class merging — never string concatenation
-- To extend a Shadcn component, wrap it in `components/shared/`, don't modify the source
+- To extend a Shadcn component, wrap it in `components/`, don't modify the source
   - Example: a `StatusBadge.tsx` that wraps `<Badge>` with Travscale-specific variants
 - Custom variants go on the wrapper component using `cva()` from `class-variance-authority`
 - Never override Shadcn styles with inline styles — use Tailwind classes via `cn()`
