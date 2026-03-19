@@ -10,8 +10,8 @@ export default function NotFound() {
         <p className="text-muted-foreground">
           Sorry, we couldn't find the page you're looking for.
         </p>
-        <Button asChild className="mt-4">
-          <Link to="/">Go back home</Link>
+        <Button render={<Link to="/" />} className="mt-4">
+          Go back home
         </Button>
       </div>
     </div>

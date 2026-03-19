@@ -42,8 +42,8 @@ export default function PageHeader({
                     <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
                   ) : (
                     <>
-                      <BreadcrumbLink asChild>
-                        <Link to={crumb.href ?? "#"}>{crumb.label}</Link>
+                      <BreadcrumbLink render={<Link to={crumb.href ?? "#"} />}>
+                        {crumb.label}
                       </BreadcrumbLink>
                       <BreadcrumbSeparator />
                     </>

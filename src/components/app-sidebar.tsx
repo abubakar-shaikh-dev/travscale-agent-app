@@ -209,10 +209,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
-              asChild
-              className="group-data-[collapsible=icon]:!p-0 hover:bg-transparent active:bg-transparent"
+              render={<a href="/" />}
+              className="group-data-[collapsible=icon]:p-0! hover:bg-transparent active:bg-transparent"
             >
-              <a href="/">
                 {state === "expanded" ? (
                   <Logo variant="full" className="h-6.5 w-auto" />
                 ) : (
@@ -220,7 +219,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <Logo variant="icon" className="size-6.5" />
                   </div>
                 )}
-              </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarSearch />
@@ -231,11 +229,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Dashboard">
-                <a href="/">
+              <SidebarMenuButton render={<a href="/" />} tooltip="Dashboard">
                   <LayoutDashboard />
                   <span>Dashboard</span>
-                </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
