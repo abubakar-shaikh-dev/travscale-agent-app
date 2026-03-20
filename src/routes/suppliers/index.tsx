@@ -21,10 +21,7 @@ import {
 
 // Feature Components
 import PageHeader from "@/components/shared/PageHeader";
-import {
-  DataTable,
-  type DataTableColumn,
-} from "@/components/shared/DataTable";
+import { DataTable, type DataTableColumn } from "@/components/shared/DataTable";
 
 // Types
 import type { Supplier, ServiceType } from "@/features/suppliers/types";
@@ -111,9 +108,15 @@ function SuppliersPage() {
   const total = mockSuppliers.length;
 
   const renderServiceTypes = (serviceTypes: ServiceType[]) => {
-    const serviceConfig: Record<ServiceType, { label: string; icon: React.ReactNode }> = {
+    const serviceConfig: Record<
+      ServiceType,
+      { label: string; icon: React.ReactNode }
+    > = {
       visa: { label: "Visa", icon: <ShieldIcon className="size-3" /> },
-      passport: { label: "Passport", icon: <FileTextIcon className="size-3" /> },
+      passport: {
+        label: "Passport",
+        icon: <FileTextIcon className="size-3" />,
+      },
       hotels: { label: "Hotels", icon: <HotelIcon className="size-3" /> },
       bus: { label: "Bus", icon: <BusIcon className="size-3" /> },
       flight: { label: "Flight", icon: <PlaneIcon className="size-3" /> },
@@ -125,14 +128,14 @@ function SuppliersPage() {
           const service = serviceConfig[type];
 
           return (
-          <Badge
-            key={type}
-            variant="secondary"
-            className="text-xs flex items-center gap-1"
-          >
-            {service.icon}
-            {service.label}
-          </Badge>
+            <Badge
+              key={type}
+              variant="secondary"
+              className="text-xs flex items-center gap-1"
+            >
+              {service.icon}
+              {service.label}
+            </Badge>
           );
         })}
       </div>
@@ -152,7 +155,7 @@ function SuppliersPage() {
       sortable: true,
     },
     {
-      key: "contactPersonName", 
+      key: "contactPersonName",
       title: "Contact Person",
       width: 160,
     },
@@ -162,10 +165,6 @@ function SuppliersPage() {
       width: 140,
     },
     {
-      key: "contactPersonEmail",
-      title: "Email",
-    },
-    {
       key: "serviceTypes",
       title: "Services",
       width: 160,
@@ -173,7 +172,7 @@ function SuppliersPage() {
     },
     {
       key: "actions",
-      title: "Actions", 
+      title: "Actions",
       width: 120,
       align: "center",
       render: () => (
@@ -194,10 +193,7 @@ function SuppliersPage() {
 
   return (
     <SidebarLayout
-      breadcrumbs={[
-        { label: "Dashboard", href: "/" },
-        { label: "Suppliers" },
-      ]}
+      breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Suppliers" }]}
     >
       <PageHeader
         title="Suppliers"
