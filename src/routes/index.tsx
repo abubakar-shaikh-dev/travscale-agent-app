@@ -13,11 +13,10 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   return (
-    <SidebarLayout>
+    <SidebarLayout breadcrumbs={[{ label: "Dashboard" }]}>
       <PageHeader
         title="Dashboard"
         description="Welcome to your Travscale dashboard."
-        breadcrumbs={[{ label: "Dashboard", href: "/"},]}
       />
     </SidebarLayout>
   );
