@@ -40,6 +40,14 @@ export default function PhoneField({
     <div className={cn("space-y-2", className)}>
       <Label htmlFor={inputId}>{label}</Label>
       <PhoneInput
+        inputStyle={{
+          width: "100%",
+          borderRadius: "9px",
+        }}
+        buttonStyle={{
+          borderTopLeftRadius: "9px",
+          borderBottomLeftRadius: "9px",
+        }}
         inputProps={{
           id: inputId,
           name: field.name,
@@ -58,7 +66,7 @@ export default function PhoneField({
         preferredCountries={["in", "us", "gb", "ae", "sa"]}
         containerClass={cn(
           "phone-input-container",
-          hasError && "phone-input-error"
+          hasError && "phone-input-error",
         )}
         inputClass="phone-input-field"
         buttonClass="phone-input-button"
@@ -67,7 +75,9 @@ export default function PhoneField({
       />
       {hasError && (
         <p className="text-sm text-destructive" role="alert">
-          {errors.map((e) => (e as { message?: string }).message ?? e).join(", ")}
+          {errors
+            .map((e) => (e as { message?: string }).message ?? e)
+            .join(", ")}
         </p>
       )}
     </div>
