@@ -71,7 +71,7 @@ const data = {
         },
         {
           title: "Add Supplier",
-          url: "/suppliers/new",
+          url: "/suppliers/create",
         },
       ],
     },

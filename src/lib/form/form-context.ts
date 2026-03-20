@@ -11,6 +11,7 @@ const InputField = lazy(() => import("./field-components/InputField"));
 const SelectField = lazy(() => import("./field-components/SelectField"));
 const PhoneField = lazy(() => import("./field-components/PhoneField"));
 const RadioCardField = lazy(() => import("./field-components/RadioCardField"));
+const CheckboxGroupField = lazy(() => import("./field-components/CheckboxGroupField"));
 
 // Step 3: Lazy-load form components
 const SubmitButton = lazy(() => import("./form-components/SubmitButton"));
@@ -24,6 +25,7 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     SelectField,
     PhoneField,
     RadioCardField,
+    CheckboxGroupField,
   },
   formComponents: {
     SubmitButton,
