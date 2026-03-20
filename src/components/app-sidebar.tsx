@@ -4,7 +4,7 @@
 import * as React from "react";
 
 // Router
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 
 // Icons
 import {
@@ -56,7 +56,7 @@ const data = {
         },
         {
           title: "Add Customer",
-          url: "/customers/new",
+          url: "/customers/create",
         },
       ],
     },
@@ -209,6 +209,10 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
+  const router = useRouter();
+  const currentPath = router.state.location.pathname;
+  const isDashboardActive = currentPath === "/";
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -236,7 +240,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton render={<Link to="/" />} tooltip="Dashboard">
+              <SidebarMenuButton
+                render={<Link to="/" />}
+                tooltip="Dashboard"
+                isActive={isDashboardActive}
+              >
                 <LayoutDashboard />
                 <span>Dashboard</span>
               </SidebarMenuButton>
