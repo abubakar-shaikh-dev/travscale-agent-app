@@ -1,8 +1,11 @@
+export type Gender = "male" | "female";
+
 export interface Customer {
   id: string;
   name: string;
   email: string;
   phone: string;
+  gender: Gender;
   createdAt: string;
   updatedAt: string;
 }
@@ -25,10 +28,12 @@ export interface CreateCustomerPayload {
   name: string;
   email: string;
   phone: string;
+  gender: Gender;
 }
 
 export interface UpdateCustomerPayload {
   name?: string;
   email?: string;
   phone?: string;
+  gender?: Gender;
 }
