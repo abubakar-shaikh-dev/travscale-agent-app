@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 // Router
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 // UI Components
 import { Button } from "@/components/ui/button";
@@ -177,7 +177,7 @@ function CustomersPage() {
           <Button
             variant="ghost"
             size="icon-sm"
-            render={<a href={`/customers/${record.id}/edit`} />}
+            render={<Link to="/customers/$customerId/edit" params={{ customerId: record.id }} />}
             aria-label={`Edit ${record.name}`}
           >
             <PencilIcon />
@@ -212,7 +212,7 @@ function CustomersPage() {
         title="Customers"
         description="Manage your customer database"
         actions={
-          <Button render={<a href="/customers/create" />}>
+          <Button render={<Link to="/customers/create" />}>
             <PlusIcon />
             Create Customer
           </Button>

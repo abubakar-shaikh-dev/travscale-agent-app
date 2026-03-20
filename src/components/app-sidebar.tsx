@@ -1,19 +1,26 @@
 "use client";
 
+// React
 import * as React from "react";
+
+// Router
+import { Link } from "@tanstack/react-router";
+
+// Icons
 import {
   Bell,
-  LayoutDashboard,
-  Users,
   CalendarCheck,
-  Stamp,
-  Settings,
-  Package,
-  FileText,
-  Truck,
   CreditCard,
+  FileText,
+  LayoutDashboard,
+  Package,
+  Settings,
+  Stamp,
+  Truck,
+  Users,
 } from "lucide-react";
 
+// UI Components
 import { Logo } from "@/components/logo";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -22,12 +29,12 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
   SidebarGroup,
+  SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
 
@@ -209,16 +216,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
-              render={<a href="/" />}
+              render={<Link to="/" />}
               className="group-data-[collapsible=icon]:p-0! hover:bg-transparent active:bg-transparent"
             >
-                {state === "expanded" ? (
-                  <Logo variant="full" className="h-6.5 w-auto" />
-                ) : (
-                  <div className="flex w-full justify-center">
-                    <Logo variant="icon" className="size-6.5" />
-                  </div>
-                )}
+              {state === "expanded" ? (
+                <Logo variant="full" className="h-6.5 w-auto" />
+              ) : (
+                <div className="flex w-full justify-center">
+                  <Logo variant="icon" className="size-6.5" />
+                </div>
+              )}
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarSearch />
@@ -229,9 +236,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton render={<a href="/" />} tooltip="Dashboard">
-                  <LayoutDashboard />
-                  <span>Dashboard</span>
+              <SidebarMenuButton render={<Link to="/" />} tooltip="Dashboard">
+                <LayoutDashboard />
+                <span>Dashboard</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
