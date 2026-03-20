@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import SidebarLayout from "@/components/sidebar-layout";
 
 // Icons
-import { PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { PencilIcon, PlusIcon } from "lucide-react";
 
 // Feature Components
 import PageHeader from "@/components/shared/PageHeader";
@@ -17,9 +17,7 @@ import {
   DataTable,
   type DataTableColumn,
 } from "@/components/shared/DataTable";
-
-// Hooks
-import { useDeleteCustomer } from "@/features/customers/queries";
+import { DeleteCustomerButton } from "@/features/customers/components/DeleteCustomerButton";
 
 // Types
 import type { Customer } from "@/features/customers/types";
@@ -150,14 +148,6 @@ function CustomersPage() {
   const customers = mockCustomers;
   const total = mockCustomers.length;
 
-  const deleteCustomer = useDeleteCustomer();
-
-  const handleDelete = (customer: Customer) => {
-    if (confirm(`Are you sure you want to delete ${customer.name}?`)) {
-      deleteCustomer.mutate(customer.id);
-    }
-  };
-
   const columns: DataTableColumn<Customer & { sno: number }>[] = [
     {
       key: "sno",
@@ -189,19 +179,17 @@ function CustomersPage() {
           <Button
             variant="ghost"
             size="icon-sm"
-            render={<Link to="/customers/$customerId/edit" params={{ customerId: record.id }} />}
+            render={
+              <Link
+                to="/customers/$customerId/edit"
+                params={{ customerId: record.id }}
+              />
+            }
             aria-label={`Edit ${record.name}`}
           >
             <PencilIcon />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            onClick={() => handleDelete(record)}
-            aria-label={`Delete ${record.name}`}
-          >
-            <TrashIcon className="text-destructive" />
-          </Button>
+          <DeleteCustomerButton customer={record} />
         </div>
       ),
     },
