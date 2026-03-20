@@ -106,13 +106,6 @@ export function CustomerForm({ customer, onSuccess }: CustomerFormProps) {
         <Suspense fallback={<FormSkeleton />}>
           {/* Contact Information Section */}
           <section className="space-y-6">
-            <div className="space-y-1">
-              <h2 className="text-lg font-semibold">Contact Information</h2>
-              <p className="text-sm text-muted-foreground">
-                Basic details used for communication and identification.
-              </p>
-            </div>
-
             <div className="grid gap-6 sm:grid-cols-2">
               <form.AppField
                 name="name"
@@ -177,7 +170,10 @@ export function CustomerForm({ customer, onSuccess }: CustomerFormProps) {
                 }}
               >
                 {(field) => (
-                  <field.RadioCardField label="Gender" options={GENDER_OPTIONS} />
+                  <field.RadioCardField
+                    label="Gender"
+                    options={GENDER_OPTIONS}
+                  />
                 )}
               </form.AppField>
             </div>
