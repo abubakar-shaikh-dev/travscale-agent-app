@@ -1,6 +1,9 @@
 // React
 import { Suspense } from "react";
 
+// Utils
+import { Country } from "country-state-city";
+
 // Router
 import { useNavigate } from "@tanstack/react-router";
 
@@ -21,6 +24,13 @@ interface PassengerFormProps {
   passenger?: Passenger;
   onSuccess?: () => void;
 }
+
+const NATIONALITY_OPTIONS = Country.getAllCountries()
+  .map((country) => ({
+    label: country.name,
+    value: country.name,
+  }))
+  .sort((a, b) => a.label.localeCompare(b.label));
 
 export function PassengerForm({ passenger, onSuccess }: PassengerFormProps) {
   const navigate = useNavigate();
@@ -142,19 +152,17 @@ export function PassengerForm({ passenger, onSuccess }: PassengerFormProps) {
                 name="nationality"
                 validators={{
                   onBlur: ({ value }) => {
-                    if (!value?.trim()) return "Nationality is required";
-                    if (value.trim().length < 2) {
-                      return "Nationality must be at least 2 characters";
-                    }
+                    if (!value) return "Nationality is required";
 
                     return undefined;
                   },
                 }}
               >
                 {(field) => (
-                  <field.InputField
+                  <field.SelectField
                     label="Nationality"
-                    placeholder="e.g. Indian"
+                    options={NATIONALITY_OPTIONS}
+                    placeholder="Select nationality"
                     required
                   />
                 )}
