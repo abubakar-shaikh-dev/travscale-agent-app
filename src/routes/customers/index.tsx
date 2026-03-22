@@ -153,26 +153,33 @@ function CustomersPage() {
       key: "sno",
       title: "S.No",
       width: 70,
+      minWidth: 56,
       align: "center",
     },
     {
       key: "name",
       title: "Name",
       sortable: true,
+      minWidth: 140,
+      ellipsis: true,
     },
     {
       key: "phone",
       title: "Phone Number",
       width: 160,
+      minWidth: 140,
     },
     {
       key: "email",
       title: "Email",
+      minWidth: 160,
+      ellipsis: true,
     },
     {
       key: "actions",
       title: "Actions",
       width: 120,
+      minWidth: 100,
       align: "center",
       render: (_, record) => (
         <div className="flex items-center justify-center gap-1">

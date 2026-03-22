@@ -22,6 +22,7 @@ declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData, TValue> {
     align?: "left" | "center" | "right";
+    ellipsis?: boolean;
   }
 }
 
@@ -74,10 +75,14 @@ export interface DataTableColumn<TData> {
   title: ReactNode;
   /** Column width in pixels */
   width?: number;
+  /** Minimum column width in pixels (used for horizontal scroll on small screens) */
+  minWidth?: number;
   /** Enable sorting for this column */
   sortable?: boolean;
   /** Text alignment */
   align?: "left" | "center" | "right";
+  /** Whether cell text should truncate with ellipsis (defaults to false) */
+  ellipsis?: boolean;
   /** Custom render function for cell content */
   render?: (value: unknown, record: TData, index: number) => ReactNode;
 }
@@ -271,6 +276,7 @@ export function DataTable<TData extends Record<string, unknown>>({
       cols.push({
         id: "__select",
         size: 40,
+        minSize: 40,
         enableSorting: false,
         header: ({ table }) => {
           const isAllSelected = table.getIsAllPageRowsSelected();
@@ -302,6 +308,7 @@ export function DataTable<TData extends Record<string, unknown>>({
         id: String(col.key),
         accessorKey: col.key as string,
         size: col.width,
+        minSize: col.minWidth,
         enableSorting: col.sortable ?? false,
         header: () => col.title,
         cell: ({ getValue, row }) => {
@@ -309,10 +316,18 @@ export function DataTable<TData extends Record<string, unknown>>({
           if (col.render) {
             return col.render(value, row.original, row.index);
           }
+          if (col.ellipsis) {
+            return (
+              <span className="block truncate" title={String(value ?? "")}>
+                {value as ReactNode}
+              </span>
+            );
+          }
           return value as ReactNode;
         },
         meta: {
           align: col.align,
+          ellipsis: col.ellipsis,
         },
       });
     });
@@ -386,24 +401,39 @@ export function DataTable<TData extends Record<string, unknown>>({
   const showPagination = pagination !== false && totalRows > 0;
   const visibleColumns = tanstackColumns.length;
 
+  // Compute a minimum table width from column definitions so the table
+  // scrolls horizontally on narrow screens instead of overlapping.
+  const tableMinWidth = useMemo(() => {
+    const total = columns.reduce((sum, col) => {
+      return sum + (col.minWidth ?? col.width ?? 120);
+    }, rowSelection ? 40 : 0);
+    return `${total}px`;
+  }, [columns, rowSelection]);
+
   return (
     <Frame className={cn("w-full", className)}>
-      <Table className="table-fixed">
+      <Table className="table-auto" style={{ minWidth: tableMinWidth }}>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow className="hover:bg-transparent" key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
-                const columnSize = header.column.getSize();
-                const align = header.column.columnDef.meta?.align as
+                const colDef = header.column.columnDef;
+                const colWidth = colDef.size;
+                const colMinWidth = colDef.minSize;
+                const align = colDef.meta?.align as
                   | "left"
                   | "center"
                   | "right"
                   | undefined;
 
+                const headerStyle: React.CSSProperties = {};
+                if (colWidth) headerStyle.width = `${colWidth}px`;
+                if (colMinWidth) headerStyle.minWidth = `${colMinWidth}px`;
+
                 return (
                   <TableHead
                     key={header.id}
-                    style={columnSize ? { width: `${columnSize}px` } : undefined}
+                    style={Object.keys(headerStyle).length > 0 ? headerStyle : undefined}
                     className={cn(
                       align === "center" && "text-center",
                       align === "right" && "text-right"
@@ -454,18 +484,21 @@ export function DataTable<TData extends Record<string, unknown>>({
                 onClick={() => onRowClick?.(row.original, row.index)}
               >
                 {row.getVisibleCells().map((cell) => {
-                  const align = cell.column.columnDef.meta?.align as
+                  const cellMeta = cell.column.columnDef.meta;
+                  const align = cellMeta?.align as
                     | "left"
                     | "center"
                     | "right"
                     | undefined;
+                  const isEllipsis = cellMeta?.ellipsis;
 
                   return (
                     <TableCell
                       key={cell.id}
                       className={cn(
                         align === "center" && "text-center",
-                        align === "right" && "text-right"
+                        align === "right" && "text-right",
+                        isEllipsis && "max-w-0"
                       )}
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -486,7 +519,7 @@ export function DataTable<TData extends Record<string, unknown>>({
 
       {showPagination && (
         <FrameFooter className="p-2">
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-between">
             {/* Results range selector */}
             <div className="flex items-center gap-2 whitespace-nowrap">
               <p className="text-sm text-muted-foreground">Viewing</p>

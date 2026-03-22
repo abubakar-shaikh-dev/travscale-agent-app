@@ -147,33 +147,41 @@ function SuppliersPage() {
       key: "sno",
       title: "S.No",
       width: 70,
+      minWidth: 56,
       align: "center",
     },
     {
       key: "name",
       title: "Supplier Name",
       sortable: true,
+      minWidth: 160,
+      ellipsis: true,
     },
     {
       key: "contactPersonName",
       title: "Contact Person",
       width: 160,
+      minWidth: 130,
+      ellipsis: true,
     },
     {
       key: "contactPersonPhone",
       title: "Phone",
       width: 140,
+      minWidth: 120,
     },
     {
       key: "serviceTypes",
       title: "Services",
       width: 160,
+      minWidth: 140,
       render: (_, record) => renderServiceTypes(record.serviceTypes),
     },
     {
       key: "actions",
       title: "Actions",
       width: 120,
+      minWidth: 100,
       align: "center",
       render: () => (
         <div className="flex items-center justify-center gap-1">
