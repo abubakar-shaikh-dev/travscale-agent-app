@@ -11,12 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SuppliersIndexRouteImport } from './routes/suppliers/index'
+import { Route as PassengersIndexRouteImport } from './routes/passengers/index'
 import { Route as CustomersIndexRouteImport } from './routes/customers/index'
 import { Route as SuppliersCreateRouteImport } from './routes/suppliers/create'
+import { Route as PassengersCreateRouteImport } from './routes/passengers/create'
 import { Route as CustomersCreateRouteImport } from './routes/customers/create'
 import { Route as AuthRegisterIndexRouteImport } from './routes/auth/register/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as SuppliersSupplierIdEditRouteImport } from './routes/suppliers/$supplierId/edit'
+import { Route as PassengersPassengerIdEditRouteImport } from './routes/passengers/$passengerId/edit'
 import { Route as CustomersCustomerIdEditRouteImport } from './routes/customers/$customerId/edit'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +32,11 @@ const SuppliersIndexRoute = SuppliersIndexRouteImport.update({
   path: '/suppliers/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PassengersIndexRoute = PassengersIndexRouteImport.update({
+  id: '/passengers/',
+  path: '/passengers/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CustomersIndexRoute = CustomersIndexRouteImport.update({
   id: '/customers/',
   path: '/customers/',
@@ -37,6 +45,11 @@ const CustomersIndexRoute = CustomersIndexRouteImport.update({
 const SuppliersCreateRoute = SuppliersCreateRouteImport.update({
   id: '/suppliers/create',
   path: '/suppliers/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PassengersCreateRoute = PassengersCreateRouteImport.update({
+  id: '/passengers/create',
+  path: '/passengers/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CustomersCreateRoute = CustomersCreateRouteImport.update({
@@ -59,6 +72,12 @@ const SuppliersSupplierIdEditRoute = SuppliersSupplierIdEditRouteImport.update({
   path: '/suppliers/$supplierId/edit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PassengersPassengerIdEditRoute =
+  PassengersPassengerIdEditRouteImport.update({
+    id: '/passengers/$passengerId/edit',
+    path: '/passengers/$passengerId/edit',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CustomersCustomerIdEditRoute = CustomersCustomerIdEditRouteImport.update({
   id: '/customers/$customerId/edit',
   path: '/customers/$customerId/edit',
@@ -68,10 +87,13 @@ const CustomersCustomerIdEditRoute = CustomersCustomerIdEditRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/customers/create': typeof CustomersCreateRoute
+  '/passengers/create': typeof PassengersCreateRoute
   '/suppliers/create': typeof SuppliersCreateRoute
   '/customers/': typeof CustomersIndexRoute
+  '/passengers/': typeof PassengersIndexRoute
   '/suppliers/': typeof SuppliersIndexRoute
   '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
+  '/passengers/$passengerId/edit': typeof PassengersPassengerIdEditRoute
   '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
@@ -79,10 +101,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/customers/create': typeof CustomersCreateRoute
+  '/passengers/create': typeof PassengersCreateRoute
   '/suppliers/create': typeof SuppliersCreateRoute
   '/customers': typeof CustomersIndexRoute
+  '/passengers': typeof PassengersIndexRoute
   '/suppliers': typeof SuppliersIndexRoute
   '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
+  '/passengers/$passengerId/edit': typeof PassengersPassengerIdEditRoute
   '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/auth/register': typeof AuthRegisterIndexRoute
@@ -91,10 +116,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/customers/create': typeof CustomersCreateRoute
+  '/passengers/create': typeof PassengersCreateRoute
   '/suppliers/create': typeof SuppliersCreateRoute
   '/customers/': typeof CustomersIndexRoute
+  '/passengers/': typeof PassengersIndexRoute
   '/suppliers/': typeof SuppliersIndexRoute
   '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
+  '/passengers/$passengerId/edit': typeof PassengersPassengerIdEditRoute
   '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
@@ -104,10 +132,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/customers/create'
+    | '/passengers/create'
     | '/suppliers/create'
     | '/customers/'
+    | '/passengers/'
     | '/suppliers/'
     | '/customers/$customerId/edit'
+    | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
     | '/auth/login/'
     | '/auth/register/'
@@ -115,10 +146,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/customers/create'
+    | '/passengers/create'
     | '/suppliers/create'
     | '/customers'
+    | '/passengers'
     | '/suppliers'
     | '/customers/$customerId/edit'
+    | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
     | '/auth/login'
     | '/auth/register'
@@ -126,10 +160,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/customers/create'
+    | '/passengers/create'
     | '/suppliers/create'
     | '/customers/'
+    | '/passengers/'
     | '/suppliers/'
     | '/customers/$customerId/edit'
+    | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
     | '/auth/login/'
     | '/auth/register/'
@@ -138,10 +175,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CustomersCreateRoute: typeof CustomersCreateRoute
+  PassengersCreateRoute: typeof PassengersCreateRoute
   SuppliersCreateRoute: typeof SuppliersCreateRoute
   CustomersIndexRoute: typeof CustomersIndexRoute
+  PassengersIndexRoute: typeof PassengersIndexRoute
   SuppliersIndexRoute: typeof SuppliersIndexRoute
   CustomersCustomerIdEditRoute: typeof CustomersCustomerIdEditRoute
+  PassengersPassengerIdEditRoute: typeof PassengersPassengerIdEditRoute
   SuppliersSupplierIdEditRoute: typeof SuppliersSupplierIdEditRoute
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
   AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
@@ -163,6 +203,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SuppliersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/passengers/': {
+      id: '/passengers/'
+      path: '/passengers'
+      fullPath: '/passengers/'
+      preLoaderRoute: typeof PassengersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/customers/': {
       id: '/customers/'
       path: '/customers'
@@ -175,6 +222,13 @@ declare module '@tanstack/react-router' {
       path: '/suppliers/create'
       fullPath: '/suppliers/create'
       preLoaderRoute: typeof SuppliersCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passengers/create': {
+      id: '/passengers/create'
+      path: '/passengers/create'
+      fullPath: '/passengers/create'
+      preLoaderRoute: typeof PassengersCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/customers/create': {
@@ -205,6 +259,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SuppliersSupplierIdEditRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/passengers/$passengerId/edit': {
+      id: '/passengers/$passengerId/edit'
+      path: '/passengers/$passengerId/edit'
+      fullPath: '/passengers/$passengerId/edit'
+      preLoaderRoute: typeof PassengersPassengerIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/customers/$customerId/edit': {
       id: '/customers/$customerId/edit'
       path: '/customers/$customerId/edit'
@@ -218,10 +279,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CustomersCreateRoute: CustomersCreateRoute,
+  PassengersCreateRoute: PassengersCreateRoute,
   SuppliersCreateRoute: SuppliersCreateRoute,
   CustomersIndexRoute: CustomersIndexRoute,
+  PassengersIndexRoute: PassengersIndexRoute,
   SuppliersIndexRoute: SuppliersIndexRoute,
   CustomersCustomerIdEditRoute: CustomersCustomerIdEditRoute,
+  PassengersPassengerIdEditRoute: PassengersPassengerIdEditRoute,
   SuppliersSupplierIdEditRoute: SuppliersSupplierIdEditRoute,
   AuthLoginIndexRoute: AuthLoginIndexRoute,
   AuthRegisterIndexRoute: AuthRegisterIndexRoute,

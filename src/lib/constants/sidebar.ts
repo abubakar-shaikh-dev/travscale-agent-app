@@ -6,6 +6,7 @@ import {
   FileText,
   LayoutDashboard,
   Package,
+  PlaneTakeoff,
   Settings,
   Stamp,
   Truck,
@@ -84,6 +85,21 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
       {
         title: "Add Supplier",
         url: "/suppliers/create",
+      },
+    ],
+  },
+  {
+    title: "Passengers",
+    url: "#",
+    icon: PlaneTakeoff,
+    items: [
+      {
+        title: "All Passengers",
+        url: "/passengers",
+      },
+      {
+        title: "Add Passenger",
+        url: "/passengers/create",
       },
     ],
   },

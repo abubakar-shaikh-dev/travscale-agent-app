@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 interface InputFieldProps {
   label: string;
   placeholder?: string;
-  type?: "text" | "email" | "tel" | "url" | "password";
+  type?: "text" | "email" | "tel" | "url" | "password" | "date";
   disabled?: boolean;
   className?: string;
   required?: boolean;
@@ -50,7 +50,9 @@ export default function InputField({
       />
       {hasError && (
         <p className="text-sm text-destructive" role="alert">
-          {errors.map((e) => (e as { message?: string }).message ?? e).join(", ")}
+          {errors
+            .map((e) => (e as { message?: string }).message ?? e)
+            .join(", ")}
         </p>
       )}
     </div>
