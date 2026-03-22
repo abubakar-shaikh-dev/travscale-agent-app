@@ -35,10 +35,82 @@ export const Route = createFileRoute("/suppliers/")({
   component: SuppliersPage,
 });
 
+// Mock data for demonstration (shown when API has no data yet)
+const mockSuppliers: Supplier[] = [
+  {
+    id: "1",
+    name: "Al-Rashid Travel Services",
+    contactPersonName: "Ahmed Al-Rashid",
+    contactPersonPhone: "+971 4 123 4567",
+    whatsappNumber: "+971 50 123 4567",
+    contactPersonEmail: "ahmed@alrashidtravel.com",
+    website: "https://www.alrashidtravel.com",
+    address: "Suite 201, Business Bay Tower, Dubai, UAE",
+    serviceTypes: ["visa", "flight", "hotels"],
+    createdAt: "2024-01-15T10:30:00Z",
+    updatedAt: "2024-01-15T10:30:00Z",
+  },
+  {
+    id: "2",
+    name: "Gulf Visa Solutions",
+    contactPersonName: "Sarah Al-Mansoori",
+    contactPersonPhone: "+971 4 234 5678",
+    whatsappNumber: "+971 50 234 5678",
+    contactPersonEmail: "sarah@gulfvisasolutions.com",
+    address: "Office 105, Trade Center, Abu Dhabi, UAE",
+    serviceTypes: ["visa", "passport"],
+    createdAt: "2024-01-16T14:20:00Z",
+    updatedAt: "2024-01-16T14:20:00Z",
+  },
+  {
+    id: "3",
+    name: "Emirates Insurance Group",
+    contactPersonName: "Mohammed Hassan",
+    contactPersonPhone: "+971 4 345 6789",
+    whatsappNumber: "+971 50 345 6789",
+    contactPersonEmail: "mohammed@emiratesinsurance.ae",
+    website: "https://www.emiratesinsurance.ae",
+    address: "Ground Floor, Financial District, Dubai, UAE",
+    serviceTypes: ["flight", "bus"],
+    createdAt: "2024-01-17T09:15:00Z",
+    updatedAt: "2024-01-17T09:15:00Z",
+  },
+  {
+    id: "4",
+    name: "Quick Visa Express",
+    contactPersonName: "Fatima Al-Zahra",
+    contactPersonPhone: "+971 4 456 7890",
+    whatsappNumber: "+971 50 456 7890",
+    contactPersonEmail: "fatima@quickvisaexpress.com",
+    address: "Mezzanine Floor, City Center, Sharjah, UAE",
+    serviceTypes: ["visa", "passport", "bus"],
+    createdAt: "2024-01-18T16:45:00Z",
+    updatedAt: "2024-01-18T16:45:00Z",
+  },
+  {
+    id: "5",
+    name: "Secure Travel Insurance",
+    contactPersonName: "Khalid Al-Mahmoud",
+    contactPersonPhone: "+971 4 567 8901",
+    whatsappNumber: "+971 50 567 8901",
+    contactPersonEmail: "khalid@securetravel.ae",
+    website: "https://www.securetravel.ae",
+    address: "Level 3, Marina Walk, Dubai Marina, UAE",
+    serviceTypes: ["hotels", "flight"],
+    createdAt: "2024-01-19T11:00:00Z",
+    updatedAt: "2024-01-19T11:00:00Z",
+  },
+];
+
 function SuppliersPage() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
-  const { data: suppliers = [], isLoading } = useSuppliers();
+  const { data: suppliersFromApi, isLoading } = useSuppliers();
+  const suppliers =
+    suppliersFromApi && suppliersFromApi.length > 0
+      ? suppliersFromApi
+      : mockSuppliers;
+  const isUsingMockData = !suppliersFromApi || suppliersFromApi.length === 0;
   const total = suppliers.length;
   const pageStart = (page - 1) * pageSize;
   const paginatedSuppliers = suppliers.slice(pageStart, pageStart + pageSize);
@@ -159,7 +231,7 @@ function SuppliersPage() {
         dataSource={dataWithSno}
         columns={columns}
         rowKey="id"
-        loading={isLoading}
+        loading={isLoading && !isUsingMockData}
         pagination={{
           current: page,
           pageSize,
