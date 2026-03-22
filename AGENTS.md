@@ -138,6 +138,24 @@ features/customers/
 - No business logic in route files — delegate to feature queries and components
 - Keep route files under 50 lines where possible
 
+## Form UI/UX Standard (must stay consistent)
+
+Follow this exact form presentation pattern so all current and future forms feel identical.
+
+- **Form Engine**: use TanStack Form via `useAppForm` from `src/lib/form/form-context.ts`
+- **Field Primitives**: use registered field components (`InputField`, `PhoneField`, `SelectField`, `RadioCardField`, `CheckboxGroupField`) instead of hand-rolled inputs
+- **Page Shell**: route page should use `SidebarLayout` + breadcrumb + `PageHeader` + form card container (`rounded-lg border bg-card p-6 shadow-sm`)
+- **Form Rhythm**: form root should use `space-y-8`; sections use `space-y-6`; fields use `grid gap-6 sm:grid-cols-2`; wide fields span with `sm:col-span-2`
+- **Actions Layout**: sticky pattern at bottom of form body: `flex flex-col-reverse gap-3 border-t pt-6 sm:flex-row sm:justify-end` with `Cancel` (outline) + primary submit
+- **Validation UX**: prefer field-level `onBlur` validation with clear inline error text, with form `onSubmit` as safety net
+- **Edit UX**: edit pages must load existing data and show a layout-matched skeleton while loading
+- **Required Fields Rule**:
+  - mandatory fields MUST display a red asterisk (`*`) beside label
+  - optional fields MUST NOT show `(Optional)` text in labels
+  - if no red asterisk is shown, the field is considered optional
+  - use shared `FieldLabel`/`required` props to keep this DRY and consistent
+- **DRY Rule for Forms**: centralize repeated form UI behavior in shared primitives (for example shared label rendering, shared actions, shared skeleton patterns), do not duplicate label/error/action logic per form
+
 ## Error Handling
 
 - Let TanStack Query handle query errors automatically via error boundaries
