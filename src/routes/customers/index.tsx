@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import SidebarLayout from "@/components/sidebar-layout";
 
 // Icons
-import { PencilIcon, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 
 // Feature Components
 import PageHeader from "@/components/shared/PageHeader";
@@ -17,6 +17,7 @@ import {
   DataTable,
   type DataTableColumn,
 } from "@/components/shared/DataTable";
+import { RowActionButtons } from "@/components/shared/RowActionButtons";
 import { DeleteCustomerButton } from "@/features/customers/components/DeleteCustomerButton";
 
 // Types
@@ -182,22 +183,16 @@ function CustomersPage() {
       minWidth: 100,
       align: "center",
       render: (_, record) => (
-        <div className="flex items-center justify-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            render={
-              <Link
-                to="/customers/$customerId/edit"
-                params={{ customerId: record.id }}
-              />
-            }
-            aria-label={`Edit ${record.name}`}
-          >
-            <PencilIcon />
-          </Button>
-          <DeleteCustomerButton customer={record} />
-        </div>
+        <RowActionButtons
+          editRender={
+            <Link
+              to="/customers/$customerId/edit"
+              params={{ customerId: record.id }}
+            />
+          }
+          editLabel={`Edit ${record.name}`}
+          deleteAction={<DeleteCustomerButton customer={record} />}
+        />
       ),
     },
   ];

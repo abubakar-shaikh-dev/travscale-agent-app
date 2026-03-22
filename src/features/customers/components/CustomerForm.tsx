@@ -122,6 +122,7 @@ export function CustomerForm({ customer, onSuccess }: CustomerFormProps) {
                   <field.InputField
                     label="Full Name"
                     placeholder="e.g. Ahmed Al-Rashid"
+                    required
                   />
                 )}
               </form.AppField>
@@ -137,7 +138,7 @@ export function CustomerForm({ customer, onSuccess }: CustomerFormProps) {
                   },
                 }}
               >
-                {(field) => <field.PhoneField label="Phone Number" />}
+                {(field) => <field.PhoneField label="Phone Number" required />}
               </form.AppField>
 
               <form.AppField
@@ -156,6 +157,7 @@ export function CustomerForm({ customer, onSuccess }: CustomerFormProps) {
                     label="Email Address"
                     type="email"
                     placeholder="e.g. ahmed@example.com"
+                    required
                   />
                 )}
               </form.AppField>
@@ -173,6 +175,7 @@ export function CustomerForm({ customer, onSuccess }: CustomerFormProps) {
                   <field.RadioCardField
                     label="Gender"
                     options={GENDER_OPTIONS}
+                    required
                   />
                 )}
               </form.AppField>

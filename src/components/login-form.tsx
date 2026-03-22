@@ -6,6 +6,7 @@ import {
 	InputGroupAddon,
 	InputGroupInput,
 } from "@/components/ui/input-group";
+import { FieldLabel } from "@/lib/form/field-components/FieldLabel";
 import { AtSignIcon, EyeIcon, EyeOffIcon, LockIcon } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { Link } from "@tanstack/react-router";
@@ -32,12 +33,7 @@ export function LoginForm() {
 	return (
 		<form className="space-y-4" onSubmit={handleSubmit}>
 			<div className="space-y-2">
-				<label
-					htmlFor="email"
-					className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-				>
-					Email
-				</label>
+				<FieldLabel label="Email" htmlFor="email" required />
 				<InputGroup>
 					<InputGroupInput
 						id="email"
@@ -55,12 +51,7 @@ export function LoginForm() {
 
 			<div className="space-y-2">
 				<div className="flex items-center justify-between">
-					<label
-						htmlFor="password"
-						className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-					>
-						Password
-					</label>
+					<FieldLabel label="Password" htmlFor="password" required />
 					<Link
 						to="/auth/login"
 						className="text-sm text-muted-foreground underline-offset-4 hover:text-primary hover:underline"

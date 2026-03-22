@@ -1,6 +1,8 @@
 // UI Components
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
+// Form Components
+import { FieldLabel } from "./FieldLabel";
 
 // Form
 import { useFieldContext } from "@/lib/form/form-context";
@@ -14,6 +16,7 @@ interface InputFieldProps {
   type?: "text" | "email" | "tel" | "url" | "password";
   disabled?: boolean;
   className?: string;
+  required?: boolean;
 }
 
 export default function InputField({
@@ -22,6 +25,7 @@ export default function InputField({
   type = "text",
   disabled,
   className,
+  required = false,
 }: InputFieldProps) {
   const field = useFieldContext<string>();
 
@@ -30,7 +34,7 @@ export default function InputField({
 
   return (
     <div className={cn("space-y-2", className)}>
-      <Label htmlFor={field.name}>{label}</Label>
+      <FieldLabel label={label} htmlFor={field.name} required={required} />
       <Input
         id={field.name}
         name={field.name}

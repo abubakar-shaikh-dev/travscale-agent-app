@@ -16,6 +16,7 @@ import { Route as SuppliersCreateRouteImport } from './routes/suppliers/create'
 import { Route as CustomersCreateRouteImport } from './routes/customers/create'
 import { Route as AuthRegisterIndexRouteImport } from './routes/auth/register/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
+import { Route as SuppliersSupplierIdEditRouteImport } from './routes/suppliers/$supplierId/edit'
 import { Route as CustomersCustomerIdEditRouteImport } from './routes/customers/$customerId/edit'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   path: '/auth/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SuppliersSupplierIdEditRoute = SuppliersSupplierIdEditRouteImport.update({
+  id: '/suppliers/$supplierId/edit',
+  path: '/suppliers/$supplierId/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CustomersCustomerIdEditRoute = CustomersCustomerIdEditRouteImport.update({
   id: '/customers/$customerId/edit',
   path: '/customers/$customerId/edit',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/customers/': typeof CustomersIndexRoute
   '/suppliers/': typeof SuppliersIndexRoute
   '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
+  '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/customers': typeof CustomersIndexRoute
   '/suppliers': typeof SuppliersIndexRoute
   '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
+  '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/auth/register': typeof AuthRegisterIndexRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/customers/': typeof CustomersIndexRoute
   '/suppliers/': typeof SuppliersIndexRoute
   '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
+  '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/customers/'
     | '/suppliers/'
     | '/customers/$customerId/edit'
+    | '/suppliers/$supplierId/edit'
     | '/auth/login/'
     | '/auth/register/'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/customers'
     | '/suppliers'
     | '/customers/$customerId/edit'
+    | '/suppliers/$supplierId/edit'
     | '/auth/login'
     | '/auth/register'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/customers/'
     | '/suppliers/'
     | '/customers/$customerId/edit'
+    | '/suppliers/$supplierId/edit'
     | '/auth/login/'
     | '/auth/register/'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   CustomersIndexRoute: typeof CustomersIndexRoute
   SuppliersIndexRoute: typeof SuppliersIndexRoute
   CustomersCustomerIdEditRoute: typeof CustomersCustomerIdEditRoute
+  SuppliersSupplierIdEditRoute: typeof SuppliersSupplierIdEditRoute
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
   AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
 }
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/suppliers/$supplierId/edit': {
+      id: '/suppliers/$supplierId/edit'
+      path: '/suppliers/$supplierId/edit'
+      fullPath: '/suppliers/$supplierId/edit'
+      preLoaderRoute: typeof SuppliersSupplierIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/customers/$customerId/edit': {
       id: '/customers/$customerId/edit'
       path: '/customers/$customerId/edit'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   CustomersIndexRoute: CustomersIndexRoute,
   SuppliersIndexRoute: SuppliersIndexRoute,
   CustomersCustomerIdEditRoute: CustomersCustomerIdEditRoute,
+  SuppliersSupplierIdEditRoute: SuppliersSupplierIdEditRoute,
   AuthLoginIndexRoute: AuthLoginIndexRoute,
   AuthRegisterIndexRoute: AuthRegisterIndexRoute,
 }

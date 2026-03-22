@@ -2,7 +2,9 @@
 import { useId } from "react";
 
 // UI Components
-import { Label } from "@/components/ui/label";
+
+// Form Components
+import { FieldLabel } from "./FieldLabel";
 
 // Phone Input
 import PhoneInput from "react-phone-input-2";
@@ -21,6 +23,7 @@ interface PhoneFieldProps {
   className?: string;
   /** Default country code (ISO 3166-1 alpha-2). Defaults to India (in). */
   country?: string;
+  required?: boolean;
 }
 
 export default function PhoneField({
@@ -29,6 +32,7 @@ export default function PhoneField({
   disabled,
   className,
   country = "in",
+  required = false,
 }: PhoneFieldProps) {
   const field = useFieldContext<string>();
   const inputId = useId();
@@ -38,7 +42,7 @@ export default function PhoneField({
 
   return (
     <div className={cn("space-y-2", className)}>
-      <Label htmlFor={inputId}>{label}</Label>
+      <FieldLabel label={label} htmlFor={inputId} required={required} />
       <PhoneInput
         inputStyle={{
           width: "100%",

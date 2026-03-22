@@ -5,6 +5,9 @@ import { type ReactNode } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
+// Form Components
+import { FieldLabel } from "./FieldLabel";
+
 // Hooks
 import { useFieldContext } from "@/lib/form/form-context";
 
@@ -20,6 +23,7 @@ interface CheckboxGroupFieldProps {
   }[];
   description?: string;
   columns?: 1 | 2 | 3;
+  required?: boolean;
 }
 
 export default function CheckboxGroupField({
@@ -27,6 +31,7 @@ export default function CheckboxGroupField({
   options,
   description,
   columns = 1,
+  required = false,
 }: CheckboxGroupFieldProps) {
   const field = useFieldContext<string[]>();
 
@@ -50,7 +55,7 @@ export default function CheckboxGroupField({
   return (
     <div className="space-y-3">
       <div className="space-y-1">
-        <Label className="text-sm font-medium">{label}</Label>
+        <FieldLabel label={label} required={required} className="text-sm font-medium" />
         {description && (
           <p className="text-sm text-muted-foreground">{description}</p>
         )}

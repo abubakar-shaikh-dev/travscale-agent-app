@@ -2,7 +2,7 @@
 import { Link, useRouter } from "@tanstack/react-router";
 
 // Icons
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 // UI Components
 import {
@@ -21,28 +21,25 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 
-// Types
-interface NavSubItem {
-  title: string;
-  url: string;
-}
-
-interface NavItem {
-  title: string;
-  url: string;
-  icon?: LucideIcon;
-  items?: NavSubItem[];
-}
+// Constants
+import {
+  SIDEBAR_GROUP_LABEL,
+  type SidebarNavItem,
+  type SidebarNavSubItem,
+} from "@/lib/constants/sidebar";
 
 interface NavMainProps {
-  items: NavItem[];
+  items: SidebarNavItem[];
 }
 
 /**
  * Check if any sub-item in a nav group is active.
  * Uses prefix matching so that /customers/123/edit highlights the Customers group.
  */
-function isGroupActive(currentPath: string, items?: NavSubItem[]): boolean {
+function isGroupActive(
+  currentPath: string,
+  items?: SidebarNavSubItem[]
+): boolean {
   if (!items) return false;
 
   return items.some((subItem) => {
@@ -64,7 +61,7 @@ export function NavMain({ items }: NavMainProps) {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>{SIDEBAR_GROUP_LABEL}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
           const groupActive = isGroupActive(currentPath, item.items);

@@ -2,7 +2,9 @@
 import type { ReactNode } from "react";
 
 // UI Components
-import { Label } from "@/components/ui/label";
+
+// Form Components
+import { FieldLabel } from "./FieldLabel";
 
 // Form
 import { useFieldContext } from "@/lib/form/form-context";
@@ -23,6 +25,7 @@ interface RadioCardFieldProps {
   disabled?: boolean;
   className?: string;
   columns?: 2 | 3 | 4;
+  required?: boolean;
 }
 
 export default function RadioCardField({
@@ -31,6 +34,7 @@ export default function RadioCardField({
   disabled,
   className,
   columns = 2,
+  required = false,
 }: RadioCardFieldProps) {
   const field = useFieldContext<string>();
 
@@ -45,7 +49,7 @@ export default function RadioCardField({
 
   return (
     <div className={cn("space-y-2", className)}>
-      <Label>{label}</Label>
+      <FieldLabel label={label} required={required} />
       <div
         className={cn("grid gap-2", gridCols[columns])}
         role="radiogroup"

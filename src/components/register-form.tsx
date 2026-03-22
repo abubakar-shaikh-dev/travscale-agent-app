@@ -6,6 +6,7 @@ import {
 	InputGroupAddon,
 	InputGroupInput,
 } from "@/components/ui/input-group";
+import { FieldLabel } from "@/lib/form/field-components/FieldLabel";
 import {
 	AtSignIcon,
 	EyeIcon,
@@ -55,12 +56,7 @@ export function RegisterForm() {
 	return (
 		<form className="space-y-4" onSubmit={handleSubmit}>
 			<div className="space-y-2">
-				<label
-					htmlFor="name"
-					className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-				>
-					Full Name
-				</label>
+				<FieldLabel label="Full Name" htmlFor="name" required />
 				<InputGroup>
 					<InputGroupAddon align="inline-start">
 						<UserIcon />
@@ -77,12 +73,7 @@ export function RegisterForm() {
 			</div>
 
 			<div className="space-y-2">
-				<label
-					htmlFor="email"
-					className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-				>
-					Email
-				</label>
+				<FieldLabel label="Email" htmlFor="email" required />
 				<InputGroup>
 					<InputGroupInput
 						id="email"
@@ -99,12 +90,7 @@ export function RegisterForm() {
 			</div>
 
 			<div className="space-y-2">
-				<label
-					htmlFor="password"
-					className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-				>
-					Password
-				</label>
+				<FieldLabel label="Password" htmlFor="password" required />
 				<InputGroup>
 					<InputGroupAddon align="inline-start">
 						<LockIcon />
@@ -139,12 +125,11 @@ export function RegisterForm() {
 			</div>
 
 			<div className="space-y-2">
-				<label
+				<FieldLabel
+					label="Confirm Password"
 					htmlFor="confirmPassword"
-					className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-				>
-					Confirm Password
-				</label>
+					required
+				/>
 				<InputGroup>
 					<InputGroupAddon align="inline-start">
 						<LockIcon />

@@ -146,6 +146,7 @@ export function SupplierForm({ supplier, onSuccess }: SupplierFormProps) {
                   <field.InputField
                     label="Supplier Name"
                     placeholder="e.g. Al-Rashid Travel Services"
+                    required
                   />
                 )}
               </form.AppField>
@@ -163,6 +164,7 @@ export function SupplierForm({ supplier, onSuccess }: SupplierFormProps) {
                   <field.InputField
                     label="Contact Person"
                     placeholder="e.g. Ahmed Al-Rashid"
+                    required
                   />
                 )}
               </form.AppField>
@@ -183,6 +185,7 @@ export function SupplierForm({ supplier, onSuccess }: SupplierFormProps) {
                     label="Email Address"
                     type="email"
                     placeholder="e.g. ahmed@example.com"
+                    required
                   />
                 )}
               </form.AppField>
@@ -198,7 +201,7 @@ export function SupplierForm({ supplier, onSuccess }: SupplierFormProps) {
                   },
                 }}
               >
-                {(field) => <field.PhoneField label="Contact Phone" />}
+                {(field) => <field.PhoneField label="Contact Phone" required />}
               </form.AppField>
 
               <form.AppField
@@ -212,7 +215,9 @@ export function SupplierForm({ supplier, onSuccess }: SupplierFormProps) {
                   },
                 }}
               >
-                {(field) => <field.PhoneField label="WhatsApp Number" />}
+                {(field) => (
+                  <field.PhoneField label="WhatsApp Number" required />
+                )}
               </form.AppField>
 
               <form.AppField
@@ -232,7 +237,7 @@ export function SupplierForm({ supplier, onSuccess }: SupplierFormProps) {
               >
                 {(field) => (
                   <field.InputField
-                    label="Website (Optional)"
+                    label="Website"
                     type="url"
                     placeholder="e.g. https://example.com"
                   />
@@ -255,6 +260,7 @@ export function SupplierForm({ supplier, onSuccess }: SupplierFormProps) {
                     label="Address"
                     placeholder="e.g. 123 Business District, Dubai, UAE"
                     className="sm:col-span-2"
+                    required
                   />
                 )}
               </form.AppField>
@@ -279,6 +285,7 @@ export function SupplierForm({ supplier, onSuccess }: SupplierFormProps) {
                   columns={2}
                   description="Pick all services this supplier can fulfill for booking operations."
                   options={SERVICE_TYPE_OPTIONS}
+                  required
                 />
               )}
             </form.AppField>

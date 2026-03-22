@@ -1,5 +1,4 @@
 // UI Components
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectItem,
@@ -7,6 +6,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+// Form Components
+import { FieldLabel } from "./FieldLabel";
 
 // Form
 import { useFieldContext } from "@/lib/form/form-context";
@@ -25,6 +27,7 @@ interface SelectFieldProps {
   options: SelectOption[];
   disabled?: boolean;
   className?: string;
+  required?: boolean;
 }
 
 export default function SelectField({
@@ -33,6 +36,7 @@ export default function SelectField({
   options,
   disabled,
   className,
+  required = false,
 }: SelectFieldProps) {
   const field = useFieldContext<string>();
 
@@ -41,7 +45,7 @@ export default function SelectField({
 
   return (
     <div className={cn("space-y-1.5", className)}>
-      <Label htmlFor={field.name}>{label}</Label>
+      <FieldLabel label={label} htmlFor={field.name} required={required} />
       <Select
         value={field.state.value ?? ""}
         onValueChange={(value) => field.handleChange(value ?? "")}

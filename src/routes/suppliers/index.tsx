@@ -22,6 +22,11 @@ import {
 // Feature Components
 import PageHeader from "@/components/shared/PageHeader";
 import { DataTable, type DataTableColumn } from "@/components/shared/DataTable";
+import { RowActionButtons } from "@/components/shared/RowActionButtons";
+import { DeleteSupplierButton } from "@/features/suppliers/components/DeleteSupplierButton";
+
+// Hooks
+import { useSuppliers } from "@/features/suppliers/queries";
 
 // Types
 import type { Supplier, ServiceType } from "@/features/suppliers/types";
@@ -30,82 +35,13 @@ export const Route = createFileRoute("/suppliers/")({
   component: SuppliersPage,
 });
 
-// Mock data for demonstration (remove when API is connected)
-const mockSuppliers: Supplier[] = [
-  {
-    id: "1",
-    name: "Al-Rashid Travel Services",
-    contactPersonName: "Ahmed Al-Rashid",
-    contactPersonPhone: "+971 4 123 4567",
-    whatsappNumber: "+971 50 123 4567",
-    contactPersonEmail: "ahmed@alrashidtravel.com",
-    website: "https://www.alrashidtravel.com",
-    address: "Suite 201, Business Bay Tower, Dubai, UAE",
-    serviceTypes: ["visa", "flight", "hotels"],
-    createdAt: "2024-01-15T10:30:00Z",
-    updatedAt: "2024-01-15T10:30:00Z",
-  },
-  {
-    id: "2",
-    name: "Gulf Visa Solutions",
-    contactPersonName: "Sarah Al-Mansoori",
-    contactPersonPhone: "+971 4 234 5678",
-    whatsappNumber: "+971 50 234 5678",
-    contactPersonEmail: "sarah@gulfvisasolutions.com",
-    address: "Office 105, Trade Center, Abu Dhabi, UAE",
-    serviceTypes: ["visa", "passport"],
-    createdAt: "2024-01-16T14:20:00Z",
-    updatedAt: "2024-01-16T14:20:00Z",
-  },
-  {
-    id: "3",
-    name: "Emirates Insurance Group",
-    contactPersonName: "Mohammed Hassan",
-    contactPersonPhone: "+971 4 345 6789",
-    whatsappNumber: "+971 50 345 6789",
-    contactPersonEmail: "mohammed@emiratesinsurance.ae",
-    website: "https://www.emiratesinsurance.ae",
-    address: "Ground Floor, Financial District, Dubai, UAE",
-    serviceTypes: ["flight", "bus"],
-    createdAt: "2024-01-17T09:15:00Z",
-    updatedAt: "2024-01-17T09:15:00Z",
-  },
-  {
-    id: "4",
-    name: "Quick Visa Express",
-    contactPersonName: "Fatima Al-Zahra",
-    contactPersonPhone: "+971 4 456 7890",
-    whatsappNumber: "+971 50 456 7890",
-    contactPersonEmail: "fatima@quickvisaexpress.com",
-    address: "Mezzanine Floor, City Center, Sharjah, UAE",
-    serviceTypes: ["visa", "passport", "bus"],
-    createdAt: "2024-01-18T16:45:00Z",
-    updatedAt: "2024-01-18T16:45:00Z",
-  },
-  {
-    id: "5",
-    name: "Secure Travel Insurance",
-    contactPersonName: "Khalid Al-Mahmoud",
-    contactPersonPhone: "+971 4 567 8901",
-    whatsappNumber: "+971 50 567 8901",
-    contactPersonEmail: "khalid@securetravel.ae",
-    website: "https://www.securetravel.ae",
-    address: "Level 3, Marina Walk, Dubai Marina, UAE",
-    serviceTypes: ["hotels", "flight"],
-    createdAt: "2024-01-19T11:00:00Z",
-    updatedAt: "2024-01-19T11:00:00Z",
-  },
-];
-
 function SuppliersPage() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
-
-  // TODO: Replace mock data with API call when backend is ready
-  // const { data, isLoading } = useSuppliers(page, pageSize);
-  const isLoading = false;
-  const suppliers = mockSuppliers;
-  const total = mockSuppliers.length;
+  const { data: suppliers = [], isLoading } = useSuppliers();
+  const total = suppliers.length;
+  const pageStart = (page - 1) * pageSize;
+  const paginatedSuppliers = suppliers.slice(pageStart, pageStart + pageSize);
 
   const renderServiceTypes = (serviceTypes: ServiceType[]) => {
     const serviceConfig: Record<
@@ -183,20 +119,25 @@ function SuppliersPage() {
       width: 120,
       minWidth: 100,
       align: "center",
-      render: () => (
-        <div className="flex items-center justify-center gap-1">
-          {/* TODO: Add edit functionality when $supplierId route is created */}
-          {/* TODO: Add DeleteSupplierButton when delete functionality is needed */}
-          <span className="text-xs text-muted-foreground">Coming soon</span>
-        </div>
+      render: (_, record) => (
+        <RowActionButtons
+          editRender={
+            <Link
+              to="/suppliers/$supplierId/edit"
+              params={{ supplierId: record.id }}
+            />
+          }
+          editLabel={`Edit ${record.name}`}
+          deleteAction={<DeleteSupplierButton supplier={record} />}
+        />
       ),
     },
   ];
 
   // Add S.No to data
-  const dataWithSno = suppliers.map((supplier, index) => ({
+  const dataWithSno = paginatedSuppliers.map((supplier, index) => ({
     ...supplier,
-    sno: (page - 1) * pageSize + index + 1,
+    sno: pageStart + index + 1,
   }));
 
   return (
