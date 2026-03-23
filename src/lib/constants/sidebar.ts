@@ -104,6 +104,21 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     ],
   },
   {
+    title: "Visa Applications",
+    url: "#",
+    icon: Stamp,
+    items: [
+      {
+        title: "All Applications",
+        url: "/visa-applications",
+      },
+      {
+        title: "New Application",
+        url: "/visa-applications/create",
+      },
+    ],
+  },
+  {
     title: "Packages",
     url: "#",
     icon: Package,

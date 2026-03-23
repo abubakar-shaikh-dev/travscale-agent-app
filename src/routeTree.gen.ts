@@ -10,14 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VisaApplicationsIndexRouteImport } from './routes/visa-applications/index'
 import { Route as SuppliersIndexRouteImport } from './routes/suppliers/index'
 import { Route as PassengersIndexRouteImport } from './routes/passengers/index'
 import { Route as CustomersIndexRouteImport } from './routes/customers/index'
+import { Route as VisaApplicationsCreateRouteImport } from './routes/visa-applications/create'
 import { Route as SuppliersCreateRouteImport } from './routes/suppliers/create'
 import { Route as PassengersCreateRouteImport } from './routes/passengers/create'
 import { Route as CustomersCreateRouteImport } from './routes/customers/create'
+import { Route as VisaApplicationsApplicationIdIndexRouteImport } from './routes/visa-applications/$applicationId/index'
 import { Route as AuthRegisterIndexRouteImport } from './routes/auth/register/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
+import { Route as VisaApplicationsApplicationIdUpdateStatusRouteImport } from './routes/visa-applications/$applicationId/update-status'
 import { Route as SuppliersSupplierIdEditRouteImport } from './routes/suppliers/$supplierId/edit'
 import { Route as PassengersPassengerIdEditRouteImport } from './routes/passengers/$passengerId/edit'
 import { Route as CustomersCustomerIdEditRouteImport } from './routes/customers/$customerId/edit'
@@ -25,6 +29,11 @@ import { Route as CustomersCustomerIdEditRouteImport } from './routes/customers/
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VisaApplicationsIndexRoute = VisaApplicationsIndexRouteImport.update({
+  id: '/visa-applications/',
+  path: '/visa-applications/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SuppliersIndexRoute = SuppliersIndexRouteImport.update({
@@ -42,6 +51,11 @@ const CustomersIndexRoute = CustomersIndexRouteImport.update({
   path: '/customers/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VisaApplicationsCreateRoute = VisaApplicationsCreateRouteImport.update({
+  id: '/visa-applications/create',
+  path: '/visa-applications/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SuppliersCreateRoute = SuppliersCreateRouteImport.update({
   id: '/suppliers/create',
   path: '/suppliers/create',
@@ -57,6 +71,12 @@ const CustomersCreateRoute = CustomersCreateRouteImport.update({
   path: '/customers/create',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VisaApplicationsApplicationIdIndexRoute =
+  VisaApplicationsApplicationIdIndexRouteImport.update({
+    id: '/visa-applications/$applicationId/',
+    path: '/visa-applications/$applicationId/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthRegisterIndexRoute = AuthRegisterIndexRouteImport.update({
   id: '/auth/register/',
   path: '/auth/register/',
@@ -67,6 +87,12 @@ const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   path: '/auth/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VisaApplicationsApplicationIdUpdateStatusRoute =
+  VisaApplicationsApplicationIdUpdateStatusRouteImport.update({
+    id: '/visa-applications/$applicationId/update-status',
+    path: '/visa-applications/$applicationId/update-status',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const SuppliersSupplierIdEditRoute = SuppliersSupplierIdEditRouteImport.update({
   id: '/suppliers/$supplierId/edit',
   path: '/suppliers/$supplierId/edit',
@@ -89,28 +115,36 @@ export interface FileRoutesByFullPath {
   '/customers/create': typeof CustomersCreateRoute
   '/passengers/create': typeof PassengersCreateRoute
   '/suppliers/create': typeof SuppliersCreateRoute
+  '/visa-applications/create': typeof VisaApplicationsCreateRoute
   '/customers/': typeof CustomersIndexRoute
   '/passengers/': typeof PassengersIndexRoute
   '/suppliers/': typeof SuppliersIndexRoute
+  '/visa-applications/': typeof VisaApplicationsIndexRoute
   '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
   '/passengers/$passengerId/edit': typeof PassengersPassengerIdEditRoute
   '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
+  '/visa-applications/$applicationId/update-status': typeof VisaApplicationsApplicationIdUpdateStatusRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
+  '/visa-applications/$applicationId/': typeof VisaApplicationsApplicationIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/customers/create': typeof CustomersCreateRoute
   '/passengers/create': typeof PassengersCreateRoute
   '/suppliers/create': typeof SuppliersCreateRoute
+  '/visa-applications/create': typeof VisaApplicationsCreateRoute
   '/customers': typeof CustomersIndexRoute
   '/passengers': typeof PassengersIndexRoute
   '/suppliers': typeof SuppliersIndexRoute
+  '/visa-applications': typeof VisaApplicationsIndexRoute
   '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
   '/passengers/$passengerId/edit': typeof PassengersPassengerIdEditRoute
   '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
+  '/visa-applications/$applicationId/update-status': typeof VisaApplicationsApplicationIdUpdateStatusRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/auth/register': typeof AuthRegisterIndexRoute
+  '/visa-applications/$applicationId': typeof VisaApplicationsApplicationIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -118,14 +152,18 @@ export interface FileRoutesById {
   '/customers/create': typeof CustomersCreateRoute
   '/passengers/create': typeof PassengersCreateRoute
   '/suppliers/create': typeof SuppliersCreateRoute
+  '/visa-applications/create': typeof VisaApplicationsCreateRoute
   '/customers/': typeof CustomersIndexRoute
   '/passengers/': typeof PassengersIndexRoute
   '/suppliers/': typeof SuppliersIndexRoute
+  '/visa-applications/': typeof VisaApplicationsIndexRoute
   '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
   '/passengers/$passengerId/edit': typeof PassengersPassengerIdEditRoute
   '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
+  '/visa-applications/$applicationId/update-status': typeof VisaApplicationsApplicationIdUpdateStatusRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
+  '/visa-applications/$applicationId/': typeof VisaApplicationsApplicationIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -134,42 +172,54 @@ export interface FileRouteTypes {
     | '/customers/create'
     | '/passengers/create'
     | '/suppliers/create'
+    | '/visa-applications/create'
     | '/customers/'
     | '/passengers/'
     | '/suppliers/'
+    | '/visa-applications/'
     | '/customers/$customerId/edit'
     | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
+    | '/visa-applications/$applicationId/update-status'
     | '/auth/login/'
     | '/auth/register/'
+    | '/visa-applications/$applicationId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/customers/create'
     | '/passengers/create'
     | '/suppliers/create'
+    | '/visa-applications/create'
     | '/customers'
     | '/passengers'
     | '/suppliers'
+    | '/visa-applications'
     | '/customers/$customerId/edit'
     | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
+    | '/visa-applications/$applicationId/update-status'
     | '/auth/login'
     | '/auth/register'
+    | '/visa-applications/$applicationId'
   id:
     | '__root__'
     | '/'
     | '/customers/create'
     | '/passengers/create'
     | '/suppliers/create'
+    | '/visa-applications/create'
     | '/customers/'
     | '/passengers/'
     | '/suppliers/'
+    | '/visa-applications/'
     | '/customers/$customerId/edit'
     | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
+    | '/visa-applications/$applicationId/update-status'
     | '/auth/login/'
     | '/auth/register/'
+    | '/visa-applications/$applicationId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -177,14 +227,18 @@ export interface RootRouteChildren {
   CustomersCreateRoute: typeof CustomersCreateRoute
   PassengersCreateRoute: typeof PassengersCreateRoute
   SuppliersCreateRoute: typeof SuppliersCreateRoute
+  VisaApplicationsCreateRoute: typeof VisaApplicationsCreateRoute
   CustomersIndexRoute: typeof CustomersIndexRoute
   PassengersIndexRoute: typeof PassengersIndexRoute
   SuppliersIndexRoute: typeof SuppliersIndexRoute
+  VisaApplicationsIndexRoute: typeof VisaApplicationsIndexRoute
   CustomersCustomerIdEditRoute: typeof CustomersCustomerIdEditRoute
   PassengersPassengerIdEditRoute: typeof PassengersPassengerIdEditRoute
   SuppliersSupplierIdEditRoute: typeof SuppliersSupplierIdEditRoute
+  VisaApplicationsApplicationIdUpdateStatusRoute: typeof VisaApplicationsApplicationIdUpdateStatusRoute
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
   AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
+  VisaApplicationsApplicationIdIndexRoute: typeof VisaApplicationsApplicationIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -194,6 +248,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/visa-applications/': {
+      id: '/visa-applications/'
+      path: '/visa-applications'
+      fullPath: '/visa-applications/'
+      preLoaderRoute: typeof VisaApplicationsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/suppliers/': {
@@ -217,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/visa-applications/create': {
+      id: '/visa-applications/create'
+      path: '/visa-applications/create'
+      fullPath: '/visa-applications/create'
+      preLoaderRoute: typeof VisaApplicationsCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/suppliers/create': {
       id: '/suppliers/create'
       path: '/suppliers/create'
@@ -238,6 +306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomersCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/visa-applications/$applicationId/': {
+      id: '/visa-applications/$applicationId/'
+      path: '/visa-applications/$applicationId'
+      fullPath: '/visa-applications/$applicationId/'
+      preLoaderRoute: typeof VisaApplicationsApplicationIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/register/': {
       id: '/auth/register/'
       path: '/auth/register'
@@ -250,6 +325,13 @@ declare module '@tanstack/react-router' {
       path: '/auth/login'
       fullPath: '/auth/login/'
       preLoaderRoute: typeof AuthLoginIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/visa-applications/$applicationId/update-status': {
+      id: '/visa-applications/$applicationId/update-status'
+      path: '/visa-applications/$applicationId/update-status'
+      fullPath: '/visa-applications/$applicationId/update-status'
+      preLoaderRoute: typeof VisaApplicationsApplicationIdUpdateStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/suppliers/$supplierId/edit': {
@@ -281,14 +363,20 @@ const rootRouteChildren: RootRouteChildren = {
   CustomersCreateRoute: CustomersCreateRoute,
   PassengersCreateRoute: PassengersCreateRoute,
   SuppliersCreateRoute: SuppliersCreateRoute,
+  VisaApplicationsCreateRoute: VisaApplicationsCreateRoute,
   CustomersIndexRoute: CustomersIndexRoute,
   PassengersIndexRoute: PassengersIndexRoute,
   SuppliersIndexRoute: SuppliersIndexRoute,
+  VisaApplicationsIndexRoute: VisaApplicationsIndexRoute,
   CustomersCustomerIdEditRoute: CustomersCustomerIdEditRoute,
   PassengersPassengerIdEditRoute: PassengersPassengerIdEditRoute,
   SuppliersSupplierIdEditRoute: SuppliersSupplierIdEditRoute,
+  VisaApplicationsApplicationIdUpdateStatusRoute:
+    VisaApplicationsApplicationIdUpdateStatusRoute,
   AuthLoginIndexRoute: AuthLoginIndexRoute,
   AuthRegisterIndexRoute: AuthRegisterIndexRoute,
+  VisaApplicationsApplicationIdIndexRoute:
+    VisaApplicationsApplicationIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
