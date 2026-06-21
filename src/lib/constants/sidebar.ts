@@ -1,12 +1,12 @@
 // Icons
 import {
-  Bell,
   CalendarCheck,
   CreditCard,
   FileText,
   LayoutDashboard,
   Package,
   PlaneTakeoff,
+  Receipt,
   Settings,
   Stamp,
   Truck,
@@ -54,8 +54,9 @@ export const SIDEBAR_USER = {
 /**
  * Primary navigation items for the sidebar.
  *
- * Follows the SaaS UX principle of keeping primary nav to 5–7 core modules
- * plus settings, ordered by usage frequency for travel agents.
+ * Follows the SaaS UX principle of keeping primary nav task-oriented.
+ * 11 items is above the 5–7 guideline but justified for a daily-use
+ * power-user ops tool — revisit once onboarding moves past design partners.
  */
 export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
   {
@@ -63,14 +64,8 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: Users,
     items: [
-      {
-        title: "All Customers",
-        url: "/customers",
-      },
-      {
-        title: "Add Customer",
-        url: "/customers/create",
-      },
+      { title: "All Customers", url: "/customers" },
+      { title: "Add Customer", url: "/customers/create" },
     ],
   },
   {
@@ -78,14 +73,8 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: Truck,
     items: [
-      {
-        title: "All Suppliers",
-        url: "/suppliers",
-      },
-      {
-        title: "Add Supplier",
-        url: "/suppliers/create",
-      },
+      { title: "All Suppliers", url: "/suppliers" },
+      { title: "Add Supplier", url: "/suppliers/create" },
     ],
   },
   {
@@ -93,14 +82,8 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: PlaneTakeoff,
     items: [
-      {
-        title: "All Passengers",
-        url: "/passengers",
-      },
-      {
-        title: "Add Passenger",
-        url: "/passengers/create",
-      },
+      { title: "All Passengers", url: "/passengers" },
+      { title: "Add Passenger", url: "/passengers/create" },
     ],
   },
   {
@@ -108,14 +91,8 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: Stamp,
     items: [
-      {
-        title: "All Applications",
-        url: "/visa-applications",
-      },
-      {
-        title: "New Application",
-        url: "/visa-applications/create",
-      },
+      { title: "All Applications", url: "/visa-applications" },
+      { title: "New Application", url: "/visa-applications/create" },
     ],
   },
   {
@@ -123,18 +100,9 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: Package,
     items: [
-      {
-        title: "All Packages",
-        url: "/packages",
-      },
-      {
-        title: "Add Package",
-        url: "/packages/new",
-      },
-      {
-        title: "Categories",
-        url: "/packages/categories",
-      },
+      { title: "All Packages", url: "/packages" },
+      { title: "Add Package", url: "/packages/create" },
+      { title: "Categories", url: "/packages/categories" },
     ],
   },
   {
@@ -142,29 +110,16 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: CalendarCheck,
     items: [
-      {
-        title: "All Orders",
-        url: "/orders",
-      },
-      {
-        title: "New Order",
-        url: "/orders/new",
-      },
+      { title: "All Orders", url: "/orders" },
+      { title: "New Order", url: "/orders/create" },
     ],
   },
   {
     title: "Service Charges",
     url: "#",
-    icon: Stamp,
+    icon: Receipt,
     items: [
-      {
-        title: "Charge History",
-        url: "/service-charges",
-      },
-      {
-        title: "Audit Log",
-        url: "/service-charges/audit-log",
-      },
+      { title: "Charge History", url: "/service-charges" },
     ],
   },
   {
@@ -172,14 +127,8 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: FileText,
     items: [
-      {
-        title: "All Documents",
-        url: "/documents",
-      },
-      {
-        title: "Upload Document",
-        url: "/documents/upload",
-      },
+      { title: "All Documents", url: "/documents" },
+      { title: "Upload Document", url: "/documents/upload" },
     ],
   },
   {
@@ -187,33 +136,9 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: CreditCard,
     items: [
-      {
-        title: "Invoices",
-        url: "/finance/invoices",
-      },
-      {
-        title: "Payments",
-        url: "/finance/payments",
-      },
-      {
-        title: "Balance",
-        url: "/finance/balance",
-      },
-    ],
-  },
-  {
-    title: "Notifications",
-    url: "#",
-    icon: Bell,
-    items: [
-      {
-        title: "Templates",
-        url: "/notifications/templates",
-      },
-      {
-        title: "Sent Log",
-        url: "/notifications/log",
-      },
+      { title: "Invoices", url: "/finance/invoices" },
+      { title: "Payments", url: "/finance/payments" },
+      { title: "Balance", url: "/finance/balance" },
     ],
   },
   {
@@ -221,30 +146,13 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: Settings,
     items: [
-      {
-        title: "Company Profile",
-        url: "/settings/company",
-      },
-      {
-        title: "Preferences",
-        url: "/settings/preferences",
-      },
-      {
-        title: "Team Members",
-        url: "/settings/team",
-      },
-      {
-        title: "Roles & Permissions",
-        url: "/settings/roles",
-      },
-      {
-        title: "Invoice Settings",
-        url: "/settings/invoice",
-      },
-      {
-        title: "Plan & Billing",
-        url: "/settings/plan",
-      },
+      { title: "Company Profile", url: "/settings/company" },
+      { title: "Preferences", url: "/settings/preferences" },
+      { title: "Notification Preferences", url: "/settings/notifications" },
+      { title: "Team Members", url: "/settings/team" },
+      { title: "Roles & Permissions", url: "/settings/roles" },
+      { title: "Invoice Settings", url: "/settings/invoice" },
+      { title: "Plan & Billing", url: "/settings/plan" },
     ],
   },
 ];
