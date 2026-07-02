@@ -1,23 +1,35 @@
 // Icons
 import {
+  BarChart3,
   CalendarCheck,
   CreditCard,
   FileText,
   LayoutDashboard,
+  ListChecks,
   Package,
   PlaneTakeoff,
-  Receipt,
   Settings,
   Stamp,
   Truck,
   Users,
+  UsersRound,
   type LucideIcon,
 } from "lucide-react";
 
 // Types
+
+/**
+ * Business type the tenant operates as. Drives which nav items / sub-items
+ * are shown — e.g. a Solo Agent doesn't need Team Members, and only a
+ * Hajj/Umrah operator needs the Groups module.
+ */
+export type AgencyType = "travel_agency" | "solo_agent" | "hajj_umrah";
+
 export interface SidebarNavSubItem {
   title: string;
   url: string;
+  /** If set, this sub-item only shows for the listed agency types. Omit to show for all. */
+  visibleFor?: AgencyType[];
 }
 
 export interface SidebarNavItem {
@@ -25,6 +37,8 @@ export interface SidebarNavItem {
   url: string;
   icon?: LucideIcon;
   items?: SidebarNavSubItem[];
+  /** If set, this top-level item only shows for the listed agency types. Omit to show for all. */
+  visibleFor?: AgencyType[];
 }
 
 export interface SidebarUser {
@@ -52,11 +66,23 @@ export const SIDEBAR_USER = {
 } satisfies SidebarUser;
 
 /**
- * Primary navigation items for the sidebar.
+ * Master nav list — unfiltered, contains every item across all three
+ * agency types. Use `getNavItems(agencyType)` (below) to get the
+ * filtered list to actually render for a tenant.
  *
- * Follows the SaaS UX principle of keeping primary nav task-oriented.
- * 11 items is above the 5–7 guideline but justified for a daily-use
- * power-user ops tool — revisit once onboarding moves past design partners.
+ * Changes from the previous version:
+ * - Orders: added Enquiries + Quotations sub-items to preserve the sales
+ *   pipeline (Enquiry -> Quotation -> Booking) instead of one flat list.
+ * - Suppliers: added Supplier Bills + Supplier Ledger — procurement now
+ *   has a transaction trail, not just master data.
+ * - Packages: added "Rate Cards & Contracts" — negotiated net rates live here.
+ * - Finance: split "Balance" into Customer Ledger / Supplier Ledger, added
+ *   Commission, and folded Service Charges in here (was its own top-level
+ *   item — moved in to reduce top-level count).
+ * - New top-level items: Tasks (ops follow-ups), Reports (Revenue / Booking
+ *   Status / Supplier & Agent Performance), Groups (Hajj/Umrah only — room
+ *   allocation, Moallim assignment, manifest export).
+ * - Settings: Team Members + Roles & Permissions hidden for Solo Agent.
  */
 export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
   {
@@ -75,6 +101,8 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     items: [
       { title: "All Suppliers", url: "/suppliers" },
       { title: "Add Supplier", url: "/suppliers/create" },
+      { title: "Supplier Bills", url: "/suppliers/bills" },
+      { title: "Supplier Ledger", url: "/suppliers/ledger" },
     ],
   },
   {
@@ -103,6 +131,7 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
       { title: "All Packages", url: "/packages" },
       { title: "Add Package", url: "/packages/create" },
       { title: "Categories", url: "/packages/categories" },
+      { title: "Rate Cards & Contracts", url: "/packages/rate-cards" },
     ],
   },
   {
@@ -110,16 +139,33 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     url: "#",
     icon: CalendarCheck,
     items: [
-      { title: "All Orders", url: "/orders" },
-      { title: "New Order", url: "/orders/create" },
+      { title: "Enquiries", url: "/orders/enquiries" },
+      { title: "Quotations", url: "/orders/quotations" },
+      { title: "All Bookings", url: "/orders" },
+      { title: "New Booking", url: "/orders/create" },
     ],
   },
   {
-    title: "Service Charges",
+    title: "Groups",
     url: "#",
-    icon: Receipt,
+    icon: UsersRound,
+    visibleFor: ["hajj_umrah"],
     items: [
-      { title: "Charge History", url: "/service-charges" },
+      { title: "All Groups", url: "/groups" },
+      { title: "Add Group", url: "/groups/create" },
+      { title: "Room Allocation", url: "/groups/rooms" },
+      { title: "Moallim Assignment", url: "/groups/moallim" },
+      { title: "Manifest Export", url: "/groups/manifest" },
+    ],
+  },
+  {
+    title: "Tasks",
+    url: "#",
+    icon: ListChecks,
+    items: [
+      { title: "My Tasks", url: "/tasks" },
+      { title: "All Tasks", url: "/tasks/all", visibleFor: ["travel_agency", "hajj_umrah"] },
+      { title: "New Task", url: "/tasks/create" },
     ],
   },
   {
@@ -138,7 +184,21 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
     items: [
       { title: "Invoices", url: "/finance/invoices" },
       { title: "Payments", url: "/finance/payments" },
-      { title: "Balance", url: "/finance/balance" },
+      { title: "Service Charges", url: "/finance/service-charges" },
+      { title: "Customer Ledger", url: "/finance/customer-ledger" },
+      { title: "Supplier Ledger", url: "/finance/supplier-ledger" },
+      { title: "Commission", url: "/finance/commission", visibleFor: ["travel_agency", "hajj_umrah"] },
+    ],
+  },
+  {
+    title: "Reports",
+    url: "#",
+    icon: BarChart3,
+    items: [
+      { title: "Revenue", url: "/reports/revenue" },
+      { title: "Booking Status", url: "/reports/bookings" },
+      { title: "Supplier Performance", url: "/reports/suppliers" },
+      { title: "Agent Performance", url: "/reports/agents", visibleFor: ["travel_agency", "hajj_umrah"] },
     ],
   },
   {
@@ -149,8 +209,8 @@ export const NAV_MAIN_ITEMS: SidebarNavItem[] = [
       { title: "Company Profile", url: "/settings/company" },
       { title: "Preferences", url: "/settings/preferences" },
       { title: "Notification Preferences", url: "/settings/notifications" },
-      { title: "Team Members", url: "/settings/team" },
-      { title: "Roles & Permissions", url: "/settings/roles" },
+      { title: "Team Members", url: "/settings/team", visibleFor: ["travel_agency", "hajj_umrah"] },
+      { title: "Roles & Permissions", url: "/settings/roles", visibleFor: ["travel_agency", "hajj_umrah"] },
       { title: "Invoice Settings", url: "/settings/invoice" },
       { title: "Plan & Billing", url: "/settings/plan" },
     ],
