@@ -3,6 +3,7 @@ import type React from "react";
 
 // UI Components
 import { Logo } from "@/components/logo";
+import { ShaderBackground } from "@/components/motion/shader-background";
 
 // Utils
 import { cn } from "@/lib/utils";
@@ -50,15 +51,15 @@ export function AuthLayout({
     <main className="relative lg:grid lg:min-h-screen lg:grid-cols-2 lg:overflow-hidden">
       {/* Showcase panel — hidden on mobile, editorial on desktop */}
       <aside className="relative hidden overflow-hidden lg:flex lg:flex-col">
-        <img
-          src="/images/auth-layout-image.png"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover"
+        <ShaderBackground
+          variant="warp"
+          className="absolute inset-0"
+          colors={["#03071e", "#ff006e", "#03071e", "#ffbe0b"]}
+          speed={0.8}
         />
 
         {/* Layered vignette — light at the top for the logo, deep at the
-            bottom where the copy sits. Tuned so the image stays visible
+            bottom where the copy sits. Tuned so the shader stays visible
             while the text earns its legibility. */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/25 via-black/20 to-black/75" />
 
