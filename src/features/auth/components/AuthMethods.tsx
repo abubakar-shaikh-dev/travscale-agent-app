@@ -63,16 +63,18 @@ export function AuthMethods({ className, children }: AuthMethodsProps) {
       <Button
         type="button"
         variant="outline"
-        className="w-full transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
+        className="w-full transition-[transform,box-shadow] duration-200 ease-[var(--motion-ease-out)] hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
       >
         <GoogleIcon className="size-5 shrink-0 opacity-100" />
         Continue with Google
       </Button>
 
-      {/* "Continue with Email" — collapses out when the form is revealed */}
+      {/* "Continue with Email" — collapses out when the form is revealed.
+          Same curve + duration as the form expand below so the two read
+          as one coordinated motion (exit uses ease-out, not ease-in). */}
       <div
         className={cn(
-          "grid transition-all duration-300 ease-in",
+          "grid transition-[grid-template-rows,opacity] duration-300 ease-[var(--motion-ease-out)]",
           showForm
             ? "grid-rows-[0fr] opacity-0"
             : "grid-rows-[1fr] opacity-100",
@@ -83,7 +85,7 @@ export function AuthMethods({ className, children }: AuthMethodsProps) {
           <Button
             type="button"
             variant="outline"
-            className="mt-3 w-full transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
+            className="mt-3 w-full transition-[transform,box-shadow] duration-200 ease-[var(--motion-ease-out)] hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
             onClick={() => setShowForm(true)}
           >
             <MailIcon className="size-5 shrink-0 opacity-100" />
@@ -95,7 +97,7 @@ export function AuthMethods({ className, children }: AuthMethodsProps) {
       {/* Form — expands in when "Continue with Email" is clicked */}
       <div
         className={cn(
-          "grid transition-all duration-500 ease-out",
+          "grid transition-[grid-template-rows,opacity] duration-300 ease-[var(--motion-ease-out)]",
           showForm
             ? "grid-rows-[1fr] opacity-100"
             : "grid-rows-[0fr] opacity-0",
