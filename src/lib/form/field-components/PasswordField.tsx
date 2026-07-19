@@ -58,7 +58,7 @@ export default function PasswordField({
           placeholder={placeholder}
           value={field.state.value ?? ""}
           disabled={disabled}
-          aria-invalid={hasError}
+          aria-invalid={hasError || undefined}
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
         />

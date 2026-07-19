@@ -42,7 +42,7 @@ export default function InputField({
         placeholder={placeholder}
         value={field.state.value ?? ""}
         disabled={disabled}
-        aria-invalid={hasError}
+        aria-invalid={hasError || undefined}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         size="lg"
