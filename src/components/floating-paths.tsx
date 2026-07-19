@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 export function FloatingPaths({ position }: { position: number }) {
 	const prefersReducedMotion = useReducedMotion();
-	const paths = Array.from({ length: 28 }, (_, i) => ({
+	const paths = Array.from({ length: 12 }, (_, i) => ({
 		id: i,
 		d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
 			380 - i * 5 * position
@@ -31,7 +31,6 @@ export function FloatingPaths({ position }: { position: number }) {
 								: {
 										pathLength: 1,
 										opacity: [0.2, 0.55, 0.2],
-										pathOffset: [0, 1, 0],
 									}
 						}
 						d={path.d}
@@ -47,9 +46,12 @@ export function FloatingPaths({ position }: { position: number }) {
 							prefersReducedMotion
 								? { duration: 0 }
 								: {
-										duration: 22 + ((path.id * 7) % 10),
-										repeat: Number.POSITIVE_INFINITY,
-										ease: "linear",
+										pathLength: { duration: 1.2, ease: "easeOut" },
+										opacity: {
+											duration: 18 + ((path.id * 7) % 8),
+											repeat: Number.POSITIVE_INFINITY,
+											ease: "linear",
+										},
 									}
 						}
 					/>

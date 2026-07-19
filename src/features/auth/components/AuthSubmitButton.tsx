@@ -78,7 +78,7 @@ export default function AuthSubmitButton({
               // Keep the button at full opacity during loading + success
               // (Button's default `disabled:opacity-64` would dim it).
               "relative w-full disabled:opacity-100",
-              "transition-colors duration-200 ease-out",
+              "transition-[color,transform] duration-200 ease-out active:scale-[0.97]",
               showSuccess &&
                 "border-success bg-success text-white hover:bg-success",
               className,
@@ -139,7 +139,7 @@ export default function AuthSubmitButton({
                     strokeDashoffset: showSuccess ? 0 : TICK_PATH_LENGTH,
                     transition: reducedMotion
                       ? "none"
-                      : `stroke-dashoffset 460ms cubic-bezier(0.23, 1, 0.32, 1) 80ms`,
+                      : `stroke-dashoffset 460ms var(--motion-ease-out) 80ms`,
                   }}
                 />
               </svg>
