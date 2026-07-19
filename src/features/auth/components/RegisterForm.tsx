@@ -66,10 +66,10 @@ export function RegisterForm({ className }: RegisterFormProps) {
           e.stopPropagation();
           void form.handleSubmit();
         }}
-        className={`space-y-4 ${className ?? ""}`}
+        className={`auth-stagger space-y-6 ${className ?? ""}`}
       >
         <Suspense fallback={null}>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2">
             <form.AppField
               name="name"
               validators={{
@@ -116,7 +116,7 @@ export function RegisterForm({ className }: RegisterFormProps) {
             </form.AppField>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2">
             <form.AppField
               name="password"
               validators={{

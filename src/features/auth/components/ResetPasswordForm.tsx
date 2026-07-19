@@ -49,7 +49,7 @@ export function ResetPasswordForm({ className, token }: ResetPasswordFormProps) 
           e.stopPropagation();
           void form.handleSubmit();
         }}
-        className={`space-y-4 ${className ?? ""}`}
+        className={`auth-stagger space-y-6 ${className ?? ""}`}
       >
         <Suspense fallback={null}>
           <form.AppField

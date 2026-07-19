@@ -7,6 +7,9 @@ import { Link } from "@tanstack/react-router";
 // UI Components
 import { Button } from "@/components/ui/button";
 
+// Icons
+import { MailCheckIcon } from "lucide-react";
+
 // Form
 import { useAppForm } from "@/lib/form/form-context";
 
@@ -37,13 +40,25 @@ export function ForgotPasswordForm({ className }: ForgotPasswordFormProps) {
 
   if (submittedEmail) {
     return (
-      <div className={`space-y-4 ${className ?? ""}`}>
-        <p className="text-sm text-muted-foreground">
-          If an account exists for{" "}
-          <span className="font-medium text-foreground">{submittedEmail}</span>,
-          a reset link has been sent. Check your inbox and follow the link to
-          set a new password.
-        </p>
+      <div className={`auth-fade space-y-6 ${className ?? ""}`}>
+        <div className="flex flex-col items-center gap-4 text-center">
+          <div className="flex size-14 items-center justify-center rounded-full bg-success/15 text-success">
+            <MailCheckIcon className="size-7" />
+          </div>
+          <div className="space-y-1.5">
+            <h2 className="font-heading text-lg font-semibold tracking-tight">
+              Check your inbox
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              If an account exists for{" "}
+              <span className="font-medium text-foreground">
+                {submittedEmail}
+              </span>
+              , a reset link has been sent. Follow the link in the email to set
+              a new password.
+            </p>
+          </div>
+        </div>
         <Button render={<Link to="/auth/login" />} className="w-full">
           Back to sign in
         </Button>
@@ -59,7 +74,7 @@ export function ForgotPasswordForm({ className }: ForgotPasswordFormProps) {
           e.stopPropagation();
           void form.handleSubmit();
         }}
-        className={`space-y-4 ${className ?? ""}`}
+        className={`auth-stagger space-y-6 ${className ?? ""}`}
       >
         <Suspense fallback={null}>
           <form.AppField
