@@ -8,7 +8,7 @@ import SidebarLayout from "@/components/sidebar-layout";
 import PageHeader from "@/components/shared/PageHeader";
 import { PassengerForm } from "@/features/passengers/components/PassengerForm";
 
-export const Route = createFileRoute("/_auth/passengers/create")({
+export const Route = createFileRoute("/_app/passengers/create")({
   component: CreatePassengerPage,
 });
 

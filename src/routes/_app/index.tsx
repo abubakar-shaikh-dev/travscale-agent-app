@@ -7,7 +7,7 @@ import SidebarLayout from "@/components/sidebar-layout";
 // Feature Components
 import PageHeader from "@/components/shared/PageHeader";
 
-export const Route = createFileRoute("/_auth/")({
+export const Route = createFileRoute("/_app/")({
   component: RouteComponent,
 });
 

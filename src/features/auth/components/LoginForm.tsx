@@ -13,11 +13,10 @@ import { useLogin } from "../queries";
 
 // Types
 export interface LoginFormProps {
-  className?: string;
   redirectTo?: string;
 }
 
-export function LoginForm({ className, redirectTo }: LoginFormProps) {
+export function LoginForm({ redirectTo }: LoginFormProps) {
   const navigate = useNavigate();
   const loginMutation = useLogin();
   const [succeeded, setSucceeded] = useState(false);
@@ -47,7 +46,7 @@ export function LoginForm({ className, redirectTo }: LoginFormProps) {
           e.stopPropagation();
           void form.handleSubmit();
         }}
-        className={`auth-stagger space-y-6 ${className ?? ""}`}
+        className="space-y-6"
       >
         <Suspense fallback={null}>
           <form.AppField

@@ -7,44 +7,46 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 // Feature Components
 import PageHeader from "@/components/shared/PageHeader";
-import { SupplierForm } from "@/features/suppliers/components/SupplierForm";
+import { CustomerForm } from "@/features/customers/components/CustomerForm";
 
 // Hooks
-import { useSupplier } from "@/features/suppliers/queries";
+import { useCustomer } from "@/features/customers/queries";
 
-export const Route = createFileRoute("/_auth/suppliers/$supplierId/edit")({
-  component: EditSupplierPage,
+export const Route = createFileRoute("/_app/customers/$customerId/edit")({
+  component: EditCustomerPage,
 });
 
 /**
- * Edit Supplier Page
+ * Edit Customer Page
  *
  * UX Design Decisions:
- * - Loads existing supplier data before showing form
+ * - Loads existing customer data before showing form
  * - Skeleton loader matches form layout for smooth transition
  * - Page title indicates edit mode
- * - Back button returns to supplier list
+ * - Back button returns to customer list
  */
-function EditSupplierPage() {
-  const { supplierId } = Route.useParams();
-  const { data: supplier, isLoading, error } = useSupplier(supplierId);
+function EditCustomerPage() {
+  const { customerId } = Route.useParams();
+  const { data: response, isLoading, error } = useCustomer(customerId);
+
+  const customer = response?.data;
 
   return (
     <SidebarLayout
       breadcrumbs={[
         { label: "Dashboard", href: "/" },
-        { label: "Suppliers", href: "/suppliers" },
+        { label: "Customers", href: "/customers" },
         { label: "Edit" },
       ]}
     >
       <PageHeader
-        title="Edit Supplier"
+        title="Edit Customer"
         description={
-          supplier
-            ? `Editing ${supplier.name}`
-            : "Update supplier information"
+          customer
+            ? `Editing ${customer.name}`
+            : "Update customer information"
         }
-        back="/suppliers"
+        back="/customers"
       />
 
       <div className="rounded-lg border bg-card p-6 shadow-sm">
@@ -53,19 +55,19 @@ function EditSupplierPage() {
         {error && (
           <div className="rounded-md border border-destructive/50 bg-destructive/10 p-4 text-center">
             <p className="text-sm text-destructive">
-              Failed to load supplier data. Please try again.
+              Failed to load customer data. Please try again.
             </p>
           </div>
         )}
 
-        {supplier && <SupplierForm supplier={supplier} />}
+        {customer && <CustomerForm customer={customer} />}
       </div>
     </SidebarLayout>
   );
 }
 
 /**
- * Skeleton that matches the supplier form layout for perceived performance.
+ * Skeleton that matches the form layout for perceived performance.
  */
 function EditFormSkeleton() {
   return (
@@ -76,30 +78,18 @@ function EditFormSkeleton() {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        {[1, 2, 3, 4, 5, 6].map((i) => (
+        {[1, 2, 3].map((i) => (
           <div key={i} className="space-y-2">
             <Skeleton className="h-4 w-24" />
             <Skeleton className="h-11 w-full" />
           </div>
         ))}
-        <div className="space-y-2 sm:col-span-2">
+        <div className="space-y-2">
           <Skeleton className="h-4 w-20" />
-          <Skeleton className="h-11 w-full" />
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        <Skeleton className="h-4 w-24" />
-        <div className="grid gap-3 sm:grid-cols-2">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div
-              key={i}
-              className="flex items-center space-x-3 rounded-lg border p-3"
-            >
-              <Skeleton className="h-5 w-5" />
-              <Skeleton className="h-4 w-32" />
-            </div>
-          ))}
+          <div className="grid grid-cols-2 gap-3">
+            <Skeleton className="h-24" />
+            <Skeleton className="h-24" />
+          </div>
         </div>
       </div>
 

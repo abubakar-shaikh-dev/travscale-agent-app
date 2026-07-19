@@ -20,6 +20,25 @@ interface AuthLayoutProps {
   showLegal?: boolean;
 }
 
+/**
+ * Per-page metadata consumed by the shared auth layout route
+ * (`src/routes/auth.tsx`). Each auth child route returns this from its
+ * `loader`; the layout reads it off the deepest match so the shell stays
+ * mounted across navigations and only the form swaps.
+ */
+export interface AuthPageMeta {
+  title: string;
+  description: string;
+  wide?: boolean;
+  showLegal?: boolean;
+  /**
+   * Whether to wrap the page in the "Continue with Google / Continue
+   * with Email" method picker. Only login & register use it; the email-
+   * only flows (forgot/verify/reset) render the form directly.
+   */
+  authMethods?: boolean;
+}
+
 export function AuthLayout({
   children,
   title,

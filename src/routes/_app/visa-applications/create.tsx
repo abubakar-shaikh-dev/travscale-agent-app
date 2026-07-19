@@ -20,7 +20,7 @@ import { VisaApplicationForm } from "@/features/visa-applications/components/Vis
 // Types
 import type { Passenger } from "@/features/passengers/types";
 
-export const Route = createFileRoute("/_auth/visa-applications/create")(
+export const Route = createFileRoute("/_app/visa-applications/create")(
   {
     component: CreateVisaApplicationPage,
   },

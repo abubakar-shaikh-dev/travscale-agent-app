@@ -2,12 +2,17 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
 // UI Components
-import { AuthLayout } from "@/components/auth-layout";
+import type { AuthPageMeta } from "@/components/auth-layout";
 
 // Feature Components
 import { RegisterForm } from "@/features/auth/components/RegisterForm";
 
 export const Route = createFileRoute("/auth/register/")({
+  loader: (): AuthPageMeta => ({
+    title: "Create your account",
+    description: "It only takes a minute to get started.",
+    authMethods: true,
+  }),
   beforeLoad: ({ context }) => {
     if (context.auth.isAuthenticated) {
       throw redirect({ to: "/" });
@@ -17,13 +22,5 @@ export const Route = createFileRoute("/auth/register/")({
 });
 
 function RouteComponent() {
-  return (
-    <AuthLayout
-      title="Create Account"
-      description="Join us and start your journey today."
-      wide
-    >
-      <RegisterForm />
-    </AuthLayout>
-  );
+  return <RegisterForm />;
 }

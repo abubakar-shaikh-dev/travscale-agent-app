@@ -5,12 +5,17 @@ import { z } from "zod";
 import { createFileRoute } from "@tanstack/react-router";
 
 // UI Components
-import { AuthLayout } from "@/components/auth-layout";
+import type { AuthPageMeta } from "@/components/auth-layout";
 
 // Feature Components
 import { VerifyEmail } from "@/features/auth/components/VerifyEmail";
 
 export const Route = createFileRoute("/auth/verify-email/")({
+  loader: (): AuthPageMeta => ({
+    title: "Verify Your Email",
+    description: "Confirming your email address.",
+    showLegal: false,
+  }),
   // Token is delivered via the email link's query string. It may be absent if
   // someone navigates here manually — the component handles that case.
   validateSearch: z.object({
@@ -21,13 +26,5 @@ export const Route = createFileRoute("/auth/verify-email/")({
 
 function RouteComponent() {
   const { token } = Route.useSearch();
-  return (
-    <AuthLayout
-      title="Verify Your Email"
-      description="Confirming your email address."
-      showLegal={false}
-    >
-      <VerifyEmail token={token ?? ""} />
-    </AuthLayout>
-  );
+  return <VerifyEmail token={token ?? ""} />;
 }

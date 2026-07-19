@@ -5,12 +5,17 @@ import { z } from "zod";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
 // UI Components
-import { AuthLayout } from "@/components/auth-layout";
+import type { AuthPageMeta } from "@/components/auth-layout";
 
 // Feature Components
 import { LoginForm } from "@/features/auth/components/LoginForm";
 
 export const Route = createFileRoute("/auth/login/")({
+  loader: (): AuthPageMeta => ({
+    title: "Welcome Back!",
+    description: "Sign in to your account to continue.",
+    authMethods: true,
+  }),
   validateSearch: z.object({
     redirect: z.string().optional(),
   }),
@@ -25,12 +30,5 @@ export const Route = createFileRoute("/auth/login/")({
 
 function RouteComponent() {
   const { redirect } = Route.useSearch();
-  return (
-    <AuthLayout
-      title="Welcome Back!"
-      description="Sign in to your account to continue."
-    >
-      <LoginForm redirectTo={redirect} />
-    </AuthLayout>
-  );
+  return <LoginForm redirectTo={redirect} />;
 }

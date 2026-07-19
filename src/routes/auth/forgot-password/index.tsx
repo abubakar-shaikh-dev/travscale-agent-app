@@ -2,12 +2,17 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
 // UI Components
-import { AuthLayout } from "@/components/auth-layout";
+import type { AuthPageMeta } from "@/components/auth-layout";
 
 // Feature Components
 import { ForgotPasswordForm } from "@/features/auth/components/ForgotPasswordForm";
 
 export const Route = createFileRoute("/auth/forgot-password/")({
+  loader: (): AuthPageMeta => ({
+    title: "Forgot Password",
+    description: "Enter your email and we'll send you a reset link.",
+    showLegal: false,
+  }),
   beforeLoad: ({ context }) => {
     if (context.auth.isAuthenticated) {
       throw redirect({ to: "/" });
@@ -17,13 +22,5 @@ export const Route = createFileRoute("/auth/forgot-password/")({
 });
 
 function RouteComponent() {
-  return (
-    <AuthLayout
-      title="Forgot Password"
-      description="Enter your email and we'll send you a reset link."
-      showLegal={false}
-    >
-      <ForgotPasswordForm />
-    </AuthLayout>
-  );
+  return <ForgotPasswordForm />;
 }

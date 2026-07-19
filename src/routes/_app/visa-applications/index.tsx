@@ -25,7 +25,7 @@ import { mockVisaApplications } from "@/features/visa-applications/dummy-data";
 // Types
 import type { VisaApplication } from "@/features/visa-applications/types";
 
-export const Route = createFileRoute("/_auth/visa-applications/")(
+export const Route = createFileRoute("/_app/visa-applications/")(
   {
     component: VisaApplicationsPage,
   },

@@ -8,7 +8,7 @@ import SidebarLayout from "@/components/sidebar-layout";
 import PageHeader from "@/components/shared/PageHeader";
 import { SupplierForm } from "@/features/suppliers/components/SupplierForm";
 
-export const Route = createFileRoute("/_auth/suppliers/create")({
+export const Route = createFileRoute("/_app/suppliers/create")({
   component: CreateSupplierPage,
 });
 
