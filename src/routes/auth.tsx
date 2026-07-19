@@ -38,6 +38,16 @@ function AuthLayoutRoute() {
   const leaf = matches[matches.length - 1];
   const meta = (leaf.loaderData ?? {}) as Partial<AuthPageMeta>;
 
+  // Keyed wrapper so navigating between peer auth pages (login <->
+  // register) remounts the <Outlet> subtree and plays the .auth-swap
+  // crossfade. AuthMethods + the layout chrome stay mounted above it,
+  // so only the form fields swap.
+  const swap = (
+    <div key={leaf.pathname} className="auth-swap">
+      <Outlet />
+    </div>
+  );
+
   return (
     <AuthLayout
       title={meta.title ?? ""}
@@ -45,13 +55,7 @@ function AuthLayoutRoute() {
       wide={meta.wide}
       showLegal={meta.showLegal}
     >
-      {meta.authMethods ? (
-        <AuthMethods>
-          <Outlet />
-        </AuthMethods>
-      ) : (
-        <Outlet />
-      )}
+      {meta.authMethods ? <AuthMethods>{swap}</AuthMethods> : swap}
     </AuthLayout>
   );
 }

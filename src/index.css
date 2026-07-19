@@ -323,6 +323,25 @@
     }
   }
 
+  /* Crossfade for the <Outlet/> swap between peer auth pages
+     (login <-> register). Keyed remount triggers the entrance;
+     150ms opacity-led with a 4px transform whisper, ease-out.
+     Stays under the 300ms UI budget for an occasional-frequency
+     navigation. AuthMethods + the layout chrome stay mounted, so
+     only the form fields swap. */
+  .auth-swap {
+    opacity: 0;
+    transform: translateY(4px);
+    animation: auth-swap-enter 150ms var(--motion-ease-out) forwards;
+  }
+
+  @keyframes auth-swap-enter {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .auth-fade,
     .auth-stagger > * {
@@ -333,6 +352,13 @@
     .auth-draw {
       animation: none;
       stroke-dashoffset: 0;
+    }
+    /* Keep the opacity crossfade (aids comprehension), drop the
+       position change. Shorter than the full animation but still
+       bridges the swap so it doesn't teleport. */
+    .auth-swap {
+      animation: auth-swap-enter 100ms var(--motion-ease-out) forwards;
+      transform: none;
     }
   }
 }
