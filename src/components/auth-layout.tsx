@@ -1,15 +1,8 @@
 // React
 import type React from "react";
 
-// Router
-import { Link } from "@tanstack/react-router";
-
 // UI Components
-import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-
-// Icons
-import { ChevronLeftIcon } from "lucide-react";
 
 // Shared Components
 import { FloatingPaths } from "@/components/floating-paths";
@@ -70,17 +63,9 @@ export function AuthLayout({
 
 			{/* Form panel */}
 			<div className="relative flex min-h-dvh flex-col p-5 sm:p-6 lg:min-h-screen lg:p-8">
-				{/* Header — brand on mobile, back-to-home on the right */}
-				<header className="flex items-center justify-between">
+				{/* Header — brand on mobile (desktop shows it in the showcase aside) */}
+				<header className="flex items-center">
 					<Logo className="h-7 lg:hidden" />
-					<Button
-						render={<Link to="/" />}
-						variant="ghost"
-						className="-me-2 lg:me-0 lg:-ms-2"
-					>
-						<ChevronLeftIcon />
-						Home
-					</Button>
 				</header>
 
 				{/* Main — form, centered in the remaining space */}
