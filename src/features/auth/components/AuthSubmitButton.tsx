@@ -80,7 +80,7 @@ export default function AuthSubmitButton({
               "relative w-full disabled:opacity-100",
               "transition-colors duration-200 ease-out",
               showSuccess &&
-                "border-success bg-success text-success-foreground hover:bg-success",
+                "border-success bg-success text-white hover:bg-success",
               className,
             )}
           >
