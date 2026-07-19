@@ -18,7 +18,7 @@ export function FloatingPaths({ position }: { position: number }) {
 	return (
 		<div className="pointer-events-none absolute inset-0">
 			<svg
-				className="h-full w-full text-foreground"
+				className="h-full w-full text-emerald-950"
 				fill="none"
 				viewBox="0 0 696 316"
 			>

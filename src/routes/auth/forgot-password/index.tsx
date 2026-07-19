@@ -21,6 +21,7 @@ function RouteComponent() {
     <AuthLayout
       title="Forgot Password"
       description="Enter your email and we'll send you a reset link."
+      showLegal={false}
     >
       <ForgotPasswordForm />
     </AuthLayout>

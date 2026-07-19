@@ -25,6 +25,7 @@ function RouteComponent() {
     <AuthLayout
       title="Verify Your Email"
       description="Confirming your email address."
+      showLegal={false}
     >
       <VerifyEmail token={token ?? ""} />
     </AuthLayout>

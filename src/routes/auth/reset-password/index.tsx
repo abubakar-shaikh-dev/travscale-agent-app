@@ -28,6 +28,7 @@ function RouteComponent() {
     <AuthLayout
       title="Reset Password"
       description="Choose a new password for your account."
+      showLegal={false}
     >
       <ResetPasswordForm token={token} />
     </AuthLayout>
