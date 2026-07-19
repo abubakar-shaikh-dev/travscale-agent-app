@@ -31,7 +31,7 @@ import { useSuppliers } from "@/features/suppliers/queries";
 // Types
 import type { Supplier, ServiceType } from "@/features/suppliers/types";
 
-export const Route = createFileRoute("/suppliers/")({
+export const Route = createFileRoute("/_auth/suppliers/")({
   component: SuppliersPage,
 });
 

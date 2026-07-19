@@ -74,6 +74,7 @@
 
 :root {
   --radius: 0.625rem;
+  --font-heading: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --background: var(--color-white);
   --foreground: var(--color-neutral-800);
   --card: var(--color-white);

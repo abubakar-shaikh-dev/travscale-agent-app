@@ -1,3 +1,6 @@
+// Zod
+import { z } from "zod";
+
 // Router
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
@@ -5,9 +8,12 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { AuthLayout } from "@/components/auth-layout";
 
 // Feature Components
-import { RegisterForm } from "@/features/auth/components/RegisterForm";
+import { ResetPasswordForm } from "@/features/auth/components/ResetPasswordForm";
 
-export const Route = createFileRoute("/auth/register/")({
+export const Route = createFileRoute("/auth/reset-password/")({
+  validateSearch: z.object({
+    token: z.string().min(1),
+  }),
   beforeLoad: ({ context }) => {
     if (context.auth.isAuthenticated) {
       throw redirect({ to: "/" });
@@ -17,13 +23,13 @@ export const Route = createFileRoute("/auth/register/")({
 });
 
 function RouteComponent() {
+  const { token } = Route.useSearch();
   return (
     <AuthLayout
-      title="Create Account"
-      description="Join us and start your journey today."
-      wide
+      title="Reset Password"
+      description="Choose a new password for your account."
     >
-      <RegisterForm />
+      <ResetPasswordForm token={token} />
     </AuthLayout>
   );
 }

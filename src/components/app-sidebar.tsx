@@ -31,12 +31,24 @@ import {
   SIDEBAR_USER,
 } from "@/lib/constants/sidebar";
 
+// Lib
+import { selectUser, useAuthStore } from "@/lib/auth-store";
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const router = useRouter();
   const currentPath = router.state.location.pathname;
   const DashboardIcon = SIDEBAR_DASHBOARD_ITEM.icon;
   const isDashboardActive = currentPath === SIDEBAR_DASHBOARD_ITEM.url;
+  const authUser = useAuthStore(selectUser);
+
+  const sidebarUser = authUser
+    ? {
+        name: authUser.name,
+        email: authUser.email,
+        avatar: "",
+      }
+    : SIDEBAR_USER;
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -81,7 +93,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={NAV_MAIN_ITEMS} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={SIDEBAR_USER} />
+        <NavUser user={sidebarUser} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

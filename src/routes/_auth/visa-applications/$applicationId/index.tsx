@@ -18,7 +18,7 @@ import { useVisaApplication } from "@/features/visa-applications/queries";
 // Constants
 import { mockVisaApplications } from "@/features/visa-applications/dummy-data";
 
-export const Route = createFileRoute("/visa-applications/$applicationId/")(
+export const Route = createFileRoute("/_auth/visa-applications/$applicationId/")(
   {
     component: VisaApplicationDetailPage,
   },

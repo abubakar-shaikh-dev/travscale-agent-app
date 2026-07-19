@@ -1,116 +1,127 @@
-import { useState, type FormEvent } from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { FieldLabel } from "@/lib/form/field-components/FieldLabel";
-import { AtSignIcon, EyeIcon, EyeOffIcon, LockIcon } from "lucide-react";
+// React
+import { Suspense, useState } from "react";
+
+// Router
+import { Link, useNavigate } from "@tanstack/react-router";
+
+// Form
+import { useAppForm } from "@/lib/form/form-context";
+
+// Feature Components
+import AuthSubmitButton from "./AuthSubmitButton";
 import { useLogin } from "../queries";
 
+// Types
 export interface LoginFormProps {
   className?: string;
+  redirectTo?: string;
 }
 
-export function LoginForm({ className }: LoginFormProps) {
-  const [showPassword, setShowPassword] = useState(false);
+export function LoginForm({ className, redirectTo }: LoginFormProps) {
   const navigate = useNavigate();
   const loginMutation = useLogin();
+  const [succeeded, setSucceeded] = useState(false);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    try {
-      await loginMutation.mutateAsync({ email, password });
-      navigate({ to: "/" });
-    } catch {
-      console.error("Login failed");
-    }
-  };
+  const form = useAppForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async ({ value }) => {
+      try {
+        await loginMutation.mutateAsync(value);
+        setSucceeded(true);
+        // Navigation is deferred until the success animation finishes — see
+        // AuthSubmitButton's onSuccessComplete.
+      } catch {
+        // Error toast is surfaced by the mutation's onError handler.
+      }
+    },
+  });
 
   return (
-    <form className={`space-y-4 ${className}`} onSubmit={handleSubmit}>
-      <div className="space-y-2">
-        <FieldLabel label="Email" htmlFor="email" required />
-        <InputGroup>
-          <InputGroupInput
-            id="email"
+    <form.AppForm>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          void form.handleSubmit();
+        }}
+        className={`space-y-4 ${className ?? ""}`}
+      >
+        <Suspense fallback={null}>
+          <form.AppField
             name="email"
-            placeholder="your.email@example.com"
-            type="email"
-            required
-            disabled={loginMutation.isPending}
-          />
-          <InputGroupAddon>
-            <AtSignIcon />
-          </InputGroupAddon>
-        </InputGroup>
-      </div>
-
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <FieldLabel label="Password" htmlFor="password" required />
-          <a
-            href="/auth/login"
-            className="text-sm text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
+            validators={{
+              onBlur: ({ value }) => {
+                if (!value) return "Email is required";
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+                  return "Please enter a valid email";
+                return undefined;
+              },
+            }}
           >
-            Forgot password?
-          </a>
-        </div>
-        <InputGroup>
-          <InputGroupAddon align="inline-start">
-            <LockIcon />
-          </InputGroupAddon>
-          <InputGroupInput
-            id="password"
+            {(field) => (
+              <field.InputField
+                label="Email"
+                type="email"
+                placeholder="your.email@example.com"
+                required
+                disabled={loginMutation.isPending}
+              />
+            )}
+          </form.AppField>
+
+          <form.AppField
             name="password"
-            placeholder="Enter your password"
-            type={showPassword ? "text" : "password"}
-            required
+            validators={{
+              onBlur: ({ value }) => {
+                if (!value) return "Password is required";
+                return undefined;
+              },
+            }}
+          >
+            {(field) => (
+              <field.PasswordField
+                label="Password"
+                placeholder="Enter your password"
+                required
+                disabled={loginMutation.isPending}
+              />
+            )}
+          </form.AppField>
+
+          <div className="flex justify-end -mt-2">
+            <Link
+              to="/auth/forgot-password"
+              className="text-sm text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
+
+          <AuthSubmitButton
+            label="Sign In"
+            loadingLabel="Signing in..."
+            successLabel="Login Succeeded"
+            isSuccess={succeeded}
+            onSuccessComplete={() =>
+              navigate({ to: redirectTo ?? "/", replace: true })
+            }
             disabled={loginMutation.isPending}
           />
-          <InputGroupAddon align="inline-end">
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="hover:text-foreground transition-colors"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+
+          <p className="text-center text-sm text-muted-foreground">
+            Don't have an account?{" "}
+            <Link
+              to="/auth/register"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
-              {showPassword ? (
-                <EyeOffIcon className="size-4" />
-              ) : (
-                <EyeIcon className="size-4" />
-              )}
-            </button>
-          </InputGroupAddon>
-        </InputGroup>
-      </div>
-
-      <Button className="w-full" type="submit" disabled={loginMutation.isPending}>
-        {loginMutation.isPending ? (
-          <>
-            <span className="animate-spin">◌</span>
-            Signing in...
-          </>
-        ) : (
-          "Sign In"
-        )}
-      </Button>
-
-      <p className="text-center text-sm text-muted-foreground">
-        Don't have an account?{" "}
-        <a
-          href="/auth/register"
-          className="font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Create account
-        </a>
-      </p>
-    </form>
+              Create account
+            </Link>
+          </p>
+        </Suspense>
+      </form>
+    </form.AppForm>
   );
 }

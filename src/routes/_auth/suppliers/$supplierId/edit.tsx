@@ -12,7 +12,7 @@ import { SupplierForm } from "@/features/suppliers/components/SupplierForm";
 // Hooks
 import { useSupplier } from "@/features/suppliers/queries";
 
-export const Route = createFileRoute("/suppliers/$supplierId/edit")({
+export const Route = createFileRoute("/_auth/suppliers/$supplierId/edit")({
   component: EditSupplierPage,
 });
 

@@ -9,74 +9,46 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as VisaApplicationsIndexRouteImport } from './routes/visa-applications/index'
-import { Route as SuppliersIndexRouteImport } from './routes/suppliers/index'
-import { Route as PassengersIndexRouteImport } from './routes/passengers/index'
-import { Route as CustomersIndexRouteImport } from './routes/customers/index'
-import { Route as VisaApplicationsCreateRouteImport } from './routes/visa-applications/create'
-import { Route as SuppliersCreateRouteImport } from './routes/suppliers/create'
-import { Route as PassengersCreateRouteImport } from './routes/passengers/create'
-import { Route as CustomersCreateRouteImport } from './routes/customers/create'
-import { Route as VisaApplicationsApplicationIdIndexRouteImport } from './routes/visa-applications/$applicationId/index'
+import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as AuthIndexRouteImport } from './routes/_auth/index'
+import { Route as AuthVerifyEmailIndexRouteImport } from './routes/auth/verify-email/index'
+import { Route as AuthResetPasswordIndexRouteImport } from './routes/auth/reset-password/index'
 import { Route as AuthRegisterIndexRouteImport } from './routes/auth/register/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
-import { Route as VisaApplicationsApplicationIdUpdateStatusRouteImport } from './routes/visa-applications/$applicationId/update-status'
-import { Route as SuppliersSupplierIdEditRouteImport } from './routes/suppliers/$supplierId/edit'
-import { Route as PassengersPassengerIdEditRouteImport } from './routes/passengers/$passengerId/edit'
-import { Route as CustomersCustomerIdEditRouteImport } from './routes/customers/$customerId/edit'
+import { Route as AuthForgotPasswordIndexRouteImport } from './routes/auth/forgot-password/index'
+import { Route as AuthVisaApplicationsIndexRouteImport } from './routes/_auth/visa-applications/index'
+import { Route as AuthSuppliersIndexRouteImport } from './routes/_auth/suppliers/index'
+import { Route as AuthPassengersIndexRouteImport } from './routes/_auth/passengers/index'
+import { Route as AuthCustomersIndexRouteImport } from './routes/_auth/customers/index'
+import { Route as AuthVisaApplicationsCreateRouteImport } from './routes/_auth/visa-applications/create'
+import { Route as AuthSuppliersCreateRouteImport } from './routes/_auth/suppliers/create'
+import { Route as AuthPassengersCreateRouteImport } from './routes/_auth/passengers/create'
+import { Route as AuthCustomersCreateRouteImport } from './routes/_auth/customers/create'
+import { Route as AuthVisaApplicationsApplicationIdIndexRouteImport } from './routes/_auth/visa-applications/$applicationId/index'
+import { Route as AuthVisaApplicationsApplicationIdUpdateStatusRouteImport } from './routes/_auth/visa-applications/$applicationId/update-status'
+import { Route as AuthSuppliersSupplierIdEditRouteImport } from './routes/_auth/suppliers/$supplierId/edit'
+import { Route as AuthPassengersPassengerIdEditRouteImport } from './routes/_auth/passengers/$passengerId/edit'
+import { Route as AuthCustomersCustomerIdEditRouteImport } from './routes/_auth/customers/$customerId/edit'
 
-const IndexRoute = IndexRouteImport.update({
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthVerifyEmailIndexRoute = AuthVerifyEmailIndexRouteImport.update({
+  id: '/auth/verify-email/',
+  path: '/auth/verify-email/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VisaApplicationsIndexRoute = VisaApplicationsIndexRouteImport.update({
-  id: '/visa-applications/',
-  path: '/visa-applications/',
+const AuthResetPasswordIndexRoute = AuthResetPasswordIndexRouteImport.update({
+  id: '/auth/reset-password/',
+  path: '/auth/reset-password/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SuppliersIndexRoute = SuppliersIndexRouteImport.update({
-  id: '/suppliers/',
-  path: '/suppliers/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PassengersIndexRoute = PassengersIndexRouteImport.update({
-  id: '/passengers/',
-  path: '/passengers/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CustomersIndexRoute = CustomersIndexRouteImport.update({
-  id: '/customers/',
-  path: '/customers/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const VisaApplicationsCreateRoute = VisaApplicationsCreateRouteImport.update({
-  id: '/visa-applications/create',
-  path: '/visa-applications/create',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SuppliersCreateRoute = SuppliersCreateRouteImport.update({
-  id: '/suppliers/create',
-  path: '/suppliers/create',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PassengersCreateRoute = PassengersCreateRouteImport.update({
-  id: '/passengers/create',
-  path: '/passengers/create',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CustomersCreateRoute = CustomersCreateRouteImport.update({
-  id: '/customers/create',
-  path: '/customers/create',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const VisaApplicationsApplicationIdIndexRoute =
-  VisaApplicationsApplicationIdIndexRouteImport.update({
-    id: '/visa-applications/$applicationId/',
-    path: '/visa-applications/$applicationId/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const AuthRegisterIndexRoute = AuthRegisterIndexRouteImport.update({
   id: '/auth/register/',
   path: '/auth/register/',
@@ -87,83 +59,148 @@ const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   path: '/auth/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VisaApplicationsApplicationIdUpdateStatusRoute =
-  VisaApplicationsApplicationIdUpdateStatusRouteImport.update({
+const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
+  id: '/auth/forgot-password/',
+  path: '/auth/forgot-password/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthVisaApplicationsIndexRoute =
+  AuthVisaApplicationsIndexRouteImport.update({
+    id: '/visa-applications/',
+    path: '/visa-applications/',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthSuppliersIndexRoute = AuthSuppliersIndexRouteImport.update({
+  id: '/suppliers/',
+  path: '/suppliers/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthPassengersIndexRoute = AuthPassengersIndexRouteImport.update({
+  id: '/passengers/',
+  path: '/passengers/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthCustomersIndexRoute = AuthCustomersIndexRouteImport.update({
+  id: '/customers/',
+  path: '/customers/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthVisaApplicationsCreateRoute =
+  AuthVisaApplicationsCreateRouteImport.update({
+    id: '/visa-applications/create',
+    path: '/visa-applications/create',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthSuppliersCreateRoute = AuthSuppliersCreateRouteImport.update({
+  id: '/suppliers/create',
+  path: '/suppliers/create',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthPassengersCreateRoute = AuthPassengersCreateRouteImport.update({
+  id: '/passengers/create',
+  path: '/passengers/create',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthCustomersCreateRoute = AuthCustomersCreateRouteImport.update({
+  id: '/customers/create',
+  path: '/customers/create',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthVisaApplicationsApplicationIdIndexRoute =
+  AuthVisaApplicationsApplicationIdIndexRouteImport.update({
+    id: '/visa-applications/$applicationId/',
+    path: '/visa-applications/$applicationId/',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthVisaApplicationsApplicationIdUpdateStatusRoute =
+  AuthVisaApplicationsApplicationIdUpdateStatusRouteImport.update({
     id: '/visa-applications/$applicationId/update-status',
     path: '/visa-applications/$applicationId/update-status',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthRoute,
   } as any)
-const SuppliersSupplierIdEditRoute = SuppliersSupplierIdEditRouteImport.update({
-  id: '/suppliers/$supplierId/edit',
-  path: '/suppliers/$supplierId/edit',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PassengersPassengerIdEditRoute =
-  PassengersPassengerIdEditRouteImport.update({
+const AuthSuppliersSupplierIdEditRoute =
+  AuthSuppliersSupplierIdEditRouteImport.update({
+    id: '/suppliers/$supplierId/edit',
+    path: '/suppliers/$supplierId/edit',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthPassengersPassengerIdEditRoute =
+  AuthPassengersPassengerIdEditRouteImport.update({
     id: '/passengers/$passengerId/edit',
     path: '/passengers/$passengerId/edit',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthRoute,
   } as any)
-const CustomersCustomerIdEditRoute = CustomersCustomerIdEditRouteImport.update({
-  id: '/customers/$customerId/edit',
-  path: '/customers/$customerId/edit',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthCustomersCustomerIdEditRoute =
+  AuthCustomersCustomerIdEditRouteImport.update({
+    id: '/customers/$customerId/edit',
+    path: '/customers/$customerId/edit',
+    getParentRoute: () => AuthRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/customers/create': typeof CustomersCreateRoute
-  '/passengers/create': typeof PassengersCreateRoute
-  '/suppliers/create': typeof SuppliersCreateRoute
-  '/visa-applications/create': typeof VisaApplicationsCreateRoute
-  '/customers/': typeof CustomersIndexRoute
-  '/passengers/': typeof PassengersIndexRoute
-  '/suppliers/': typeof SuppliersIndexRoute
-  '/visa-applications/': typeof VisaApplicationsIndexRoute
-  '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
-  '/passengers/$passengerId/edit': typeof PassengersPassengerIdEditRoute
-  '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
-  '/visa-applications/$applicationId/update-status': typeof VisaApplicationsApplicationIdUpdateStatusRoute
+  '/': typeof AuthIndexRoute
+  '/customers/create': typeof AuthCustomersCreateRoute
+  '/passengers/create': typeof AuthPassengersCreateRoute
+  '/suppliers/create': typeof AuthSuppliersCreateRoute
+  '/visa-applications/create': typeof AuthVisaApplicationsCreateRoute
+  '/customers/': typeof AuthCustomersIndexRoute
+  '/passengers/': typeof AuthPassengersIndexRoute
+  '/suppliers/': typeof AuthSuppliersIndexRoute
+  '/visa-applications/': typeof AuthVisaApplicationsIndexRoute
+  '/auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
-  '/visa-applications/$applicationId/': typeof VisaApplicationsApplicationIdIndexRoute
+  '/auth/reset-password/': typeof AuthResetPasswordIndexRoute
+  '/auth/verify-email/': typeof AuthVerifyEmailIndexRoute
+  '/customers/$customerId/edit': typeof AuthCustomersCustomerIdEditRoute
+  '/passengers/$passengerId/edit': typeof AuthPassengersPassengerIdEditRoute
+  '/suppliers/$supplierId/edit': typeof AuthSuppliersSupplierIdEditRoute
+  '/visa-applications/$applicationId/update-status': typeof AuthVisaApplicationsApplicationIdUpdateStatusRoute
+  '/visa-applications/$applicationId/': typeof AuthVisaApplicationsApplicationIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/customers/create': typeof CustomersCreateRoute
-  '/passengers/create': typeof PassengersCreateRoute
-  '/suppliers/create': typeof SuppliersCreateRoute
-  '/visa-applications/create': typeof VisaApplicationsCreateRoute
-  '/customers': typeof CustomersIndexRoute
-  '/passengers': typeof PassengersIndexRoute
-  '/suppliers': typeof SuppliersIndexRoute
-  '/visa-applications': typeof VisaApplicationsIndexRoute
-  '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
-  '/passengers/$passengerId/edit': typeof PassengersPassengerIdEditRoute
-  '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
-  '/visa-applications/$applicationId/update-status': typeof VisaApplicationsApplicationIdUpdateStatusRoute
+  '/': typeof AuthIndexRoute
+  '/customers/create': typeof AuthCustomersCreateRoute
+  '/passengers/create': typeof AuthPassengersCreateRoute
+  '/suppliers/create': typeof AuthSuppliersCreateRoute
+  '/visa-applications/create': typeof AuthVisaApplicationsCreateRoute
+  '/customers': typeof AuthCustomersIndexRoute
+  '/passengers': typeof AuthPassengersIndexRoute
+  '/suppliers': typeof AuthSuppliersIndexRoute
+  '/visa-applications': typeof AuthVisaApplicationsIndexRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/auth/register': typeof AuthRegisterIndexRoute
-  '/visa-applications/$applicationId': typeof VisaApplicationsApplicationIdIndexRoute
+  '/auth/reset-password': typeof AuthResetPasswordIndexRoute
+  '/auth/verify-email': typeof AuthVerifyEmailIndexRoute
+  '/customers/$customerId/edit': typeof AuthCustomersCustomerIdEditRoute
+  '/passengers/$passengerId/edit': typeof AuthPassengersPassengerIdEditRoute
+  '/suppliers/$supplierId/edit': typeof AuthSuppliersSupplierIdEditRoute
+  '/visa-applications/$applicationId/update-status': typeof AuthVisaApplicationsApplicationIdUpdateStatusRoute
+  '/visa-applications/$applicationId': typeof AuthVisaApplicationsApplicationIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/customers/create': typeof CustomersCreateRoute
-  '/passengers/create': typeof PassengersCreateRoute
-  '/suppliers/create': typeof SuppliersCreateRoute
-  '/visa-applications/create': typeof VisaApplicationsCreateRoute
-  '/customers/': typeof CustomersIndexRoute
-  '/passengers/': typeof PassengersIndexRoute
-  '/suppliers/': typeof SuppliersIndexRoute
-  '/visa-applications/': typeof VisaApplicationsIndexRoute
-  '/customers/$customerId/edit': typeof CustomersCustomerIdEditRoute
-  '/passengers/$passengerId/edit': typeof PassengersPassengerIdEditRoute
-  '/suppliers/$supplierId/edit': typeof SuppliersSupplierIdEditRoute
-  '/visa-applications/$applicationId/update-status': typeof VisaApplicationsApplicationIdUpdateStatusRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/_auth/': typeof AuthIndexRoute
+  '/_auth/customers/create': typeof AuthCustomersCreateRoute
+  '/_auth/passengers/create': typeof AuthPassengersCreateRoute
+  '/_auth/suppliers/create': typeof AuthSuppliersCreateRoute
+  '/_auth/visa-applications/create': typeof AuthVisaApplicationsCreateRoute
+  '/_auth/customers/': typeof AuthCustomersIndexRoute
+  '/_auth/passengers/': typeof AuthPassengersIndexRoute
+  '/_auth/suppliers/': typeof AuthSuppliersIndexRoute
+  '/_auth/visa-applications/': typeof AuthVisaApplicationsIndexRoute
+  '/auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
-  '/visa-applications/$applicationId/': typeof VisaApplicationsApplicationIdIndexRoute
+  '/auth/reset-password/': typeof AuthResetPasswordIndexRoute
+  '/auth/verify-email/': typeof AuthVerifyEmailIndexRoute
+  '/_auth/customers/$customerId/edit': typeof AuthCustomersCustomerIdEditRoute
+  '/_auth/passengers/$passengerId/edit': typeof AuthPassengersPassengerIdEditRoute
+  '/_auth/suppliers/$supplierId/edit': typeof AuthSuppliersSupplierIdEditRoute
+  '/_auth/visa-applications/$applicationId/update-status': typeof AuthVisaApplicationsApplicationIdUpdateStatusRoute
+  '/_auth/visa-applications/$applicationId/': typeof AuthVisaApplicationsApplicationIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -177,12 +214,15 @@ export interface FileRouteTypes {
     | '/passengers/'
     | '/suppliers/'
     | '/visa-applications/'
+    | '/auth/forgot-password/'
+    | '/auth/login/'
+    | '/auth/register/'
+    | '/auth/reset-password/'
+    | '/auth/verify-email/'
     | '/customers/$customerId/edit'
     | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
     | '/visa-applications/$applicationId/update-status'
-    | '/auth/login/'
-    | '/auth/register/'
     | '/visa-applications/$applicationId/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -195,122 +235,77 @@ export interface FileRouteTypes {
     | '/passengers'
     | '/suppliers'
     | '/visa-applications'
+    | '/auth/forgot-password'
+    | '/auth/login'
+    | '/auth/register'
+    | '/auth/reset-password'
+    | '/auth/verify-email'
     | '/customers/$customerId/edit'
     | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
     | '/visa-applications/$applicationId/update-status'
-    | '/auth/login'
-    | '/auth/register'
     | '/visa-applications/$applicationId'
   id:
     | '__root__'
-    | '/'
-    | '/customers/create'
-    | '/passengers/create'
-    | '/suppliers/create'
-    | '/visa-applications/create'
-    | '/customers/'
-    | '/passengers/'
-    | '/suppliers/'
-    | '/visa-applications/'
-    | '/customers/$customerId/edit'
-    | '/passengers/$passengerId/edit'
-    | '/suppliers/$supplierId/edit'
-    | '/visa-applications/$applicationId/update-status'
+    | '/_auth'
+    | '/_auth/'
+    | '/_auth/customers/create'
+    | '/_auth/passengers/create'
+    | '/_auth/suppliers/create'
+    | '/_auth/visa-applications/create'
+    | '/_auth/customers/'
+    | '/_auth/passengers/'
+    | '/_auth/suppliers/'
+    | '/_auth/visa-applications/'
+    | '/auth/forgot-password/'
     | '/auth/login/'
     | '/auth/register/'
-    | '/visa-applications/$applicationId/'
+    | '/auth/reset-password/'
+    | '/auth/verify-email/'
+    | '/_auth/customers/$customerId/edit'
+    | '/_auth/passengers/$passengerId/edit'
+    | '/_auth/suppliers/$supplierId/edit'
+    | '/_auth/visa-applications/$applicationId/update-status'
+    | '/_auth/visa-applications/$applicationId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  CustomersCreateRoute: typeof CustomersCreateRoute
-  PassengersCreateRoute: typeof PassengersCreateRoute
-  SuppliersCreateRoute: typeof SuppliersCreateRoute
-  VisaApplicationsCreateRoute: typeof VisaApplicationsCreateRoute
-  CustomersIndexRoute: typeof CustomersIndexRoute
-  PassengersIndexRoute: typeof PassengersIndexRoute
-  SuppliersIndexRoute: typeof SuppliersIndexRoute
-  VisaApplicationsIndexRoute: typeof VisaApplicationsIndexRoute
-  CustomersCustomerIdEditRoute: typeof CustomersCustomerIdEditRoute
-  PassengersPassengerIdEditRoute: typeof PassengersPassengerIdEditRoute
-  SuppliersSupplierIdEditRoute: typeof SuppliersSupplierIdEditRoute
-  VisaApplicationsApplicationIdUpdateStatusRoute: typeof VisaApplicationsApplicationIdUpdateStatusRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  AuthForgotPasswordIndexRoute: typeof AuthForgotPasswordIndexRoute
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
   AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
-  VisaApplicationsApplicationIdIndexRoute: typeof VisaApplicationsApplicationIdIndexRoute
+  AuthResetPasswordIndexRoute: typeof AuthResetPasswordIndexRoute
+  AuthVerifyEmailIndexRoute: typeof AuthVerifyEmailIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/': {
+      id: '/_auth/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/auth/verify-email/': {
+      id: '/auth/verify-email/'
+      path: '/auth/verify-email'
+      fullPath: '/auth/verify-email/'
+      preLoaderRoute: typeof AuthVerifyEmailIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/visa-applications/': {
-      id: '/visa-applications/'
-      path: '/visa-applications'
-      fullPath: '/visa-applications/'
-      preLoaderRoute: typeof VisaApplicationsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/suppliers/': {
-      id: '/suppliers/'
-      path: '/suppliers'
-      fullPath: '/suppliers/'
-      preLoaderRoute: typeof SuppliersIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/passengers/': {
-      id: '/passengers/'
-      path: '/passengers'
-      fullPath: '/passengers/'
-      preLoaderRoute: typeof PassengersIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/customers/': {
-      id: '/customers/'
-      path: '/customers'
-      fullPath: '/customers/'
-      preLoaderRoute: typeof CustomersIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/visa-applications/create': {
-      id: '/visa-applications/create'
-      path: '/visa-applications/create'
-      fullPath: '/visa-applications/create'
-      preLoaderRoute: typeof VisaApplicationsCreateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/suppliers/create': {
-      id: '/suppliers/create'
-      path: '/suppliers/create'
-      fullPath: '/suppliers/create'
-      preLoaderRoute: typeof SuppliersCreateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/passengers/create': {
-      id: '/passengers/create'
-      path: '/passengers/create'
-      fullPath: '/passengers/create'
-      preLoaderRoute: typeof PassengersCreateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/customers/create': {
-      id: '/customers/create'
-      path: '/customers/create'
-      fullPath: '/customers/create'
-      preLoaderRoute: typeof CustomersCreateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/visa-applications/$applicationId/': {
-      id: '/visa-applications/$applicationId/'
-      path: '/visa-applications/$applicationId'
-      fullPath: '/visa-applications/$applicationId/'
-      preLoaderRoute: typeof VisaApplicationsApplicationIdIndexRouteImport
+    '/auth/reset-password/': {
+      id: '/auth/reset-password/'
+      path: '/auth/reset-password'
+      fullPath: '/auth/reset-password/'
+      preLoaderRoute: typeof AuthResetPasswordIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/register/': {
@@ -327,56 +322,152 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/visa-applications/$applicationId/update-status': {
-      id: '/visa-applications/$applicationId/update-status'
+    '/auth/forgot-password/': {
+      id: '/auth/forgot-password/'
+      path: '/auth/forgot-password'
+      fullPath: '/auth/forgot-password/'
+      preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/visa-applications/': {
+      id: '/_auth/visa-applications/'
+      path: '/visa-applications'
+      fullPath: '/visa-applications/'
+      preLoaderRoute: typeof AuthVisaApplicationsIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/suppliers/': {
+      id: '/_auth/suppliers/'
+      path: '/suppliers'
+      fullPath: '/suppliers/'
+      preLoaderRoute: typeof AuthSuppliersIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/passengers/': {
+      id: '/_auth/passengers/'
+      path: '/passengers'
+      fullPath: '/passengers/'
+      preLoaderRoute: typeof AuthPassengersIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/customers/': {
+      id: '/_auth/customers/'
+      path: '/customers'
+      fullPath: '/customers/'
+      preLoaderRoute: typeof AuthCustomersIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/visa-applications/create': {
+      id: '/_auth/visa-applications/create'
+      path: '/visa-applications/create'
+      fullPath: '/visa-applications/create'
+      preLoaderRoute: typeof AuthVisaApplicationsCreateRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/suppliers/create': {
+      id: '/_auth/suppliers/create'
+      path: '/suppliers/create'
+      fullPath: '/suppliers/create'
+      preLoaderRoute: typeof AuthSuppliersCreateRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/passengers/create': {
+      id: '/_auth/passengers/create'
+      path: '/passengers/create'
+      fullPath: '/passengers/create'
+      preLoaderRoute: typeof AuthPassengersCreateRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/customers/create': {
+      id: '/_auth/customers/create'
+      path: '/customers/create'
+      fullPath: '/customers/create'
+      preLoaderRoute: typeof AuthCustomersCreateRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/visa-applications/$applicationId/': {
+      id: '/_auth/visa-applications/$applicationId/'
+      path: '/visa-applications/$applicationId'
+      fullPath: '/visa-applications/$applicationId/'
+      preLoaderRoute: typeof AuthVisaApplicationsApplicationIdIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/visa-applications/$applicationId/update-status': {
+      id: '/_auth/visa-applications/$applicationId/update-status'
       path: '/visa-applications/$applicationId/update-status'
       fullPath: '/visa-applications/$applicationId/update-status'
-      preLoaderRoute: typeof VisaApplicationsApplicationIdUpdateStatusRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthVisaApplicationsApplicationIdUpdateStatusRouteImport
+      parentRoute: typeof AuthRoute
     }
-    '/suppliers/$supplierId/edit': {
-      id: '/suppliers/$supplierId/edit'
+    '/_auth/suppliers/$supplierId/edit': {
+      id: '/_auth/suppliers/$supplierId/edit'
       path: '/suppliers/$supplierId/edit'
       fullPath: '/suppliers/$supplierId/edit'
-      preLoaderRoute: typeof SuppliersSupplierIdEditRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthSuppliersSupplierIdEditRouteImport
+      parentRoute: typeof AuthRoute
     }
-    '/passengers/$passengerId/edit': {
-      id: '/passengers/$passengerId/edit'
+    '/_auth/passengers/$passengerId/edit': {
+      id: '/_auth/passengers/$passengerId/edit'
       path: '/passengers/$passengerId/edit'
       fullPath: '/passengers/$passengerId/edit'
-      preLoaderRoute: typeof PassengersPassengerIdEditRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthPassengersPassengerIdEditRouteImport
+      parentRoute: typeof AuthRoute
     }
-    '/customers/$customerId/edit': {
-      id: '/customers/$customerId/edit'
+    '/_auth/customers/$customerId/edit': {
+      id: '/_auth/customers/$customerId/edit'
       path: '/customers/$customerId/edit'
       fullPath: '/customers/$customerId/edit'
-      preLoaderRoute: typeof CustomersCustomerIdEditRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthCustomersCustomerIdEditRouteImport
+      parentRoute: typeof AuthRoute
     }
   }
 }
 
+interface AuthRouteChildren {
+  AuthIndexRoute: typeof AuthIndexRoute
+  AuthCustomersCreateRoute: typeof AuthCustomersCreateRoute
+  AuthPassengersCreateRoute: typeof AuthPassengersCreateRoute
+  AuthSuppliersCreateRoute: typeof AuthSuppliersCreateRoute
+  AuthVisaApplicationsCreateRoute: typeof AuthVisaApplicationsCreateRoute
+  AuthCustomersIndexRoute: typeof AuthCustomersIndexRoute
+  AuthPassengersIndexRoute: typeof AuthPassengersIndexRoute
+  AuthSuppliersIndexRoute: typeof AuthSuppliersIndexRoute
+  AuthVisaApplicationsIndexRoute: typeof AuthVisaApplicationsIndexRoute
+  AuthCustomersCustomerIdEditRoute: typeof AuthCustomersCustomerIdEditRoute
+  AuthPassengersPassengerIdEditRoute: typeof AuthPassengersPassengerIdEditRoute
+  AuthSuppliersSupplierIdEditRoute: typeof AuthSuppliersSupplierIdEditRoute
+  AuthVisaApplicationsApplicationIdUpdateStatusRoute: typeof AuthVisaApplicationsApplicationIdUpdateStatusRoute
+  AuthVisaApplicationsApplicationIdIndexRoute: typeof AuthVisaApplicationsApplicationIdIndexRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthIndexRoute: AuthIndexRoute,
+  AuthCustomersCreateRoute: AuthCustomersCreateRoute,
+  AuthPassengersCreateRoute: AuthPassengersCreateRoute,
+  AuthSuppliersCreateRoute: AuthSuppliersCreateRoute,
+  AuthVisaApplicationsCreateRoute: AuthVisaApplicationsCreateRoute,
+  AuthCustomersIndexRoute: AuthCustomersIndexRoute,
+  AuthPassengersIndexRoute: AuthPassengersIndexRoute,
+  AuthSuppliersIndexRoute: AuthSuppliersIndexRoute,
+  AuthVisaApplicationsIndexRoute: AuthVisaApplicationsIndexRoute,
+  AuthCustomersCustomerIdEditRoute: AuthCustomersCustomerIdEditRoute,
+  AuthPassengersPassengerIdEditRoute: AuthPassengersPassengerIdEditRoute,
+  AuthSuppliersSupplierIdEditRoute: AuthSuppliersSupplierIdEditRoute,
+  AuthVisaApplicationsApplicationIdUpdateStatusRoute:
+    AuthVisaApplicationsApplicationIdUpdateStatusRoute,
+  AuthVisaApplicationsApplicationIdIndexRoute:
+    AuthVisaApplicationsApplicationIdIndexRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  CustomersCreateRoute: CustomersCreateRoute,
-  PassengersCreateRoute: PassengersCreateRoute,
-  SuppliersCreateRoute: SuppliersCreateRoute,
-  VisaApplicationsCreateRoute: VisaApplicationsCreateRoute,
-  CustomersIndexRoute: CustomersIndexRoute,
-  PassengersIndexRoute: PassengersIndexRoute,
-  SuppliersIndexRoute: SuppliersIndexRoute,
-  VisaApplicationsIndexRoute: VisaApplicationsIndexRoute,
-  CustomersCustomerIdEditRoute: CustomersCustomerIdEditRoute,
-  PassengersPassengerIdEditRoute: PassengersPassengerIdEditRoute,
-  SuppliersSupplierIdEditRoute: SuppliersSupplierIdEditRoute,
-  VisaApplicationsApplicationIdUpdateStatusRoute:
-    VisaApplicationsApplicationIdUpdateStatusRoute,
+  AuthRoute: AuthRouteWithChildren,
+  AuthForgotPasswordIndexRoute: AuthForgotPasswordIndexRoute,
   AuthLoginIndexRoute: AuthLoginIndexRoute,
   AuthRegisterIndexRoute: AuthRegisterIndexRoute,
-  VisaApplicationsApplicationIdIndexRoute:
-    VisaApplicationsApplicationIdIndexRoute,
+  AuthResetPasswordIndexRoute: AuthResetPasswordIndexRoute,
+  AuthVerifyEmailIndexRoute: AuthVerifyEmailIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

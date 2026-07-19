@@ -12,7 +12,7 @@ import { PassengerForm } from "@/features/passengers/components/PassengerForm";
 // Hooks
 import { usePassenger } from "@/features/passengers/queries";
 
-export const Route = createFileRoute("/passengers/$passengerId/edit")({
+export const Route = createFileRoute("/_auth/passengers/$passengerId/edit")({
   component: EditPassengerPage,
 });
 

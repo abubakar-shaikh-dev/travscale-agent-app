@@ -8,6 +8,7 @@ export const { fieldContext, formContext, useFieldContext, useFormContext } =
 
 // Step 2: Lazy-load field components for code splitting
 const InputField = lazy(() => import("./field-components/InputField"));
+const PasswordField = lazy(() => import("./field-components/PasswordField"));
 const DatePickerField = lazy(
   () => import("./field-components/DatePickerField"),
 );
@@ -28,6 +29,7 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
   fieldComponents: {
     DatePickerField,
     InputField,
+    PasswordField,
     SelectField,
     PhoneField,
     RadioCardField,

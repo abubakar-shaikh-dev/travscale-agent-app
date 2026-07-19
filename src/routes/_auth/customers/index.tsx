@@ -23,7 +23,7 @@ import { DeleteCustomerButton } from "@/features/customers/components/DeleteCust
 // Types
 import type { Customer } from "@/features/customers/types";
 
-export const Route = createFileRoute("/customers/")({
+export const Route = createFileRoute("/_auth/customers/")({
   component: CustomersPage,
 });
 

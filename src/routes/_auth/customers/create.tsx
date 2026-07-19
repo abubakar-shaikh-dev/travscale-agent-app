@@ -8,7 +8,7 @@ import SidebarLayout from "@/components/sidebar-layout";
 import PageHeader from "@/components/shared/PageHeader";
 import { CustomerForm } from "@/features/customers/components/CustomerForm";
 
-export const Route = createFileRoute("/customers/create")({
+export const Route = createFileRoute("/_auth/customers/create")({
   component: CreateCustomerPage,
 });
 

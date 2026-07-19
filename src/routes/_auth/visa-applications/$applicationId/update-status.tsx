@@ -37,7 +37,7 @@ import { VALID_STATUS_TRANSITIONS } from "@/features/visa-applications/visa-form
 import type { VisaStatus } from "@/features/visa-applications/types";
 
 export const Route = createFileRoute(
-  "/visa-applications/$applicationId/update-status",
+  "/_auth/visa-applications/$applicationId/update-status",
 )({
   component: UpdateVisaStatusPage,
 });

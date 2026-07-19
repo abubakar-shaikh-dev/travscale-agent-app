@@ -7,13 +7,17 @@ import type React from "react";
 import { FloatingPaths } from "@/components/floating-paths";
 import { Link } from "@tanstack/react-router";
 
+// Utils
+import { cn } from "@/lib/utils";
+
 interface AuthLayoutProps {
 	children: React.ReactNode;
 	title: string;
 	description: string;
+	wide?: boolean;
 }
 
-export function AuthLayout({ children, title, description }: AuthLayoutProps) {
+export function AuthLayout({ children, title, description, wide }: AuthLayoutProps) {
 	return (
 		<main className="relative md:h-screen md:overflow-hidden lg:grid lg:grid-cols-2">
 			<div className="relative hidden h-full flex-col border-r bg-secondary p-10 lg:flex dark:bg-secondary/20">
@@ -36,7 +40,7 @@ export function AuthLayout({ children, title, description }: AuthLayoutProps) {
 					<FloatingPaths position={-1} />
 				</div>
 			</div>
-			<div className="relative flex min-h-screen flex-col justify-center p-4">
+			<div className="relative flex min-h-screen flex-col p-4 sm:p-6">
 				<div
 					aria-hidden
 					className="-z-10 absolute inset-0 isolate opacity-60 contain-strict"
@@ -45,18 +49,44 @@ export function AuthLayout({ children, title, description }: AuthLayoutProps) {
 					<div className="absolute top-0 right-0 h-320 w-60 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,--theme(--color-foreground/.04)_0,--theme(--color-foreground/.01)_80%,transparent_100%)] [translate:5%_-50%]" />
 					<div className="-translate-y-87.5 absolute top-0 right-0 h-320 w-60 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,--theme(--color-foreground/.04)_0,--theme(--color-foreground/.01)_80%,transparent_100%)]" />
 				</div>
-				<Button render={<Link to="/" />} className="absolute top-7 left-5" variant="ghost">
+
+				{/* Header — back to home */}
+				<Button
+					render={<Link to="/" />}
+					variant="ghost"
+					className="-ms-2 self-start"
+				>
 					<ChevronLeftIcon />
 					Home
 				</Button>
-				<div className="mx-auto space-y-4 sm:w-sm">
-					<Logo className="h-10 lg:hidden" />
-					<div className="flex flex-col space-y-1">
-						<h1 className="font-bold text-2xl tracking-wide">{title}</h1>
-						<p className="text-base text-muted-foreground">{description}</p>
+
+				{/* Main — form, centered in the remaining space */}
+				<div className="flex flex-1 flex-col items-center justify-center py-10">
+					<div
+						className={cn(
+							"w-full space-y-8 [&_[data-slot=input]]:h-11 [&_[data-slot=input]]:leading-11 [&_[data-slot=button].w-full]:h-11",
+							wide ? "max-w-lg" : "max-w-sm",
+						)}
+					>
+						<div className="space-y-6">
+							<Logo className="h-10 lg:hidden" />
+							<div className="space-y-2">
+								<h1 className="font-heading font-bold text-2xl tracking-wide">{title}</h1>
+								<p className="text-base text-muted-foreground">{description}</p>
+							</div>
+						</div>
+						{children}
 					</div>
-					{children}
-					<p className="mt-8 text-muted-foreground text-sm">
+				</div>
+
+				{/* Footer — legal, pinned to bottom */}
+				<footer
+					className={cn(
+						"mx-auto w-full text-center text-sm text-muted-foreground",
+						wide ? "max-w-lg" : "max-w-sm",
+					)}
+				>
+					<p>
 						By clicking continue, you agree to our{" "}
 						<a
 							className="underline underline-offset-4 hover:text-primary"
@@ -73,7 +103,7 @@ export function AuthLayout({ children, title, description }: AuthLayoutProps) {
 						</a>
 						.
 					</p>
-				</div>
+				</footer>
 			</div>
 		</main>
 	);

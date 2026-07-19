@@ -12,7 +12,7 @@ import { CustomerForm } from "@/features/customers/components/CustomerForm";
 // Hooks
 import { useCustomer } from "@/features/customers/queries";
 
-export const Route = createFileRoute("/customers/$customerId/edit")({
+export const Route = createFileRoute("/_auth/customers/$customerId/edit")({
   component: EditCustomerPage,
 });
 

@@ -5,9 +5,9 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { AuthLayout } from "@/components/auth-layout";
 
 // Feature Components
-import { RegisterForm } from "@/features/auth/components/RegisterForm";
+import { ForgotPasswordForm } from "@/features/auth/components/ForgotPasswordForm";
 
-export const Route = createFileRoute("/auth/register/")({
+export const Route = createFileRoute("/auth/forgot-password/")({
   beforeLoad: ({ context }) => {
     if (context.auth.isAuthenticated) {
       throw redirect({ to: "/" });
@@ -19,11 +19,10 @@ export const Route = createFileRoute("/auth/register/")({
 function RouteComponent() {
   return (
     <AuthLayout
-      title="Create Account"
-      description="Join us and start your journey today."
-      wide
+      title="Forgot Password"
+      description="Enter your email and we'll send you a reset link."
     >
-      <RegisterForm />
+      <ForgotPasswordForm />
     </AuthLayout>
   );
 }

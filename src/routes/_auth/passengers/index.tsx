@@ -23,7 +23,7 @@ import { usePassengers } from "@/features/passengers/queries";
 // Types
 import type { Passenger } from "@/features/passengers/types";
 
-export const Route = createFileRoute("/passengers/")({
+export const Route = createFileRoute("/_auth/passengers/")({
   component: PassengersPage,
 });
 
