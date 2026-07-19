@@ -99,36 +99,31 @@ export function AuthLayout({
               <p className="text-base text-muted-foreground">{description}</p>
             </div>
             {children}
+
+            {/* Legal — flows right beneath the content (buttons or form)
+                rather than being pinned to the viewport bottom, so it sits
+                close to the actions in the collapsed state too. */}
+            {showLegal && (
+              <p className="auth-fade text-center text-sm text-muted-foreground">
+                By continuing, you agree to our{" "}
+                <a
+                  className="underline underline-offset-4 hover:text-primary"
+                  href="#"
+                >
+                  Terms of Service
+                </a>{" "}
+                and{" "}
+                <a
+                  className="underline underline-offset-4 hover:text-primary"
+                  href="#"
+                >
+                  Privacy Policy
+                </a>
+                .
+              </p>
+            )}
           </div>
         </div>
-
-        {/* Footer — legal, pinned to bottom */}
-        {showLegal && (
-          <footer
-            className={cn(
-              "mx-auto w-full text-center text-sm text-muted-foreground",
-              wide ? "max-w-lg" : "max-w-sm",
-            )}
-          >
-            <p>
-              By continuing, you agree to our{" "}
-              <a
-                className="underline underline-offset-4 hover:text-primary"
-                href="#"
-              >
-                Terms of Service
-              </a>{" "}
-              and{" "}
-              <a
-                className="underline underline-offset-4 hover:text-primary"
-                href="#"
-              >
-                Privacy Policy
-              </a>
-              .
-            </p>
-          </footer>
-        )}
       </div>
     </main>
   );
