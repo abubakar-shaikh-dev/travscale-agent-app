@@ -111,7 +111,7 @@ export function AuthLayout({
             )}
           >
             <p>
-              By clicking continue, you agree to our{" "}
+              By continuing, you agree to our{" "}
               <a
                 className="underline underline-offset-4 hover:text-primary"
                 href="#"
