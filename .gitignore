@@ -10,7 +10,13 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-*.local
+
+# Env files
+# Committed (shared, non-secret): .env, .env.example, .env.<mode>
+# Ignored (personal / local overrides, never commit):
+.env.local
+.env.*.local
+.envrc
 
 # Editor directories and files
 .vscode/*
