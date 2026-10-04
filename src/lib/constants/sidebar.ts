@@ -35,12 +35,6 @@ export interface SidebarNavItem {
   visibleFor?: AgencyType[];
 }
 
-export interface SidebarUser {
-  name: string;
-  email: string;
-  avatar: string;
-}
-
 export const SIDEBAR_GROUP_LABEL = "Platform";
 
 export const SIDEBAR_DASHBOARD_ITEM: SidebarNavItem = {
@@ -48,16 +42,6 @@ export const SIDEBAR_DASHBOARD_ITEM: SidebarNavItem = {
   url: "/",
   icon: LayoutDashboard,
 };
-
-/**
- * Static user data for sidebar footer.
- * TODO: Replace with authenticated user data from auth context.
- */
-export const SIDEBAR_USER = {
-  name: "Admin",
-  email: "admin@travscale.com",
-  avatar: "/avatars/admin.jpg",
-} satisfies SidebarUser;
 
 /**
  * Master nav list — unfiltered, contains every item. Use

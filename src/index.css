@@ -342,6 +342,35 @@
     }
   }
 
+  /* ===== Sidebar custom scrollbar =====
+     The sidebar scrolls natively (the Shadcn ScrollArea scrollbar is
+     hidden in SidebarContent); style a thin, theme-aware thumb that
+     follows the sidebar tokens in light and dark mode. */
+  [data-slot="sidebar-content"] {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--sidebar-foreground) 25%, transparent) transparent;
+  }
+
+  [data-slot="sidebar-content"]::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  [data-slot="sidebar-content"]::-webkit-scrollbar-track {
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--sidebar-foreground) 6%, transparent);
+  }
+
+  [data-slot="sidebar-content"]::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-color: color-mix(in srgb, var(--sidebar-foreground) 25%, transparent);
+  }
+
+  [data-slot="sidebar-content"]:hover::-webkit-scrollbar-thumb,
+  [data-slot="sidebar-content"]:focus-within::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--sidebar-foreground) 40%, transparent);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .auth-fade,
     .auth-stagger > * {

@@ -9,12 +9,10 @@ import { Link, useRouter } from "@tanstack/react-router";
 // UI Components
 import { Logo } from "@/components/logo";
 import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
 import { SidebarSearch } from "@/components/sidebar-search";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
@@ -28,11 +26,7 @@ import {
 import {
   NAV_MAIN_ITEMS,
   SIDEBAR_DASHBOARD_ITEM,
-  SIDEBAR_USER,
 } from "@/lib/constants/sidebar";
-
-// Lib
-import { selectUser, useAuthStore } from "@/lib/auth-store";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
@@ -40,15 +34,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const currentPath = router.state.location.pathname;
   const DashboardIcon = SIDEBAR_DASHBOARD_ITEM.icon;
   const isDashboardActive = currentPath === SIDEBAR_DASHBOARD_ITEM.url;
-  const authUser = useAuthStore(selectUser);
-
-  const sidebarUser = authUser
-    ? {
-        name: authUser.name,
-        email: authUser.email,
-        avatar: "",
-      }
-    : SIDEBAR_USER;
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -72,7 +57,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarSearch />
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="overflow-y-scroll!">
         {/* Dashboard Link */}
         <SidebarGroup>
           <SidebarMenu>
@@ -92,9 +77,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* Main Navigation */}
         <NavMain items={NAV_MAIN_ITEMS} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={sidebarUser} />
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
