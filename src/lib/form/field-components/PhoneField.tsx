@@ -24,6 +24,11 @@ interface PhoneFieldProps {
   /** Default country code (ISO 3166-1 alpha-2). Defaults to India (in). */
   country?: string;
   required?: boolean;
+  /**
+   * "lg" shrinks the input to 38px so it aligns with `Input size="lg"`
+   * (h-9.5) fields in the same grid row. Default keeps the tall auth style.
+   */
+  size?: "default" | "lg";
 }
 
 export default function PhoneField({
@@ -33,6 +38,7 @@ export default function PhoneField({
   className,
   country = "in",
   required = false,
+  size = "default",
 }: PhoneFieldProps) {
   const field = useFieldContext<string>();
   const inputId = useId();
@@ -47,6 +53,7 @@ export default function PhoneField({
         inputStyle={{
           width: "100%",
           borderRadius: "9px",
+          ...(size === "lg" ? { height: "2.375rem" } : null),
         }}
         buttonStyle={{
           borderTopLeftRadius: "9px",

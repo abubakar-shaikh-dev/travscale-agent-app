@@ -323,6 +323,25 @@
     }
   }
 
+  /* One-shot ring pulse behind the onboarding success check: the moment of
+     arrival gets a beat of emphasis, then the ring is gone. */
+  @keyframes success-ping {
+    from {
+      transform: scale(0.6);
+      opacity: 0.7;
+    }
+    to {
+      transform: scale(1.55);
+      opacity: 0;
+    }
+  }
+
+  /* Same pulse marking the newly-current wizard step: one beat of "you are
+     here" as the rail updates, not a looping glow. */
+  .node-ping-ring {
+    animation: success-ping 700ms var(--motion-ease-out) both;
+  }
+
   /* Crossfade for the <Outlet/> swap between peer auth pages
      (login <-> register). Keyed remount triggers the entrance;
      150ms opacity-led with a 4px transform whisper, ease-out.
@@ -368,6 +387,25 @@
     animation: otp-shake 220ms var(--motion-ease-out);
   }
 
+  /* Inline error nudge for form/action failures (same motion as the OTP
+     shake, shared keyframes). Replays on remount via a changing React key. */
+  .error-shake {
+    animation: otp-shake 220ms var(--motion-ease-out);
+  }
+
+  /* Opacity-only fade for elements that mount into place: the drag & drop
+     veil and the agency logo tile's first paint. No movement, so it is safe
+     under reduced motion and needs no exception. */
+  .fade-in {
+    animation: fade-in 180ms var(--motion-ease-out);
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
   /* ===== Sidebar custom scrollbar =====
      The sidebar scrolls natively (the Shadcn ScrollArea scrollbar is
      hidden in SidebarContent); style a thin, theme-aware thumb that
@@ -397,6 +435,31 @@
     background-color: color-mix(in srgb, var(--sidebar-foreground) 40%, transparent);
   }
 
+  /* ===== Onboarding step scroll (desktop) =====
+     The step column scrolls independently while the rail stays put; a thin,
+     theme-aware thumb keeps the scrollbar from shouting next to the cards. */
+  .step-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--muted-foreground) 25%, transparent) transparent;
+  }
+
+  .step-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .step-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .step-scroll::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-color: color-mix(in srgb, var(--muted-foreground) 25%, transparent);
+  }
+
+  .step-scroll:hover::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--muted-foreground) 40%, transparent);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .auth-fade,
     .auth-stagger > * {
@@ -408,6 +471,14 @@
       animation: none;
       stroke-dashoffset: 0;
     }
+    .success-ping-ring {
+      animation: none !important;
+      opacity: 0;
+    }
+    .node-ping-ring {
+      animation: none;
+      opacity: 0;
+    }
     /* Keep the opacity crossfade (aids comprehension), drop the
        position change. Shorter than the full animation but still
        bridges the swap so it doesn't teleport. */
@@ -416,7 +487,8 @@
       transform: none;
     }
     /* Movement-based feedback: drop the shake entirely. */
-    .otp-shake {
+    .otp-shake,
+    .error-shake {
       animation: none;
     }
   }

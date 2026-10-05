@@ -24,6 +24,13 @@ export const Route = createFileRoute("/_app")({
     if (context.auth.user?.status === "PENDING_ACTIVATION") {
       throw redirect({ to: "/auth/verify-otp" });
     }
+
+    // The dashboard gate: no agency + first location yet, no dashboard.
+    // A strict false only: legacy persisted sessions without the field are
+    // caught by the server's 403 ONBOARDING_INCOMPLETE instead.
+    if (context.auth.user?.onboarding_completed === false) {
+      throw redirect({ to: "/onboarding" });
+    }
   },
   component: () => <Outlet />,
 });

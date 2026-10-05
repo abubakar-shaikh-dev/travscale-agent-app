@@ -81,7 +81,9 @@ export function VerifyOtp({ className }: VerifyOtpProps) {
         useAuthStore.getState().setUser({ ...current, status: "ACTIVE" });
       }
       toast.success(message);
-      navigate({ to: "/", replace: true });
+      // Freshly verified accounts land in the onboarding wizard; the route
+      // guard bounces fully-onboarded accounts to the dashboard.
+      navigate({ to: "/onboarding", replace: true });
     },
     [navigate]
   );
@@ -183,9 +185,9 @@ export function VerifyOtp({ className }: VerifyOtpProps) {
         </div>
         <Button
           className="w-full"
-          onClick={() => navigate({ to: "/", replace: true })}
+          onClick={() => navigate({ to: "/onboarding", replace: true })}
         >
-          Continue to Dashboard
+          Continue
         </Button>
       </div>
     );

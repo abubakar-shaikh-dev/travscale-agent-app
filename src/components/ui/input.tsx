@@ -48,7 +48,9 @@ export function Input({
           className={inputClassName}
           data-slot="input"
           size={typeof size === "number" ? size : undefined}
-          {...props}
+          {...(props as Omit<typeof props, "style"> & {
+            style?: React.CSSProperties;
+          })}
         />
       ) : (
         <InputPrimitive

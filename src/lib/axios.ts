@@ -92,6 +92,15 @@ function redirectToOtpVerification(): void {
   }
 }
 
+function redirectToOnboarding(): void {
+  if (
+    typeof window !== "undefined" &&
+    window.location.pathname !== "/onboarding"
+  ) {
+    window.location.assign("/onboarding");
+  }
+}
+
 // --- Silent refresh plumbing -------------------------------------------------
 
 let isRefreshing = false;
@@ -149,6 +158,14 @@ axiosInstance.interceptors.response.use(
     // instead of clearing the session (auth-api-doc §3).
     if (status === 403 && errorCode === "EMAIL_NOT_VERIFIED") {
       redirectToOtpVerification();
+      return Promise.reject(error);
+    }
+
+    // Same idea for an account that has not finished onboarding: the session
+    // is fine, the user just has steps left. Route to the wizard without
+    // signing anyone out (onboarding-api-doc §6).
+    if (status === 403 && errorCode === "ONBOARDING_INCOMPLETE") {
+      redirectToOnboarding();
       return Promise.reject(error);
     }
 

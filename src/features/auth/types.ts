@@ -14,6 +14,14 @@ export interface AuthUser {
   email: string;
   role: USER_ROLES;
   status: USER_STATUS;
+  /**
+   * Returned by /auth/register and /auth/login
+   * (docs/api/onboarding-api.md §6). Sessions persisted before this field
+   * existed may lack it (undefined): treat only a strict `false` as
+   * "not onboarded" and let the server's 403 ONBOARDING_INCOMPLETE catch
+   * the legacy-undefined case.
+   */
+  onboarding_completed: boolean;
 }
 
 /** Full session returned by /auth/login and /auth/register. */

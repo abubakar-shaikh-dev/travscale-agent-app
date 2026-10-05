@@ -1,5 +1,5 @@
 // React
-import { StrictMode } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
 // Router
@@ -41,10 +41,29 @@ declare module "@tanstack/react-router" {
  * on every render. Keeping this in a child component (instead of inline in the
  * root render) lets us subscribe to the store reactively so guards re-evaluate
  * when the session changes.
+ *
+ * The persisted store rehydrates asynchronously, so the first render would
+ * otherwise evaluate every route guard against an empty session and bounce a
+ * signed-in user to login on a hard refresh. Hold rendering until hydration
+ * has finished (one frame in practice).
  */
 function InnerApp() {
+  const [hydrated, setHydrated] = useState(useAuthStore.persist.hasHydrated());
   const isAuthenticated = useAuthStore(selectIsAuthenticated);
   const user = useAuthStore(selectUser);
+
+  useEffect(() => {
+    const unsub = useAuthStore.persist.onFinishHydration(() => setHydrated(true));
+    // Safety net: with a synchronous storage, hydration can complete in a
+    // microtask between the first render and this effect, so the callback
+    // above would never fire again.
+    void Promise.resolve().then(() => {
+      if (useAuthStore.persist.hasHydrated()) setHydrated(true);
+    });
+    return unsub;
+  }, []);
+
+  if (!hydrated) return null;
 
   const context: RouterContext = {
     auth: { isAuthenticated, user },

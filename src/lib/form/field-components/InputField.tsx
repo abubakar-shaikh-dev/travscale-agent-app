@@ -17,6 +17,7 @@ interface InputFieldProps {
   disabled?: boolean;
   className?: string;
   required?: boolean;
+  autoFocus?: boolean;
 }
 
 export default function InputField({
@@ -26,6 +27,7 @@ export default function InputField({
   disabled,
   className,
   required = false,
+  autoFocus = false,
 }: InputFieldProps) {
   const field = useFieldContext<string>();
 
@@ -43,6 +45,7 @@ export default function InputField({
         value={field.state.value ?? ""}
         disabled={disabled}
         aria-invalid={hasError || undefined}
+        autoFocus={autoFocus}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         size="lg"

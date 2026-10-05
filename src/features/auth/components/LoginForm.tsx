@@ -118,9 +118,15 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
             onSuccessComplete={() => {
               // A PENDING_ACTIVATION account logs in fine but can't use the
               // app yet: it goes to the OTP screen instead of the dashboard.
-              const status = useAuthStore.getState().user?.status;
-              if (status === "PENDING_ACTIVATION") {
+              const user = useAuthStore.getState().user;
+              if (user?.status === "PENDING_ACTIVATION") {
                 navigate({ to: "/auth/verify-otp", replace: true });
+                return;
+              }
+              // An account without agency + location onboarding goes to the
+              // wizard before any dashboard (onboarding-api-doc §6).
+              if (user?.onboarding_completed === false) {
+                navigate({ to: "/onboarding", replace: true });
                 return;
               }
               navigate({ to: redirectTo ?? "/", replace: true });
