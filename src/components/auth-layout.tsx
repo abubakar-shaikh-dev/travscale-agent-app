@@ -5,6 +5,9 @@ import type React from "react";
 import { Logo } from "@/components/logo";
 import { ShaderBackground } from "@/components/motion/shader-background";
 
+// Icons
+import { CalendarCheck2, CreditCard, FileCheck2, Users } from "lucide-react";
+
 // Utils
 import { cn } from "@/lib/utils";
 
@@ -40,6 +43,14 @@ export interface AuthPageMeta {
   authMethods?: boolean;
 }
 
+/** Showcase panel feature rows: mirrors the app's real modules. */
+const SHOWCASE_FEATURES = [
+  { icon: Users, label: "Traveler & sub-agent CRM" },
+  { icon: CalendarCheck2, label: "Bookings, quotes & itineraries" },
+  { icon: FileCheck2, label: "Visas & document management" },
+  { icon: CreditCard, label: "Payments, invoices & ledgers" },
+] as const;
+
 export function AuthLayout({
   children,
   title,
@@ -49,7 +60,7 @@ export function AuthLayout({
 }: AuthLayoutProps) {
   return (
     <main className="relative lg:grid lg:min-h-screen lg:grid-cols-2 lg:overflow-hidden">
-      {/* Showcase panel — hidden on mobile, editorial on desktop */}
+      {/* Showcase panel: hidden on mobile, editorial on desktop */}
       <aside className="relative hidden overflow-hidden lg:flex lg:flex-col">
         <ShaderBackground
           variant="warp"
@@ -58,34 +69,59 @@ export function AuthLayout({
           speed={0.8}
         />
 
-        {/* Layered vignette — light at the top for the logo, deep at the
+        {/* Layered vignette: light at the top for the logo, deep at the
             bottom where the copy sits. Tuned so the shader stays visible
             while the text earns its legibility. */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/25 via-black/20 to-black/75" />
 
         <div className="relative z-10 flex flex-1 flex-col justify-between p-10 lg:p-14">
-          {/* Logo — fades in with the same curve as the form panel header */}
+          {/* Logo: fades in with the same curve as the form panel header */}
           <div className="auth-fade">
             <Logo className="h-7 text-white drop-shadow-md invert" />
           </div>
 
-          {/* Bottom content staggers in, cohesive with the form fields */}
-          <div className="auth-stagger max-w-md">
-            <h2 className="font-heading text-4xl font-semibold leading-[1.1] tracking-tight text-white [text-shadow:_0_2px_24px_rgb(0_0_0_/_55%)]">
-              Run your travel agency with calm and clarity.
-            </h2>
+          {/* Bottom content: headline, supporting line, then the product
+              modules as glass-chip rows. The support line enters with the
+              headline (auth-fade); the rows cascade via auth-stagger so the
+              panel tells a story instead of flashing in as one block. */}
+          <div className="max-w-md">
+            <div className="auth-fade">
+              <h2 className="font-heading text-4xl font-semibold leading-[1.1] tracking-tight text-white [text-shadow:_0_2px_24px_rgb(0_0_0_/_55%)]">
+                Run your travel agency with calm and clarity.
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-white/75 [text-shadow:_0_1px_12px_rgb(0_0_0_/_45%)]">
+                Customers, bookings, visas, and payments. All in one calm
+                workspace, not a dozen scattered tools.
+              </p>
+            </div>
+
+            {/* Feature rows: grounded in the actual product modules. The
+                backdrop blur over the shader gives the chips a glass feel
+                without a heavy material; the vignette keeps text legible. */}
+            <ul className="auth-stagger mt-9 space-y-3">
+              {SHOWCASE_FEATURES.map((feature) => (
+                <li className="flex items-center gap-3" key={feature.label}>
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/10 text-white/90 backdrop-blur-[2px]">
+                    <feature.icon className="size-4" aria-hidden="true" />
+                  </span>
+                  <span className="text-sm text-white/85">
+                    {feature.label}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </aside>
 
       {/* Form panel */}
       <div className="relative flex min-h-dvh flex-col p-5 sm:p-6 lg:min-h-screen lg:p-8">
-        {/* Header — brand on mobile (desktop shows it in the showcase aside) */}
+        {/* Header: brand on mobile (desktop shows it in the showcase aside) */}
         <header className="flex items-center">
           <Logo className="h-7 lg:hidden" />
         </header>
 
-        {/* Main — form, centered in the remaining space */}
+        {/* Main: form, centered in the remaining space */}
         <div className="flex flex-1 flex-col items-center justify-center py-8 sm:py-10">
           <div
             className={cn(
@@ -101,7 +137,7 @@ export function AuthLayout({
             </div>
             {children}
 
-            {/* Legal — flows right beneath the content (buttons or form)
+            {/* Legal: flows right beneath the content (buttons or form)
                 rather than being pinned to the viewport bottom, so it sits
                 close to the actions in the collapsed state too. */}
             {showLegal && (

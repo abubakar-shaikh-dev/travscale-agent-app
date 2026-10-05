@@ -144,7 +144,7 @@ axiosInstance.interceptors.response.use(
     const url = originalRequest?.url;
     const errorCode = error.response?.data?.error?.code;
 
-    // An unverified account is still signed in — the server answers 403
+    // An unverified account is still signed in: the server answers 403
     // EMAIL_NOT_VERIFIED on every protected endpoint. Route to the OTP screen
     // instead of clearing the session (auth-api-doc §3).
     if (status === 403 && errorCode === "EMAIL_NOT_VERIFIED") {

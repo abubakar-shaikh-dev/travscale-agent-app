@@ -44,7 +44,7 @@ function GoogleIcon({ className }: { className?: string }) {
  *
  * Renders the "Continue with Google" and "Continue with Email" buttons
  * initially. The email/password form (passed as `children`) is hidden until
- * the user picks the email path — keeping the first impression calm and
+ * the user picks the email path: keeping the first impression calm and
  * progressive instead of dumping every field at once.
  *
  * The reveal uses a CSS grid `grid-template-rows: 0fr → 1fr` height
@@ -69,7 +69,7 @@ export function AuthMethods({ className, children }: AuthMethodsProps) {
         Continue with Google
       </Button>
 
-      {/* "Continue with Email" — collapses out when the form is revealed.
+      {/* "Continue with Email": collapses out when the form is revealed.
           Same curve + duration as the form expand below so the two read
           as one coordinated motion (exit uses ease-out, not ease-in). */}
       <div
@@ -94,7 +94,7 @@ export function AuthMethods({ className, children }: AuthMethodsProps) {
         </div>
       </div>
 
-      {/* Form — expands in when "Continue with Email" is clicked */}
+      {/* Form: expands in when "Continue with Email" is clicked */}
       <div
         className={cn(
           "grid transition-[grid-template-rows,opacity] duration-300 ease-[var(--motion-ease-out)]",

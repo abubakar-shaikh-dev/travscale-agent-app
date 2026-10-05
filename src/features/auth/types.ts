@@ -1,4 +1,4 @@
-// Shared domain types — matches the Travscale Auth API reference.
+// Shared domain types: matches the Travscale Auth API reference.
 
 export type USER_ROLES = "SUPER_ADMIN" | "AGENT";
 

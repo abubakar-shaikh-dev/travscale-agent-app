@@ -25,7 +25,7 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
   const loginMutation = useLogin();
   const [succeeded, setSucceeded] = useState(false);
   // 423 ACCOUNT_LOCKED: the per-account lockout is server-side and the window
-  // length is not reported — stop submitting entirely instead of letting the
+  // length is not reported: stop submitting entirely instead of letting the
   // user mash the button (auth-api-doc §6).
   const [locked, setLocked] = useState(false);
 
@@ -38,7 +38,7 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
       try {
         await loginMutation.mutateAsync(value);
         setSucceeded(true);
-        // Navigation is deferred until the success animation finishes — see
+        // Navigation is deferred until the success animation finishes: see
         // AuthSubmitButton's onSuccessComplete.
       } catch (error) {
         if (extractAuthError(error).code === "ACCOUNT_LOCKED") {
@@ -117,7 +117,7 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
             isSuccess={succeeded}
             onSuccessComplete={() => {
               // A PENDING_ACTIVATION account logs in fine but can't use the
-              // app yet — it goes to the OTP screen instead of the dashboard.
+              // app yet: it goes to the OTP screen instead of the dashboard.
               const status = useAuthStore.getState().user?.status;
               if (status === "PENDING_ACTIVATION") {
                 navigate({ to: "/auth/verify-otp", replace: true });
@@ -133,8 +133,8 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
               role="alert"
               className="text-center text-sm text-destructive"
             >
-              Too many failed attempts. This account is temporarily locked —
-              try again later.
+              Too many failed attempts. This account is temporarily locked.
+              Try again later.
             </p>
           )}
 

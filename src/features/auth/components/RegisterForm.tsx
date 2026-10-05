@@ -45,7 +45,7 @@ export function RegisterForm() {
       try {
         await registerMutation.mutateAsync(payload);
         setSucceeded(true);
-        // Navigation is deferred until the success animation finishes — see
+        // Navigation is deferred until the success animation finishes: see
         // AuthSubmitButton's onSuccessComplete.
       } catch {
         // Error toast is surfaced by the mutation's onError handler.
@@ -138,7 +138,7 @@ export function RegisterForm() {
             successLabel="Account Created"
             isSuccess={succeeded}
             // Registration signs the user in immediately (the response carries
-            // the token pair) — the next step is the OTP screen, not login.
+            // the token pair): the next step is the OTP screen, not login.
             onSuccessComplete={() =>
               navigate({ to: "/auth/verify-otp", replace: true })
             }

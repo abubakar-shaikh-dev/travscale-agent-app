@@ -21,7 +21,7 @@ interface AuthSubmitButtonProps {
   disabled?: boolean;
 }
 
-// Length of the tick path "M5 13l4 4L19 7" — used for the stroke-dash draw.
+// Length of the tick path "M5 13l4 4L19 7": used for the stroke-dash draw.
 const TICK_PATH_LENGTH = 24;
 
 export default function AuthSubmitButton({
@@ -71,7 +71,7 @@ export default function AuthSubmitButton({
           <Button
             type="submit"
             // `loading={false}` so Button doesn't render its own spinner or
-            // hide our children — we orchestrate the three states ourselves.
+            // hide our children: we orchestrate the three states ourselves.
             loading={false}
             disabled={isDisabled}
             className={cn(
@@ -97,7 +97,7 @@ export default function AuthSubmitButton({
               {label}
             </span>
 
-            {/* Loading overlay — spinner + loading label */}
+            {/* Loading overlay: spinner + loading label */}
             <span
               className={cn(
                 "absolute inset-0 flex items-center justify-center gap-2 transition-[opacity,transform] duration-150 ease-out",
@@ -111,7 +111,7 @@ export default function AuthSubmitButton({
               <span>{loadingLabel}</span>
             </span>
 
-            {/* Success overlay — animated tick + success label */}
+            {/* Success overlay: animated tick + success label */}
             <span
               className={cn(
                 "absolute inset-0 flex items-center justify-center gap-2 transition-[opacity,transform] duration-200 ease-out",

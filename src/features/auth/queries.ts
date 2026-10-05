@@ -40,7 +40,7 @@ export function useLogin() {
     onSuccess: (session) => {
       useAuthStore.getState().setSession(session);
       // Success feedback is shown in-button via AuthSubmitButton's tick
-      // animation — no toast.
+      // animation: no toast.
     },
     onError: (error) => notifyError(error),
   });
@@ -52,7 +52,7 @@ export function useRegister() {
     onSuccess: (session) => {
       useAuthStore.getState().setSession(session);
       // Success feedback is shown in-button via AuthSubmitButton's tick
-      // animation — no toast.
+      // animation: no toast.
     },
     onError: (error) => notifyError(error),
   });
@@ -74,7 +74,7 @@ export function useVerifyOtp() {
   return useMutation({
     mutationFn: (payload: VerifyOtpPayload) => verifyOtpApi(payload),
     onSuccess: (message) => {
-      // Verification flips the account to ACTIVE — keep the local session's
+      // Verification flips the account to ACTIVE: keep the local session's
       // user in sync so route guards stop sending the user to the OTP screen.
       const user = useAuthStore.getState().user;
       if (user && user.status !== "ACTIVE") {
@@ -82,7 +82,7 @@ export function useVerifyOtp() {
       }
       toast.success(message);
     },
-    // No onError toast — the VerifyOtp component renders inline errors and
+    // No onError toast: the VerifyOtp component renders inline errors and
     // branches on the error code (invalid / expired / attempts exceeded).
   });
 }
@@ -91,7 +91,7 @@ export function useResendOtp() {
   return useMutation({
     mutationFn: () => resendOtpApi(),
     onSuccess: (message) => toast.success(message),
-    // No onError toast — the component branches on the code: a 429
+    // No onError toast: the component branches on the code: a 429
     // OTP_RESEND_TOO_SOON starts a 60s countdown, 409 ALREADY_VERIFIED
     // routes to the dashboard.
   });

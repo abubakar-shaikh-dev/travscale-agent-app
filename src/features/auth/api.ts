@@ -121,7 +121,7 @@ export function extractAuthError(error: unknown): AuthErrorInfo {
   if (axiosError?.request && !axiosError.response) {
     return {
       code: null,
-      message: "Network error — please check your connection and try again.",
+      message: "Network error: please check your connection and try again.",
       fieldErrors: [],
     };
   }

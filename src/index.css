@@ -342,6 +342,32 @@
     }
   }
 
+  /* OTP error shake: a short horizontal nudge so a wrong code is felt, not
+     just read. Replays per failed attempt because the class is re-added
+     whenever the verify mutation lands back in an error state. */
+  @keyframes otp-shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(-4px);
+    }
+    40% {
+      transform: translateX(4px);
+    }
+    60% {
+      transform: translateX(-3px);
+    }
+    80% {
+      transform: translateX(3px);
+    }
+  }
+
+  .otp-shake {
+    animation: otp-shake 220ms var(--motion-ease-out);
+  }
+
   /* ===== Sidebar custom scrollbar =====
      The sidebar scrolls natively (the Shadcn ScrollArea scrollbar is
      hidden in SidebarContent); style a thin, theme-aware thumb that
@@ -388,6 +414,10 @@
     .auth-swap {
       animation: auth-swap-enter 100ms var(--motion-ease-out) forwards;
       transform: none;
+    }
+    /* Movement-based feedback: drop the shake entirely. */
+    .otp-shake {
+      animation: none;
     }
   }
 }

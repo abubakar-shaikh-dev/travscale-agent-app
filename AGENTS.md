@@ -137,6 +137,14 @@ features/customers/
 - Use Shadcn components from `components/ui/` as base building blocks
 - No business logic in route files — delegate to feature queries and components
 - Keep route files under 50 lines where possible
+- **Never use em dashes (`—`).** Not in code comments, UI copy, commit messages,
+  or chat replies. This is a hard user preference. Use commas, colons, periods,
+  or parentheses instead.
+- **Always use `cursor-pointer` on clickable elements that are not native
+  links.** Tailwind v4's preflight sets `<button>` to `cursor: default`, so any
+  raw `<button>` styled as a text link (or any `role="button"` element) must
+  include `cursor-pointer` in its classes. Native `<a>`/`<Link>` elements and
+  the shared `<Button>` component already show the pointer, they need nothing.
 
 ## Form UI/UX Standard (must stay consistent)
 

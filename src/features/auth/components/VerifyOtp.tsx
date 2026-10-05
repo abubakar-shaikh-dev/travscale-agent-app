@@ -18,9 +18,6 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
-// Form Components
-import { FieldLabel } from "@/lib/form/field-components/FieldLabel";
-
 // Feature Components
 import { useLogout, useResendOtp, useVerifyOtp } from "../queries";
 
@@ -34,7 +31,7 @@ export interface VerifyOtpProps {
 }
 
 /**
- * Error codes where the server message alone isn't actionable — replace it
+ * Error codes where the server message alone isn't actionable: replace it
  * with copy that points at the resend flow (auth-api-doc §4.3: an expired or
  * over-guessed code and a wrong code mean different things to the user).
  */
@@ -51,11 +48,16 @@ const OTP_ERROR_COPY: Record<string, string> = {
 // 60s countdown and keep the button disabled until it ends (auth-api-doc §4.4).
 const RESEND_COOLDOWN_SECONDS = 60;
 
+/** Shared styling for inline text-link actions in the auth panels. */
+const AUTH_LINK_CLASS =
+  "cursor-pointer font-medium text-primary underline-offset-4 hover:underline disabled:pointer-events-none disabled:opacity-64";
+
 export function VerifyOtp({ className }: VerifyOtpProps) {
   const navigate = useNavigate();
   const verifyMutation = useVerifyOtp();
   const resendMutation = useResendOtp();
   const logoutMutation = useLogout();
+  const user = useAuthStore((s) => s.user);
 
   const [value, setValue] = useState("");
   const [cooldown, setCooldown] = useState(0);
@@ -72,7 +74,7 @@ export function VerifyOtp({ className }: VerifyOtpProps) {
 
   const handleAlreadyVerified = useCallback(
     (message: string) => {
-      // Verification flips the account to ACTIVE — keep the local session's
+      // Verification flips the account to ACTIVE: keep the local session's
       // user in sync so route guards stop sending the user to the OTP screen.
       const current = useAuthStore.getState().user;
       if (current && current.status !== "ACTIVE") {
@@ -84,7 +86,7 @@ export function VerifyOtp({ className }: VerifyOtpProps) {
     [navigate]
   );
 
-  // A 409 ALREADY_VERIFIED from verify-otp means the account is done — treat
+  // A 409 ALREADY_VERIFIED from verify-otp means the account is done: treat
   // it as success and leave the OTP screen.
   useEffect(() => {
     if (!verifyMutation.isError || handledAlreadyVerifiedRef.current) return;
@@ -139,7 +141,7 @@ export function VerifyOtp({ className }: VerifyOtpProps) {
   };
 
   const handleSwitchAccount = () => {
-    // The session is bound to the (wrong) email — revoke it server-side and
+    // The session is bound to the (wrong) email: revoke it server-side and
     // return to login. useLogout clears the local session in its own
     // onSettled, whether or not the server call succeeds.
     const refresh_token = useAuthStore.getState().refresh_token ?? "";
@@ -193,7 +195,7 @@ export function VerifyOtp({ className }: VerifyOtpProps) {
     ? extractAuthError(verifyMutation.error)
     : null;
 
-  // The code is dead (expired or the guess budget is spent) — no point
+  // The code is dead (expired or the guess budget is spent): no point
   // submitting it again; the user needs a fresh one via resend.
   const isDeadCode =
     verifyError?.code === "OTP_EXPIRED" ||
@@ -206,8 +208,28 @@ export function VerifyOtp({ className }: VerifyOtpProps) {
 
   return (
     <div className={cn("space-y-6 auth-fade", className)}>
-      <div className="space-y-2">
-        <FieldLabel label="Verification Code" required />
+      {/* The email chip sits at the point of use: "which address?" is asked
+          right here, so the correction action lives here too (Gmail/Linear
+          pattern) instead of exiled to a footer. The whole block shakes on a
+          failed attempt so a wrong code is felt, not just read. */}
+      <div className={cn("space-y-2", verifyError && "otp-shake")}>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span>Sent to</span>
+          <span className="inline-flex min-w-0 max-w-56 items-center rounded-md bg-muted px-2 py-0.5 sm:max-w-64">
+            <span className="truncate font-medium text-foreground">
+              {user?.email}
+            </span>
+          </span>
+          <button
+            type="button"
+            className={AUTH_LINK_CLASS}
+            disabled={logoutMutation.isPending}
+            onClick={handleSwitchAccount}
+          >
+            Change
+          </button>
+        </div>
+
         {/* Full-width h-11 slots so the control aligns with the standard
             auth-panel inputs ([&_[data-slot=input]]:h-11 in auth-layout).
             autoComplete="one-time-code" lets mobile OSes offer the code from
@@ -268,33 +290,21 @@ export function VerifyOtp({ className }: VerifyOtpProps) {
         Verify Email
       </Button>
 
+      {/* Recovery: resend is the stuck user's primary action, so it gets a
+          real button (the countdown then reads as a natural disabled state);
+          the spam hint hangs under it as its caption. */}
       <div className="space-y-2">
-        <p className="text-center text-sm text-muted-foreground">
-          Didn't receive a code?{" "}
-          <button
-            type="button"
-            className="font-medium text-primary underline-offset-4 hover:underline disabled:pointer-events-none disabled:opacity-64"
-            disabled={resendMutation.isPending || cooldown > 0}
-            onClick={handleResend}
-          >
-            {cooldown > 0 ? `Resend code in ${cooldown}s` : "Resend code"}
-          </button>
-        </p>
-
+        <Button
+          variant="outline"
+          className="w-full"
+          disabled={resendMutation.isPending || cooldown > 0}
+          loading={resendMutation.isPending}
+          onClick={handleResend}
+        >
+          {cooldown > 0 ? `Resend code in ${cooldown}s` : "Resend code"}
+        </Button>
         <p className="text-center text-xs text-muted-foreground">
           Check your spam or promotions folder.
-        </p>
-
-        <p className="text-center text-sm text-muted-foreground">
-          Wrong email?{" "}
-          <button
-            type="button"
-            className="font-medium text-primary underline-offset-4 hover:underline disabled:pointer-events-none disabled:opacity-64"
-            disabled={logoutMutation.isPending}
-            onClick={handleSwitchAccount}
-          >
-            Sign in with a different email
-          </button>
         </p>
       </div>
     </div>
