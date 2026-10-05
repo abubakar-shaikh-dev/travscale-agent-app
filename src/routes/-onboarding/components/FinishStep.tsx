@@ -26,6 +26,7 @@ import {
 // Feature Queries
 import { useAgencyLocations, useMyAgency } from "@/features/agencies/queries";
 import { onboardingKeys, useCompleteOnboarding } from "@/features/onboarding/queries";
+import { grantWelcomeTicket } from "@/features/onboarding/welcome-ticket";
 
 // Utils
 import { extractApiError } from "@/lib/api-error";
@@ -114,16 +115,17 @@ export function FinishStep() {
   const location = locationsQuery.data?.items[0];
   const where = useWhereLabel(location);
 
-  // Hold the success state long enough to read, then hand over to the app
-  // (same rhythm as the auth submit button).
+  // Hold the success state long enough to read, then hand over to the
+  // welcome screen (same rhythm as the auth submit button). The view
+  // transition dissolves the light wizard into the dark shader welcome.
   useEffect(() => {
     if (!succeeded || completedRef.current) return;
     completedRef.current = true;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const t = setTimeout(
-      () => navigate({ to: "/", replace: true }),
-      reduced ? 400 : 1100
-    );
+    const t = setTimeout(() => {
+      grantWelcomeTicket();
+      navigate({ to: "/welcome", replace: true, viewTransition: true });
+    }, reduced ? 400 : 1100);
     return () => clearTimeout(t);
   }, [succeeded, navigate]);
 

@@ -406,6 +406,27 @@
     }
   }
 
+  /* ===== Welcome scene change (View Transitions) =====
+     The onboarding handover (wizard -> welcome -> dashboard) opts into the
+     View Transitions API via navigate({ viewTransition: true }). The UA
+     default is a 250ms crossfade, which flickers for a full scene change.
+     The outgoing page fades a touch faster than the incoming one, so the
+     light wizard dips into the dark shader and the dashboard is revealed
+     through it, instead of the two scenes muddying mid-dissolve. Opacity
+     only; gated off under reduced motion so the UA's short default
+     crossfade applies there. */
+  @media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root) {
+      animation-duration: 300ms;
+      animation-timing-function: var(--motion-ease-out);
+    }
+
+    ::view-transition-new(root) {
+      animation-duration: 450ms;
+      animation-timing-function: var(--motion-ease-out);
+    }
+  }
+
   /* ===== Sidebar custom scrollbar =====
      The sidebar scrolls natively (the Shadcn ScrollArea scrollbar is
      hidden in SidebarContent); style a thin, theme-aware thumb that
