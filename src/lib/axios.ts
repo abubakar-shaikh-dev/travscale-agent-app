@@ -56,14 +56,16 @@ declare module "axios" {
   }
 }
 
+// Endpoints whose own 401s must NOT trigger the silent refresh (they are
+// pre-auth or are the refresh call itself). /auth/verify-otp and
+// /auth/resend-otp are deliberately absent: they are called with a bearer
+// token, so an expired access token there SHOULD be refreshed and retried.
 const AUTH_PATHS = [
   "/auth/login",
   "/auth/register",
   "/auth/refresh-token",
   "/auth/forgot-password",
   "/auth/reset-password",
-  "/auth/verify-email",
-  "/auth/resend-verification-link",
   "/auth/logout",
 ];
 
@@ -78,6 +80,15 @@ function redirectToLogin(): void {
     !window.location.pathname.startsWith("/auth")
   ) {
     window.location.assign("/auth/login");
+  }
+}
+
+function redirectToOtpVerification(): void {
+  if (
+    typeof window !== "undefined" &&
+    window.location.pathname !== "/auth/verify-otp"
+  ) {
+    window.location.assign("/auth/verify-otp");
   }
 }
 
@@ -131,6 +142,15 @@ axiosInstance.interceptors.response.use(
 
     const status = error.response?.status;
     const url = originalRequest?.url;
+    const errorCode = error.response?.data?.error?.code;
+
+    // An unverified account is still signed in — the server answers 403
+    // EMAIL_NOT_VERIFIED on every protected endpoint. Route to the OTP screen
+    // instead of clearing the session (auth-api-doc §3).
+    if (status === 403 && errorCode === "EMAIL_NOT_VERIFIED") {
+      redirectToOtpVerification();
+      return Promise.reject(error);
+    }
 
     // Only attempt a silent refresh on a 401 from a protected (non-auth)
     // endpoint, and only once per request.

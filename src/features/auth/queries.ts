@@ -14,9 +14,9 @@ import {
   loginApi,
   logoutApi,
   registerApi,
-  resendVerificationApi,
+  resendOtpApi,
   resetPasswordApi,
-  verifyEmailApi,
+  verifyOtpApi,
 } from "./api";
 
 // Types
@@ -26,7 +26,7 @@ import type {
   LogoutPayload,
   RegisterPayload,
   ResetPasswordPayload,
-  VerifyEmailPayload,
+  VerifyOtpPayload,
 } from "./types";
 
 function notifyError(error: unknown): void {
@@ -70,19 +70,30 @@ export function useLogout() {
   });
 }
 
-export function useVerifyEmail() {
+export function useVerifyOtp() {
   return useMutation({
-    mutationFn: (payload: VerifyEmailPayload) => verifyEmailApi(payload),
-    onSuccess: (message) => toast.success(message),
-    onError: (error) => notifyError(error),
+    mutationFn: (payload: VerifyOtpPayload) => verifyOtpApi(payload),
+    onSuccess: (message) => {
+      // Verification flips the account to ACTIVE — keep the local session's
+      // user in sync so route guards stop sending the user to the OTP screen.
+      const user = useAuthStore.getState().user;
+      if (user && user.status !== "ACTIVE") {
+        useAuthStore.getState().setUser({ ...user, status: "ACTIVE" });
+      }
+      toast.success(message);
+    },
+    // No onError toast — the VerifyOtp component renders inline errors and
+    // branches on the error code (invalid / expired / attempts exceeded).
   });
 }
 
-export function useResendVerification() {
+export function useResendOtp() {
   return useMutation({
-    mutationFn: () => resendVerificationApi(),
+    mutationFn: () => resendOtpApi(),
     onSuccess: (message) => toast.success(message),
-    onError: (error) => notifyError(error),
+    // No onError toast — the component branches on the code: a 429
+    // OTP_RESEND_TOO_SOON starts a 60s countdown, 409 ALREADY_VERIFIED
+    // routes to the dashboard.
   });
 }
 

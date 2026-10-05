@@ -11,6 +11,10 @@ import { useAppForm } from "@/lib/form/form-context";
 import AuthSubmitButton from "./AuthSubmitButton";
 import { useLogin } from "../queries";
 
+// Utils
+import { useAuthStore } from "@/lib/auth-store";
+import { extractAuthError } from "../api";
+
 // Types
 export interface LoginFormProps {
   redirectTo?: string;
@@ -20,6 +24,10 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
   const navigate = useNavigate();
   const loginMutation = useLogin();
   const [succeeded, setSucceeded] = useState(false);
+  // 423 ACCOUNT_LOCKED: the per-account lockout is server-side and the window
+  // length is not reported — stop submitting entirely instead of letting the
+  // user mash the button (auth-api-doc §6).
+  const [locked, setLocked] = useState(false);
 
   const form = useAppForm({
     defaultValues: {
@@ -32,8 +40,11 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
         setSucceeded(true);
         // Navigation is deferred until the success animation finishes — see
         // AuthSubmitButton's onSuccessComplete.
-      } catch {
-        // Error toast is surfaced by the mutation's onError handler.
+      } catch (error) {
+        if (extractAuthError(error).code === "ACCOUNT_LOCKED") {
+          setLocked(true);
+        }
+        // Other errors are surfaced by the mutation's onError handler.
       }
     },
   });
@@ -104,11 +115,28 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
             loadingLabel="Signing in..."
             successLabel="Login Succeeded"
             isSuccess={succeeded}
-            onSuccessComplete={() =>
-              navigate({ to: redirectTo ?? "/", replace: true })
-            }
-            disabled={loginMutation.isPending}
+            onSuccessComplete={() => {
+              // A PENDING_ACTIVATION account logs in fine but can't use the
+              // app yet — it goes to the OTP screen instead of the dashboard.
+              const status = useAuthStore.getState().user?.status;
+              if (status === "PENDING_ACTIVATION") {
+                navigate({ to: "/auth/verify-otp", replace: true });
+                return;
+              }
+              navigate({ to: redirectTo ?? "/", replace: true });
+            }}
+            disabled={loginMutation.isPending || locked}
           />
+
+          {locked && (
+            <p
+              role="alert"
+              className="text-center text-sm text-destructive"
+            >
+              Too many failed attempts. This account is temporarily locked —
+              try again later.
+            </p>
+          )}
 
           <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}

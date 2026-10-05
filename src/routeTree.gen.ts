@@ -24,7 +24,7 @@ import { Route as AuthForgotPasswordIndexRouteImport } from './routes/auth/forgo
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as AuthRegisterIndexRouteImport } from './routes/auth/register/index'
 import { Route as AuthResetPasswordIndexRouteImport } from './routes/auth/reset-password/index'
-import { Route as AuthVerifyEmailIndexRouteImport } from './routes/auth/verify-email/index'
+import { Route as AuthVerifyOtpIndexRouteImport } from './routes/auth/verify-otp/index'
 import { Route as AppCustomersCustomerIdEditRouteImport } from './routes/_app/customers/$customerId/edit'
 import { Route as AppPassengersPassengerIdEditRouteImport } from './routes/_app/passengers/$passengerId/edit'
 import { Route as AppSuppliersSupplierIdEditRouteImport } from './routes/_app/suppliers/$supplierId/edit'
@@ -107,9 +107,9 @@ const AuthResetPasswordIndexRoute = AuthResetPasswordIndexRouteImport.update({
   path: '/reset-password/',
   getParentRoute: () => AuthRoute,
 } as any)
-const AuthVerifyEmailIndexRoute = AuthVerifyEmailIndexRouteImport.update({
-  id: '/verify-email/',
-  path: '/verify-email/',
+const AuthVerifyOtpIndexRoute = AuthVerifyOtpIndexRouteImport.update({
+  id: '/verify-otp/',
+  path: '/verify-otp/',
   getParentRoute: () => AuthRoute,
 } as any)
 const AppCustomersCustomerIdEditRoute =
@@ -158,7 +158,7 @@ export interface FileRoutesByFullPath {
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
   '/auth/reset-password/': typeof AuthResetPasswordIndexRoute
-  '/auth/verify-email/': typeof AuthVerifyEmailIndexRoute
+  '/auth/verify-otp/': typeof AuthVerifyOtpIndexRoute
   '/customers/$customerId/edit': typeof AppCustomersCustomerIdEditRoute
   '/passengers/$passengerId/edit': typeof AppPassengersPassengerIdEditRoute
   '/suppliers/$supplierId/edit': typeof AppSuppliersSupplierIdEditRoute
@@ -180,7 +180,7 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginIndexRoute
   '/auth/register': typeof AuthRegisterIndexRoute
   '/auth/reset-password': typeof AuthResetPasswordIndexRoute
-  '/auth/verify-email': typeof AuthVerifyEmailIndexRoute
+  '/auth/verify-otp': typeof AuthVerifyOtpIndexRoute
   '/customers/$customerId/edit': typeof AppCustomersCustomerIdEditRoute
   '/passengers/$passengerId/edit': typeof AppPassengersPassengerIdEditRoute
   '/suppliers/$supplierId/edit': typeof AppSuppliersSupplierIdEditRoute
@@ -204,7 +204,7 @@ export interface FileRoutesById {
   '/auth/login/': typeof AuthLoginIndexRoute
   '/auth/register/': typeof AuthRegisterIndexRoute
   '/auth/reset-password/': typeof AuthResetPasswordIndexRoute
-  '/auth/verify-email/': typeof AuthVerifyEmailIndexRoute
+  '/auth/verify-otp/': typeof AuthVerifyOtpIndexRoute
   '/_app/customers/$customerId/edit': typeof AppCustomersCustomerIdEditRoute
   '/_app/passengers/$passengerId/edit': typeof AppPassengersPassengerIdEditRoute
   '/_app/suppliers/$supplierId/edit': typeof AppSuppliersSupplierIdEditRoute
@@ -228,7 +228,7 @@ export interface FileRouteTypes {
     | '/auth/login/'
     | '/auth/register/'
     | '/auth/reset-password/'
-    | '/auth/verify-email/'
+    | '/auth/verify-otp/'
     | '/customers/$customerId/edit'
     | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
@@ -250,7 +250,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
-    | '/auth/verify-email'
+    | '/auth/verify-otp'
     | '/customers/$customerId/edit'
     | '/passengers/$passengerId/edit'
     | '/suppliers/$supplierId/edit'
@@ -273,7 +273,7 @@ export interface FileRouteTypes {
     | '/auth/login/'
     | '/auth/register/'
     | '/auth/reset-password/'
-    | '/auth/verify-email/'
+    | '/auth/verify-otp/'
     | '/_app/customers/$customerId/edit'
     | '/_app/passengers/$passengerId/edit'
     | '/_app/suppliers/$supplierId/edit'
@@ -393,11 +393,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthResetPasswordIndexRouteImport
       parentRoute: typeof AuthRoute
     }
-    '/auth/verify-email/': {
-      id: '/auth/verify-email/'
-      path: '/verify-email'
-      fullPath: '/auth/verify-email/'
-      preLoaderRoute: typeof AuthVerifyEmailIndexRouteImport
+    '/auth/verify-otp/': {
+      id: '/auth/verify-otp/'
+      path: '/verify-otp'
+      fullPath: '/auth/verify-otp/'
+      preLoaderRoute: typeof AuthVerifyOtpIndexRouteImport
       parentRoute: typeof AuthRoute
     }
     '/_app/customers/$customerId/edit': {
@@ -481,7 +481,7 @@ interface AuthRouteChildren {
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
   AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
   AuthResetPasswordIndexRoute: typeof AuthResetPasswordIndexRoute
-  AuthVerifyEmailIndexRoute: typeof AuthVerifyEmailIndexRoute
+  AuthVerifyOtpIndexRoute: typeof AuthVerifyOtpIndexRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
@@ -489,7 +489,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginIndexRoute: AuthLoginIndexRoute,
   AuthRegisterIndexRoute: AuthRegisterIndexRoute,
   AuthResetPasswordIndexRoute: AuthResetPasswordIndexRoute,
-  AuthVerifyEmailIndexRoute: AuthVerifyEmailIndexRoute,
+  AuthVerifyOtpIndexRoute: AuthVerifyOtpIndexRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)

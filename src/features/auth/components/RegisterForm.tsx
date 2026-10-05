@@ -137,7 +137,11 @@ export function RegisterForm() {
             loadingLabel="Creating account..."
             successLabel="Account Created"
             isSuccess={succeeded}
-            onSuccessComplete={() => navigate({ to: "/", replace: true })}
+            // Registration signs the user in immediately (the response carries
+            // the token pair) — the next step is the OTP screen, not login.
+            onSuccessComplete={() =>
+              navigate({ to: "/auth/verify-otp", replace: true })
+            }
             disabled={registerMutation.isPending}
           />
 

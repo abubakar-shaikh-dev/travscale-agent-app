@@ -63,17 +63,24 @@ export interface ApiError {
 
 export type ApiResponse<T> = ApiSuccess<T> | ApiError;
 
-/** Error codes used by the auth API. */
+/** Error codes used by the auth API (see auth-api-doc §4.9). */
 export type AuthErrorCode =
   | "VALIDATION_ERROR"
-  | "INVALID_CREDENTIALS"
   | "TOKEN_INVALID"
   | "TOKEN_EXPIRED"
-  | "EMAIL_ALREADY_EXISTS"
-  | "ALREADY_VERIFIED"
-  | "USER_NOT_FOUND"
+  | "OTP_INVALID"
+  | "OTP_EXPIRED"
+  | "INVALID_CREDENTIALS"
   | "UNAUTHORIZED"
-  | "INTERNAL_ERROR";
+  | "ACCOUNT_SUSPENDED"
+  | "EMAIL_NOT_VERIFIED"
+  | "USER_NOT_FOUND"
+  | "ALREADY_VERIFIED"
+  | "EMAIL_ALREADY_EXISTS"
+  | "ACCOUNT_LOCKED"
+  | "OTP_RESEND_TOO_SOON"
+  | "OTP_ATTEMPTS_EXCEEDED"
+  | "RATE_LIMIT_EXCEEDED";
 
 // ---------------------------------------------------------------------------
 // Request payloads
@@ -99,8 +106,8 @@ export interface LogoutPayload {
   refresh_token: string;
 }
 
-export interface VerifyEmailPayload {
-  token: string;
+export interface VerifyOtpPayload {
+  code: string;
 }
 
 export interface ForgotPasswordPayload {

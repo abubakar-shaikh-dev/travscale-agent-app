@@ -14,7 +14,7 @@ import type {
   RefreshTokenPayload,
   RegisterPayload,
   ResetPasswordPayload,
-  VerifyEmailPayload,
+  VerifyOtpPayload,
 } from "./types";
 import type { AxiosError } from "axios";
 
@@ -59,19 +59,17 @@ export async function logoutApi(payload: LogoutPayload): Promise<string> {
   return response.data.message;
 }
 
-export async function verifyEmailApi(
-  payload: VerifyEmailPayload
-): Promise<string> {
+export async function verifyOtpApi(payload: VerifyOtpPayload): Promise<string> {
   const response = await axiosInstance.post<ApiSuccess<null>>(
-    "/auth/verify-email",
+    "/auth/verify-otp",
     payload
   );
   return response.data.message;
 }
 
-export async function resendVerificationApi(): Promise<string> {
+export async function resendOtpApi(): Promise<string> {
   const response = await axiosInstance.post<ApiSuccess<null>>(
-    "/auth/resend-verification-link"
+    "/auth/resend-otp"
   );
   return response.data.message;
 }
