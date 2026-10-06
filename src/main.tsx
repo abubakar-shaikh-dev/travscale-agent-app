@@ -8,6 +8,9 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 // Query
 import { QueryClientProvider } from "@tanstack/react-query";
 
+// Auth
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 // Toast
 import { Toaster } from "sonner";
 
@@ -75,7 +78,9 @@ function InnerApp() {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <InnerApp />
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <InnerApp />
+      </GoogleOAuthProvider>
       <Toaster richColors position="top-right" />
     </QueryClientProvider>
   </StrictMode>

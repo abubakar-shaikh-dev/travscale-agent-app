@@ -8,6 +8,7 @@ import type {
   ApiSuccess,
   AuthSession,
   ForgotPasswordPayload,
+  GoogleAuthPayload,
   LoginPayload,
   LogoutPayload,
   RefreshSession,
@@ -36,6 +37,16 @@ export async function registerApi(
 export async function loginApi(payload: LoginPayload): Promise<AuthSession> {
   const response = await axiosInstance.post<ApiSuccess<AuthSession>>(
     "/auth/login",
+    payload
+  );
+  return unwrap(response);
+}
+
+export async function googleLoginApi(
+  payload: GoogleAuthPayload
+): Promise<AuthSession> {
+  const response = await axiosInstance.post<ApiSuccess<AuthSession>>(
+    "/auth/google",
     payload
   );
   return unwrap(response);

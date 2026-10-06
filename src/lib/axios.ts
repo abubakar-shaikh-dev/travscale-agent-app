@@ -62,6 +62,7 @@ declare module "axios" {
 // token, so an expired access token there SHOULD be refreshed and retried.
 const AUTH_PATHS = [
   "/auth/login",
+  "/auth/google",
   "/auth/register",
   "/auth/refresh-token",
   "/auth/forgot-password",

@@ -14,6 +14,7 @@ import { useLogin } from "../queries";
 // Utils
 import { useAuthStore } from "@/lib/auth-store";
 import { extractAuthError } from "../api";
+import { resolvePostAuthRoute } from "../post-auth";
 
 // Types
 export interface LoginFormProps {
@@ -116,20 +117,11 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
             successLabel="Login Succeeded"
             isSuccess={succeeded}
             onSuccessComplete={() => {
-              // A PENDING_ACTIVATION account logs in fine but can't use the
-              // app yet: it goes to the OTP screen instead of the dashboard.
               const user = useAuthStore.getState().user;
-              if (user?.status === "PENDING_ACTIVATION") {
-                navigate({ to: "/auth/verify-otp", replace: true });
-                return;
-              }
-              // An account without agency + location onboarding goes to the
-              // wizard before any dashboard (onboarding-api-doc §6).
-              if (user?.onboarding_completed === false) {
-                navigate({ to: "/onboarding", replace: true });
-                return;
-              }
-              navigate({ to: redirectTo ?? "/", replace: true });
+              navigate({
+                to: resolvePostAuthRoute(user, redirectTo),
+                replace: true,
+              });
             }}
             disabled={loginMutation.isPending || locked}
           />

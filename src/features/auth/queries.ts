@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import {
   extractAuthError,
   forgotPasswordApi,
+  googleLoginApi,
   loginApi,
   logoutApi,
   registerApi,
@@ -22,6 +23,7 @@ import {
 // Types
 import type {
   ForgotPasswordPayload,
+  GoogleAuthPayload,
   LoginPayload,
   LogoutPayload,
   RegisterPayload,
@@ -41,6 +43,17 @@ export function useLogin() {
       useAuthStore.getState().setSession(session);
       // Success feedback is shown in-button via AuthSubmitButton's tick
       // animation: no toast.
+    },
+    onError: (error) => notifyError(error),
+  });
+}
+
+export function useLoginWithGoogle() {
+  return useMutation({
+    mutationFn: (payload: GoogleAuthPayload) => googleLoginApi(payload),
+    onSuccess: (session) => {
+      useAuthStore.getState().setSession(session);
+      // No toast: the button holds a success state, then routes.
     },
     onError: (error) => notifyError(error),
   });

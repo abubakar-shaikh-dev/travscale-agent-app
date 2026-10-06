@@ -106,6 +106,14 @@ export interface LoginPayload {
   password: string;
 }
 
+/**
+ * One-time authorization code from Google's OAuth popup, exchanged server-side
+ * at /auth/google for a full session (the client secret lives on the server).
+ */
+export interface GoogleAuthPayload {
+  code: string;
+}
+
 export interface RefreshTokenPayload {
   refresh_token: string;
 }
