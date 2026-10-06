@@ -178,13 +178,47 @@
   code, kbd, samp, pre {
     font-family: var(--font-mono);
   }
+
+  /* ===== Mobile platform layer =====
+     The browser's own tells: the gray flash on tap, pull-to-refresh
+     hijacking the wizard scroll, double-tap-zoom delays, and long-press
+     text selection on controls. Press feedback lives on :active states
+     (every tappable control has one), never on the removed highlight. */
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%; /* no font inflation in landscape */
+    overscroll-behavior: none;
+  }
+
+  /* Controls never double-tap-zoom and never select their label on
+     long-press. Text content stays selectable: never put user-select: none
+     on body. */
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* A button wrapping an image (the agency logo tile) must not pop the
+     native save/copy callout on long-press; links keep theirs. */
+  button,
+  [role="button"] {
+    -webkit-touch-callout: none;
+  }
 }
 
-/* Phone Input Styles - Matching UI library design */
-@layer components {
-  .phone-input-container {
-    @apply relative flex w-full;
-  }
+/* Phone Input Styles - Matching UI library design.
+
+   Unlayered on purpose: react-phone-input-2 ships its own unlayered
+   stylesheet, and unlayered CSS beats anything in a @layer regardless of
+   specificity. Inside @layer components our text-base (16px) lost to the
+   lib's font-size: 14px, so the phone input rendered small enough for iOS
+   Safari to zoom the page on focus and never zoom back out. */
+.phone-input-container {
+  @apply relative flex w-full;
+}
 
   .phone-input-container .react-tel-input {
     @apply w-full font-sans;
@@ -208,7 +242,7 @@
   }
 
   .phone-input-container .react-tel-input .selected-flag {
-    @apply flex h-full w-12 items-center justify-center rounded-s-md bg-transparent px-3 hover:bg-accent/50;
+    @apply flex h-full w-12 items-center justify-center rounded-s-md bg-transparent px-3 hover:bg-accent/50 active:bg-accent/50;
   }
 
   .phone-input-container .react-tel-input .selected-flag .arrow {
@@ -246,7 +280,8 @@
   }
 
   .phone-input-container .react-tel-input .country-list .search-box {
-    @apply h-9 w-full rounded-md border border-input bg-background px-3 text-sm outline-none placeholder:text-muted-foreground/72 focus:border-ring focus:ring-[3px] focus:ring-ring/24;
+    /* 16px on touch (the iOS zoom floor), the tighter 14px on fine pointers. */
+    @apply h-9 w-full rounded-md border border-input bg-background px-3 text-base sm:pointer-fine:text-sm outline-none placeholder:text-muted-foreground/72 focus:border-ring focus:ring-[3px] focus:ring-ring/24;
   }
 
   .phone-input-container .react-tel-input .country-list .search-emoji {
@@ -276,6 +311,21 @@
     @apply cursor-not-allowed;
   }
 
+  /* Touch: the flag button and the country rows are controls, so no
+     long-press text selection and immediate taps. Hover styles above are
+     Tailwind v4 (gated to hover-capable pointers); :active covers touch. */
+  .phone-input-container .react-tel-input .selected-flag,
+  .phone-input-container .react-tel-input .country-list .country {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .phone-input-container .react-tel-input .country-list .country:active {
+    @apply bg-accent;
+  }
+
+@layer components {
   /* ===== Auth pages — entry & ambient motion =====
      CSS-only so animations run off the main thread during the
      auth pages' initial load (smoother than JS-driven motion). */
@@ -512,5 +562,18 @@
     .error-shake {
       animation: none;
     }
+  }
+}
+
+/* iOS Safari zooms the page when focus lands on an input under 16px, and
+   does not zoom back out on blur. Inputs are text-base on mobile and
+   sm:text-sm from 640px up, which bites landscape phones. Unlayered so this
+   wins over the layered sm: utilities on coarse pointers; desktop keeps the
+   tighter 14px design. */
+@media (pointer: coarse) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
   }
 }

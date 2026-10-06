@@ -4,7 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="icon" href="/favicon-invert.ico" media="(prefers-color-scheme: dark)" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- viewport-fit=cover lets the app paint under the notch/home indicator;
+         content pads back out with env(safe-area-inset-*). interactive-widget
+         makes the Android keyboard shrink the layout viewport, so dvh layouts
+         and bottom-pinned UI react the way they do on iOS. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
     <title>travscale-agent-app</title>
   </head>
   <body>

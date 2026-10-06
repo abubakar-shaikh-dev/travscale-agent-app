@@ -226,6 +226,9 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
                   placeholder="BOM"
                   required
                   disabled={createLocation.isPending}
+                  autoCapitalize="characters"
+                  autoCorrect="off"
+                  spellCheck={false}
                 />
               )}
             </form.AppField>
@@ -387,6 +390,8 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
                   label="Postal code"
                   placeholder="400059"
                   disabled={createLocation.isPending}
+                  autoComplete="postal-code"
+                  autoCapitalize="characters"
                 />
               )}
             </form.AppField>

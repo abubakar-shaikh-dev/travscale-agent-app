@@ -94,6 +94,26 @@ export function WelcomeScreen() {
     };
   }, [reducedMotion, handOff]);
 
+  // This scene is dark regardless of the OS scheme, but the browser chrome
+  // takes its color from the static per-scheme theme-color metas in
+  // index.html. Paint it to match the shader while mounted, restore after
+  // (the dashboard that follows is light unless the OS says otherwise).
+  useEffect(() => {
+    const metas = Array.from(
+      document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')
+    );
+    if (metas.length === 0) return;
+    const previous = metas.map((meta) => meta.getAttribute("content"));
+    metas.forEach((meta) => meta.setAttribute("content", "#03071e"));
+    return () => {
+      metas.forEach((meta, index) => {
+        const value = previous[index];
+        if (value === null) meta.removeAttribute("content");
+        else meta.setAttribute("content", value);
+      });
+    };
+  }, []);
+
   return (
     <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-[#03071e] px-6 text-center">
       <ShaderBackground
@@ -218,7 +238,7 @@ export function WelcomeScreen() {
             type="button"
             onClick={handOff}
             aria-label="Skip and open your dashboard"
-            className="cursor-pointer rounded-sm px-2 py-1 text-xs font-medium text-white/55 transition-colors outline-none hover:text-white/90 focus-visible:ring-2 focus-visible:ring-white/70"
+            className="cursor-pointer rounded-sm px-2 py-1 text-xs font-medium text-white/55 transition-colors outline-none hover:text-white/90 active:text-white/90 focus-visible:ring-2 focus-visible:ring-white/70"
           >
             Skip
           </button>

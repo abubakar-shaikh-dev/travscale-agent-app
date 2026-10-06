@@ -18,6 +18,12 @@ interface InputFieldProps {
   className?: string;
   required?: boolean;
   autoFocus?: boolean;
+  /** Keyboard hints that matter on touch surfaces (iOS zoom floor is font
+      size, but autocapitalize/autocorrect still fight codes and emails). */
+  autoComplete?: string;
+  autoCapitalize?: "off" | "none" | "on" | "characters" | "sentences" | "words";
+  autoCorrect?: "off" | "on";
+  spellCheck?: boolean;
 }
 
 export default function InputField({
@@ -28,6 +34,10 @@ export default function InputField({
   className,
   required = false,
   autoFocus = false,
+  autoComplete,
+  autoCapitalize,
+  autoCorrect,
+  spellCheck,
 }: InputFieldProps) {
   const field = useFieldContext<string>();
 
@@ -46,6 +56,10 @@ export default function InputField({
         disabled={disabled}
         aria-invalid={hasError || undefined}
         autoFocus={autoFocus}
+        autoComplete={autoComplete}
+        autoCapitalize={autoCapitalize}
+        autoCorrect={autoCorrect}
+        spellCheck={spellCheck}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         size="lg"

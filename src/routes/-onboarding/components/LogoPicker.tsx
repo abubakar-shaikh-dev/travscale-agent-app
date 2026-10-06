@@ -354,7 +354,7 @@ export function LogoPicker({ agency }: LogoPickerProps) {
                   type="button"
                   onClick={() => inputRef.current?.click()}
                   disabled={busy}
-                  className="cursor-pointer rounded-sm font-medium text-foreground underline-offset-2 transition-colors outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-64"
+                  className="cursor-pointer rounded-sm font-medium text-foreground underline-offset-2 transition-colors outline-none hover:underline active:opacity-70 focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-64"
                 >
                   Replace
                 </button>
@@ -362,7 +362,7 @@ export function LogoPicker({ agency }: LogoPickerProps) {
                   type="button"
                   onClick={handleRemove}
                   disabled={busy}
-                  className="cursor-pointer rounded-sm font-medium text-muted-foreground underline-offset-2 transition-colors outline-none hover:text-destructive hover:underline focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-64"
+                  className="cursor-pointer rounded-sm font-medium text-muted-foreground underline-offset-2 transition-colors outline-none hover:text-destructive hover:underline active:opacity-70 focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-64"
                 >
                   Remove
                 </button>
@@ -371,7 +371,7 @@ export function LogoPicker({ agency }: LogoPickerProps) {
               <button
                 type="button"
                 onClick={() => inputRef.current?.click()}
-                className="cursor-pointer rounded-sm font-medium text-primary underline-offset-2 transition-colors outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
+                className="cursor-pointer rounded-sm font-medium text-primary underline-offset-2 transition-colors outline-none hover:underline active:opacity-70 focus-visible:ring-2 focus-visible:ring-ring"
               >
                 Add logo
               </button>

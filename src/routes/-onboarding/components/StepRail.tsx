@@ -56,7 +56,7 @@ export function StepRail({
                 <button
                   type="button"
                   onClick={() => onStepClick?.(step.id)}
-                  className="-mx-1 cursor-pointer rounded-md px-1 text-left outline-none transition-colors duration-150 ease-out hover:bg-accent/40 focus-visible:ring-2 focus-visible:ring-ring"
+                  className="-mx-1 cursor-pointer rounded-md px-1 text-left outline-none transition-colors duration-150 ease-out hover:bg-accent/40 active:bg-accent/60 focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {body}
                 </button>
@@ -103,7 +103,7 @@ export function StepRail({
               <button
                 type="button"
                 onClick={() => onStepClick?.(step.id)}
-                className="col-span-2 -mx-2 grid cursor-pointer grid-cols-[auto_1fr] gap-x-3.5 rounded-md px-2 text-left outline-none transition-colors duration-150 ease-out hover:bg-accent/40 focus-visible:ring-2 focus-visible:ring-ring"
+                className="col-span-2 -mx-2 grid cursor-pointer grid-cols-[auto_1fr] gap-x-3.5 rounded-md px-2 text-left outline-none transition-colors duration-150 ease-out hover:bg-accent/40 active:bg-accent/60 focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {body}
               </button>

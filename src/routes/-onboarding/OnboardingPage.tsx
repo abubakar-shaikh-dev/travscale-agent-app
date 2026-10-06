@@ -146,8 +146,10 @@ export function OnboardingPage() {
 
   return (
     <div className="flex min-h-dvh flex-col bg-background lg:h-dvh lg:overflow-hidden">
-      {/* Top bar: brand + a way out (wayfinding: never trap the user) */}
-      <header className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b bg-background/85 px-5 py-3.5 backdrop-blur-md sm:px-8">
+      {/* Top bar: brand + a way out (wayfinding: never trap the user).
+          With viewport-fit=cover the status bar/dynamic island sits over the
+          page, so the header pads below env(safe-area-inset-top). */}
+      <header className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b bg-background/85 px-5 pt-[calc(0.875rem+env(safe-area-inset-top,0px))] pb-3.5 backdrop-blur-md sm:px-8">
         <Logo className="h-7" />
         <div className="flex min-w-0 items-center gap-3 text-sm text-muted-foreground">
           <span className="hidden min-w-0 truncate sm:block">
@@ -161,7 +163,7 @@ export function OnboardingPage() {
             type="button"
             onClick={handleSignOut}
             disabled={logout.isPending}
-            className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md px-1.5 py-1 font-medium text-muted-foreground transition-colors outline-none hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-64"
+            className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md px-1.5 py-1 font-medium text-muted-foreground transition-colors outline-none hover:bg-accent hover:text-foreground active:bg-accent active:text-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-64"
           >
             <LogOutIcon className="size-4" aria-hidden="true" />
             Sign out
@@ -169,7 +171,9 @@ export function OnboardingPage() {
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-8 sm:px-8 sm:py-12 lg:min-h-0">
+      {/* Bottom padding clears the home indicator so the form's action row
+          never ends up under it when scrolled to the end. */}
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom,0px))] sm:px-8 sm:pt-12 sm:pb-12 lg:min-h-0">
         {/* Compact rail on mobile */}
         <StepRail
           steps={railSteps}

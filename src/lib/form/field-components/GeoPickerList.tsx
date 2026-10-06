@@ -154,7 +154,7 @@ export function GeoPickerList({
         id={listId.current}
         aria-label={searchPlaceholder}
         className={cn(
-          "min-h-0 overflow-y-auto overflow-x-hidden p-1.5 [scrollbar-width:thin]",
+          "min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain p-1.5 [scrollbar-width:thin]",
           fillHeight && "flex-1",
         )}
         style={
@@ -261,7 +261,7 @@ function PickerRow({
       style={{ height: rowHeight, ...style }}
       className={cn(
         "flex w-full cursor-pointer select-none items-center gap-2.5 rounded-md px-2.5 text-left text-sm outline-none transition-colors duration-75",
-        "data-[active=true]:bg-accent",
+        "data-[active=true]:bg-accent active:bg-accent/70",
         active && "bg-accent",
         selected && "text-primary",
       )}

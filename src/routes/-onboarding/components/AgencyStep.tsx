@@ -254,6 +254,9 @@ function AgencyStepForm({ isEdit, agency, onAfterSave }: AgencyStepFormProps) {
                   placeholder="hello@travelspeed.in"
                   required
                   disabled={isSaving}
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                 />
               )}
             </form.AppField>
@@ -275,6 +278,9 @@ function AgencyStepForm({ isEdit, agency, onAfterSave }: AgencyStepFormProps) {
                   label="Website"
                   placeholder="travelspeed.in"
                   disabled={isSaving}
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                 />
               )}
             </form.AppField>
