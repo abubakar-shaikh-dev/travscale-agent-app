@@ -1,6 +1,18 @@
 "use client";
 
+// React
+import { useState } from "react";
+
 // UI Components
+import {
+  AlertDialog,
+  AlertDialogClose,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogPopup,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import {
   Avatar,
   AvatarFallback,
@@ -48,6 +60,7 @@ const ROLE_LABELS: Record<USER_ROLES, string> = {
 export function UserMenu() {
   const user = useAuthStore(selectUser);
   const logoutMutation = useLogout();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   if (!user) return null;
 
@@ -67,7 +80,8 @@ export function UserMenu() {
   };
 
   return (
-    <DropdownMenu>
+    <>
+      <DropdownMenu>
       <DropdownMenuTrigger
         render={
           <Button
@@ -128,11 +142,38 @@ export function UserMenu() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive" onClick={handleLogout}>
+        <DropdownMenuItem variant="destructive" onClick={() => setConfirmOpen(true)}>
           <LogOut />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
-    </DropdownMenu>
+      </DropdownMenu>
+
+      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <AlertDialogPopup>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Log out</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to log out? You will need to sign in again
+              to access your dashboard.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogClose
+              render={<Button variant="outline" disabled={logoutMutation.isPending} />}
+            >
+              Cancel
+            </AlertDialogClose>
+            <Button
+              variant="destructive"
+              onClick={handleLogout}
+              loading={logoutMutation.isPending}
+            >
+              {logoutMutation.isPending ? "Logging out..." : "Log out"}
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogPopup>
+      </AlertDialog>
+    </>
   );
 }
