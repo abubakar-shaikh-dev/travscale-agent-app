@@ -58,7 +58,7 @@ export function AuthMethods({ className, children }: AuthMethodsProps) {
           <Button
             type="button"
             variant="outline"
-            className="mt-3 w-full transition-[transform,box-shadow] duration-200 ease-[var(--motion-ease-out)] hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
+            className="mt-3 w-full"
             onClick={() => setShowForm(true)}
           >
             <MailIcon className="size-5 shrink-0 opacity-100" />

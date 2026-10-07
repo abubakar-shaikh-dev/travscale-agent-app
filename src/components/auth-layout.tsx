@@ -69,42 +69,42 @@ export function AuthLayout({
           speed={0.8}
         />
 
-        {/* Layered vignette: light at the top for the logo, deep at the
-            bottom where the copy sits. Tuned so the shader stays visible
-            while the text earns its legibility. */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/25 via-black/20 to-black/75" />
+        {/* Layered scrim: light at the top for the logo, deep at the
+            bottom where the copy sits. Crisp white type stays legible over
+            the shader without text shadows. */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-black/25 to-black/80" />
 
         <div className="relative z-10 flex flex-1 flex-col justify-between p-10 lg:p-14">
           {/* Logo: fades in with the same curve as the form panel header */}
           <div className="auth-fade">
-            <Logo className="h-7 text-white drop-shadow-md invert" />
+            <Logo className="h-7 text-white invert" />
           </div>
 
           {/* Bottom content: headline, supporting line, then the product
-              modules as glass-chip rows. The support line enters with the
+              modules as a quiet icon list. The support line enters with the
               headline (auth-fade); the rows cascade via auth-stagger so the
               panel tells a story instead of flashing in as one block. */}
           <div className="max-w-md">
             <div className="auth-fade">
-              <h2 className="font-heading text-4xl font-semibold leading-[1.1] tracking-tight text-white [text-shadow:_0_2px_24px_rgb(0_0_0_/_55%)]">
+              <h2 className="font-heading text-4xl font-semibold leading-[1.1] tracking-tight text-white">
                 Run your travel agency with calm and clarity.
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-white/75 [text-shadow:_0_1px_12px_rgb(0_0_0_/_45%)]">
+              <p className="mt-4 text-base leading-relaxed text-white/70">
                 Customers, bookings, visas, and payments. All in one calm
                 workspace, not a dozen scattered tools.
               </p>
             </div>
 
-            {/* Feature rows: grounded in the actual product modules. The
-                backdrop blur over the shader gives the chips a glass feel
-                without a heavy material; the vignette keeps text legible. */}
-            <ul className="auth-stagger mt-9 space-y-3">
+            {/* Feature rows: bare glyphs and labels, no boxes. On the shader
+                background the icons read as content, not chrome. */}
+            <ul className="auth-stagger mt-9 space-y-3.5">
               {SHOWCASE_FEATURES.map((feature) => (
                 <li className="flex items-center gap-3" key={feature.label}>
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/10 text-white/90 backdrop-blur-[2px]">
-                    <feature.icon className="size-4" aria-hidden="true" />
-                  </span>
-                  <span className="text-sm text-white/85">
+                  <feature.icon
+                    className="size-[18px] shrink-0 text-white/60"
+                    aria-hidden="true"
+                  />
+                  <span className="text-[15px] text-white/85">
                     {feature.label}
                   </span>
                 </li>
@@ -125,7 +125,13 @@ export function AuthLayout({
         <div className="flex flex-1 flex-col items-center justify-center py-8 sm:py-10">
           <div
             className={cn(
-              "w-full space-y-8 [&_[data-slot=input]]:h-11 [&_[data-slot=input]]:leading-11 [&_[data-slot=button].w-full]:h-11",
+              "w-full space-y-8",
+              // Apple-style fields: filled quiet surfaces instead of bordered
+              // boxes, fixed 44px height for the touch target. Both the plain
+              // input and the input-group variant (password) are covered.
+              "[&_[data-slot=input]]:h-11 [&_[data-slot=input]]:leading-11 [&_[data-slot=button].w-full]:h-11",
+              "[&_[data-slot=input-control]]:rounded-lg [&_[data-slot=input-control]]:border-0 [&_[data-slot=input-control]]:bg-muted [&_[data-slot=input-control]]:shadow-none",
+              "[&_[data-slot=input-group]]:rounded-lg [&_[data-slot=input-group]]:border-0 [&_[data-slot=input-group]]:bg-muted [&_[data-slot=input-group]]:shadow-none",
               wide ? "max-w-lg" : "max-w-sm",
             )}
           >

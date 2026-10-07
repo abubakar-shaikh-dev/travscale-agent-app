@@ -12,7 +12,7 @@ import { LoginForm } from "@/features/auth/components/LoginForm";
 
 export const Route = createFileRoute("/auth/login/")({
   loader: (): AuthPageMeta => ({
-    title: "Welcome Back!",
+    title: "Welcome back",
     description: "Sign in to your account to continue.",
     authMethods: true,
   }),
