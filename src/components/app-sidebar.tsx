@@ -7,19 +7,20 @@ import * as React from "react";
 import { Link, useRouter } from "@tanstack/react-router";
 
 // UI Components
+import { AgencySwitcher } from "@/components/agency-switcher";
 import { Logo } from "@/components/logo";
 import { NavMain } from "@/components/nav-main";
 import { SidebarSearch } from "@/components/sidebar-search";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-  useSidebar,
 } from "@/components/ui/sidebar";
 
 // Constants
@@ -29,7 +30,6 @@ import {
 } from "@/lib/constants/sidebar";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { state } = useSidebar();
   const router = useRouter();
   const currentPath = router.state.location.pathname;
   const DashboardIcon = SIDEBAR_DASHBOARD_ITEM.icon;
@@ -38,24 +38,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              render={<Link to="/" />}
-              className="group-data-[collapsible=icon]:p-0! hover:bg-transparent active:bg-transparent"
-            >
-              {state === "expanded" ? (
-                <Logo variant="full" className="h-6.5 w-auto" />
-              ) : (
-                <div className="flex w-full justify-center">
-                  <Logo variant="icon" className="size-6.5" />
-                </div>
-              )}
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarSearch />
-        </SidebarMenu>
+        <AgencySwitcher />
+        <SidebarSearch />
       </SidebarHeader>
       <SidebarContent className="overflow-y-scroll!">
         {/* Dashboard Link */}
@@ -78,8 +62,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* Main Navigation */}
         <NavMain items={NAV_MAIN_ITEMS} />
       </SidebarContent>
+      <SidebarFooter className="group-data-[collapsible=icon]:hidden">
+        <div className="flex items-center justify-center">
+          <Logo variant="full" className="h-4 w-auto opacity-50" />
+        </div>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
 }
-

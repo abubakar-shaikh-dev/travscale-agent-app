@@ -33,22 +33,13 @@ import type { USER_ROLES } from "@/features/auth/types";
 
 // Utils
 import { selectUser, useAuthStore } from "@/lib/auth-store";
+import { useTenantStore } from "@/lib/tenant-store";
+import { getInitials } from "@/lib/utils";
 
 const ROLE_LABELS: Record<USER_ROLES, string> = {
   SUPER_ADMIN: "Super Admin",
   AGENT: "Agent",
 };
-
-function getInitials(name: string): string {
-  return (
-    name
-      .split(" ")
-      .map((part) => part[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2) || "U"
-  );
-}
 
 /**
  * Navbar user menu — avatar trigger that opens the account dropdown.
@@ -66,6 +57,9 @@ export function UserMenu() {
       { refresh_token: refresh_token ?? "" },
       {
         onSettled: () => {
+          // The next sign-in may be a different agency: drop the branch
+          // selection so the switcher defaults cleanly.
+          useTenantStore.getState().clear();
           window.location.assign("/auth/login");
         },
       }
