@@ -1,5 +1,5 @@
 // React
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useMemo, useRef, useState } from "react";
 
 // Query
 import { useQueryClient } from "@tanstack/react-query";
@@ -20,6 +20,7 @@ import { onboardingKeys } from "@/features/onboarding/queries";
 
 // Types
 import type { CreateAgencyLocationPayload } from "@/features/agencies/types";
+import type { GeoOption } from "@/lib/geo";
 
 // Utils
 import { extractApiError } from "@/lib/api-error";
@@ -38,6 +39,13 @@ import { useAsyncOptions } from "@/hooks/use-async-options";
 
 // Feature Components
 import { applyServerFieldErrors } from "./apply-server-errors";
+
+/** Quick-pick markets for the country picker, in chip order. */
+const POPULAR_COUNTRY_CODES = ["AE", "SA", "IN", "GB", "US"];
+
+/** Alphabetical sections for every geo picker on this step. */
+const groupByFirstLetter = (option: GeoOption) =>
+  option.label.charAt(0).toUpperCase();
 
 interface LocationStepProps {
   /** Whether the agency step is done (always true when this step shows). */
@@ -71,6 +79,12 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
   // the user commits an edit themselves (blur), then they are left alone.
   const codeTouchedRef = useRef(false);
   const currencyTouchedRef = useRef(false);
+  // Whether the user has actually typed into the free-text fields. A
+  // pristine blur (tapping another control straight away) must not inject a
+  // "required" error mid-tap: the layout shift above the picker steals the
+  // tap and the sheet never opens on the first press.
+  const nameEditedRef = useRef(false);
+  const codeEditedRef = useRef(false);
   // Guards the async currency suggestion against out-of-order completions
   // when the country changes quickly.
   const currencyRequestRef = useRef(0);
@@ -157,6 +171,18 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
   );
   const countryName = countryMeta.data;
 
+  // Resolve the quick-pick markets against the real dataset so labels/codes
+  // stay canonical and a missing country simply drops out of the section.
+  const popularCountries = useMemo(
+    () =>
+      POPULAR_COUNTRY_CODES
+        .map((code) =>
+          (countryOptions.data ?? []).find((option) => option.value === code)
+        )
+        .filter((option): option is GeoOption => Boolean(option)),
+    [countryOptions.data]
+  );
+
   return (
     <form.AppForm>
       <form
@@ -173,6 +199,7 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
               name="name"
               validators={{
                 onBlur: ({ value }) => {
+                  if (!nameEditedRef.current && !value.trim()) return undefined;
                   if (!value.trim()) return "Location name is required";
                   if (value.trim().length > 100)
                     return "Location name must be at most 100 characters";
@@ -180,9 +207,10 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
                 },
               }}
               listeners={{
-                // Auto-suggest the short code from the name until the user
-                // commits their own code, then suggestions stop.
                 onChange: ({ value: name }) => {
+                  nameEditedRef.current = true;
+                  // Auto-suggest the short code from the name until the user
+                  // commits their own code, then suggestions stop.
                   if (!codeTouchedRef.current) {
                     form.setFieldValue(
                       "code",
@@ -208,6 +236,7 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
               name="code"
               validators={{
                 onBlur: ({ value }) => {
+                  if (!codeEditedRef.current && !value.trim()) return undefined;
                   if (!value.trim()) return "Location code is required";
                   if (!CODE_PATTERN.test(value.trim().toUpperCase()))
                     return "2 to 10 characters using A-Z, 0-9, - or _";
@@ -217,6 +246,9 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
               listeners={{
                 onBlur: () => {
                   codeTouchedRef.current = true;
+                },
+                onChange: () => {
+                  codeEditedRef.current = true;
                 },
               }}
             >
@@ -264,6 +296,11 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
                   notFoundMessage="No country found"
                   options={countryOptions.data ?? []}
                   isPending={countryOptions.isPending && !countryOptions.data}
+                  popularItems={popularCountries}
+                  groupBy={groupByFirstLetter}
+                  alphabetIndex
+                  fetchError={countryOptions.isError}
+                  onRetry={countryOptions.reload}
                   required
                   disabled={createLocation.isPending}
                 />
@@ -287,6 +324,10 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
                   notFoundMessage="No state found"
                   options={stateOptions.data ?? []}
                   isPending={stateOptions.isPending && !stateOptions.data}
+                  groupBy={groupByFirstLetter}
+                  alphabetIndex
+                  fetchError={stateOptions.isError}
+                  onRetry={stateOptions.reload}
                   disabled={createLocation.isPending || !country || !hasStates}
                   disabledHint={
                     !country
@@ -329,7 +370,10 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
                   notFoundMessage="No city found"
                   options={cityOptions.data ?? []}
                   isPending={cityOptions.isPending && !cityOptions.data}
-                  allowCustom
+                  groupBy={groupByFirstLetter}
+                  alphabetIndex
+                  fetchError={cityOptions.isError}
+                  onRetry={cityOptions.reload}
                   required
                   disabled={
                     createLocation.isPending ||
@@ -369,6 +413,10 @@ export function LocationStep({ canGoBack, onBack }: LocationStepProps) {
                   notFoundMessage="No currency found"
                   options={currencyOptions.data ?? []}
                   isPending={currencyOptions.isPending && !currencyOptions.data}
+                  groupBy={groupByFirstLetter}
+                  alphabetIndex
+                  fetchError={currencyOptions.isError}
+                  onRetry={currencyOptions.reload}
                   required
                   disabled={createLocation.isPending}
                 />

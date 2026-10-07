@@ -18,6 +18,11 @@ export interface GeoOption {
   label: string;
   /** Optional secondary text (e.g. the ISO code). */
   hint?: string;
+  /**
+   * Optional muted line under the label (e.g. a region or full name).
+   * Datasets that do not set it render single-line rows.
+   */
+  secondary?: string;
 }
 
 export interface CountryMeta {
