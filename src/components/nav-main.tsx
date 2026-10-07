@@ -78,14 +78,15 @@ export function NavMain({ items }: NavMainProps) {
                     <SidebarMenuButton
                       tooltip={item.title}
                       isActive={groupActive}
+                      className="data-[active=true]:bg-sidebar-accent-active"
                     />
                   }
                 >
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  <ChevronRight className="ml-auto transition-transform duration-200 [transition-timing-function:var(--motion-ease-out)] group-data-[state=open]/collapsible:rotate-90" />
                 </CollapsibleTrigger>
-                <CollapsibleContent>
+                <CollapsibleContent className="[transition-timing-function:var(--motion-ease-out)]">
                   <SidebarMenuSub>
                     {item.items?.map((subItem) => {
                       // Sub-items use exact matching only
@@ -96,6 +97,7 @@ export function NavMain({ items }: NavMainProps) {
                           <SidebarMenuSubButton
                             render={<Link to={subItem.url} />}
                             isActive={subItemActive}
+                            className="data-[active=true]:bg-sidebar-accent-active"
                           >
                             <span>{subItem.title}</span>
                           </SidebarMenuSubButton>

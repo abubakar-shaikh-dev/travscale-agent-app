@@ -59,13 +59,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent className="overflow-y-scroll!">
         {/* Dashboard Link */}
-        <SidebarGroup>
+        <SidebarGroup className="pb-0">
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
                 render={<Link to={SIDEBAR_DASHBOARD_ITEM.url} />}
                 tooltip={SIDEBAR_DASHBOARD_ITEM.title}
                 isActive={isDashboardActive}
+                className="data-[active=true]:bg-sidebar-accent-active"
               >
                 {DashboardIcon && <DashboardIcon />}
                 <span>{SIDEBAR_DASHBOARD_ITEM.title}</span>
